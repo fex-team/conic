@@ -1,10 +1,21 @@
 var React = require('react')
+var Left = require('./left')
+var Top = require('./top')
+var Right = require('./right')
+var style = require('./style')
 
 module.exports = React.createClass({
-    render: function() {
+    render: function () {
         return (
             <div>
-                {this.props.children}
+                <Top/>
+
+                <div style={style.layout}>
+                    <Left/>
+
+                    <div style={style.child}>{this.props.children}</div>
+                    <Right/>
+                </div>
             </div>
         )
     }

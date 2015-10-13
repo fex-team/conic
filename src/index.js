@@ -1,3 +1,6 @@
+// 全局样式
+require('./reset.scss')
+
 // 全局路由
 var React = require('react')
 var reactRouter = require('react-router')
