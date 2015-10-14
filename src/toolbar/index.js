@@ -2,18 +2,23 @@ var React = require('react')
 var Left = require('./left')
 var Top = require('./top')
 var Right = require('./right')
-var style = require('./style')
+//var ReactShadow = require('react-shadow')
 
 module.exports = React.createClass({
+    //mixins: [ReactShadow],
+    //cssSource: require('./index.scss').toString(),
     render: function () {
         return (
             <div>
                 <Top/>
 
-                <div style={style.layout}>
+                <div className="layout">
                     <Left/>
 
-                    <div style={style.child}>{this.props.children}</div>
+                    <div className="phone">
+                        <div className="status-bar"></div>
+                        {this.props.children}
+                    </div>
                     <Right/>
                 </div>
             </div>

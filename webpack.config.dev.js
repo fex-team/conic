@@ -20,11 +20,11 @@ module.exports = {
                 loaders: ['jsx', 'react-hot', 'babel']
             }, {
                 test: /\.(scss|css)/,
-                loader: 'style!css!autoprefixer!sass'
+                loader: 'css!autoprefixer!sass'
             }, {
                 test: /\.(png|jpg)$/,
                 exclude: /node_modules/,
-                loader: 'url?limit=256'
+                loader: 'url'
             }, {
                 test: /\.woff$/,
                 loader: "url?limit=10000&minetype=application/font-woff"

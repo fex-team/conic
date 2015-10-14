@@ -12,14 +12,14 @@ module.exports = {
             {
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                loaders: ['jsx', 'babel']
+                loaders: ['jsx', 'babel',require('./auto-path-class')]
             }, {
                 test: /\.(scss|css)/,
                 loader: 'style!css!autoprefixer!sass'
             }, {
                 test: /\.(png|jpg)$/,
                 exclude: /node_modules/,
-                loader: 'url-loader?limit=8192'
+                loader: 'url-loader'
             }, {
                 test: /\.woff$/,
                 loader: "url?limit=10000&minetype=application/font-woff"

@@ -1,0 +1,35 @@
+.layout {
+  display: flex;
+  justify-content: space-between;
+}
+
+.phone {
+  width: 360px;
+  height: 600px;
+  overflow: hidden;
+  background: #000000;
+  border-radius: 55px;
+  box-shadow: 0 0 0 2px #b2b2b2;
+  top: -50px;
+  right: 40px;
+  padding: 105px 25px;
+  &:before {
+    content: '';
+    width: 60px;
+    height: 10px;
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    margin-left: -30px;
+    background: #333;
+    top: 50px;
+  }
+  .status-bar {
+    background: url('./image/status-bar.png');
+    background-size: cover;
+    width: 100%;
+    height: 20px;
+    left: 50%;
+    top: 100px;
+  }
+}

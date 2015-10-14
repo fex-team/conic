@@ -1,10 +1,12 @@
 var React = require('react')
-var style = require('./style')
+var ReactShadow = require('react-shadow')
 
 module.exports = React.createClass({
+    mixins: [ReactShadow],
+    cssSource: require('./index.scss').toString(),
     render: function() {
         return (
-            <div style={style.layout}>顶部栏</div>
+            <div className="layout">顶部栏</div>
         )
     }
 })
