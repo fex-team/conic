@@ -1,10 +1,16 @@
 var React = require('react')
-var style = require('./style')
+require('./index.scss')
 
 module.exports = React.createClass({
-    render: function() {
+    render: function () {
         return (
-            <div style={style.layout}>左侧栏</div>
+            <div>
+                <div className="nothing">
+                    <div className="bold">编辑组件</div>
+
+                    <div>请选中一个组件</div>
+                </div>
+            </div>
         )
     }
 })

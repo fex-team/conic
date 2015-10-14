@@ -5,7 +5,7 @@ module.exports = {
     entry: [
         'webpack-dev-server/client?http://localhost:8090',
         'webpack/hot/only-dev-server',
-        './index.js'
+        './src/index.js'
     ],
     output: {
         path: __dirname + '/output/',
@@ -17,10 +17,11 @@ module.exports = {
             {
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                loaders: ['jsx', 'react-hot', 'babel']
+                loaders: ['jsx', 'react-hot', 'babel', 'path-class-loader']
             }, {
                 test: /\.(scss|css)/,
-                loader: 'css!autoprefixer!sass'
+                exclude: /node_modules/,
+                loaders: ['style', 'css', 'autoprefixer', 'sass', 'css-path-loader']
             }, {
                 test: /\.(png|jpg)$/,
                 exclude: /node_modules/,

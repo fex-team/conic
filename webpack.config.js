@@ -5,7 +5,7 @@ module.exports = {
     output: {
         path: __dirname + '/output/',
         publicPath: '/output/',
-        filename: 'index.js'
+        filename: './src/index.js'
     },
     module: {
         loaders: [

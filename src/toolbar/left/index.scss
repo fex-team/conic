@@ -1,0 +1,13 @@
+.nothing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  color: #777;
+  .bold {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+}

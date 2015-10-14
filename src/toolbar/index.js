@@ -2,24 +2,40 @@ var React = require('react')
 var Left = require('./left')
 var Top = require('./top')
 var Right = require('./right')
-//var ReactShadow = require('react-shadow')
+var Footer = require('./footer')
+require('./index.scss')
 
 module.exports = React.createClass({
-    //mixins: [ReactShadow],
-    //cssSource: require('./index.scss').toString(),
+    getInitialState: function () {
+        return {
+            // 操作页面中当前选中对象
+            selection: {}
+        };
+    },
+
     render: function () {
         return (
             <div>
-                <Top/>
+                <div className="g-hd">
+                    <Top/>
+                </div>
 
-                <div className="layout">
+                <div className="g-sd">
                     <Left/>
+                </div>
 
-                    <div className="phone">
+                <div className="g-rd">
+                    <Right/>
+                </div>
+
+                <div className="g-mn">
+                    <div className="phone-dev">
                         <div className="status-bar"></div>
                         {this.props.children}
                     </div>
-                    <Right/>
+                </div>
+                <div className="g-ft">
+                    <Footer/>
                 </div>
             </div>
         )

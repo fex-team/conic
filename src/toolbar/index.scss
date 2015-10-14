@@ -1,13 +1,82 @@
-.layout {
+// 全屏自适应布局
+html {
+  _height: auto;
+  _padding: 80px 0 50px;
+}
+
+.g-hd, .g-sd, .g-mn, .g-ft {
+  position: absolute;
+  left: 0;
+}
+
+.g-hd, .g-ft {
+  width: 100%;
+}
+
+.g-sd, .g-mn, .g-rd {
+  top: 81px;
+  bottom: 40px;
+  _height: 100%;
+  overflow: auto;
+}
+
+.g-sd, .g-rd, .g-ft {
+  color: #ccc;
+  background: #333;
+}
+
+.g-rd, .g-sd {
+  border-top: 1px solid #444;
+  border-bottom: 1px solid #222;
+}
+
+.g-rd {
+  position: absolute;
+  width: 250px;
+  right: 0;
+}
+
+.g-hd {
+  top: 0;
+  height: 80px;
+}
+
+.g-sd {
+  width: 300px;
+}
+
+.g-mn {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  _position: relative;
+  left: 300px;
+  right: 250px;
+  _top: 0;
+  _left: 0;
+  _margin-left: 250px;
+  background: #444;
+}
+
+.g-ft {
+  bottom: 0;
+  height: 39px;
+  border-top: 1px solid #444;
+}
+
+.phone-dev {
+  width: 460px;
+  height: 1200px;
+  margin-top: 20px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background: white;
 }
 
 .phone {
   width: 360px;
   height: 600px;
+  margin-top: 20px;
   overflow: hidden;
-  background: #000000;
   border-radius: 55px;
   box-shadow: 0 0 0 2px #b2b2b2;
   top: -50px;
