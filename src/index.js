@@ -1,3 +1,6 @@
+// antd样式
+require('antd/lib/index.css')
+
 // 全局样式
 require('./reset.scss')
 

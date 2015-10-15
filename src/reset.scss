@@ -6,11 +6,92 @@ html, body {
   padding: 0;
   ::-webkit-scrollbar {
     background: #555;
-    color:#444;
+    color: #444;
   }
   ::-webkit-scrollbar-thumb {
-    background:#666;
+    background: #666;
     border: thin solid #555;
-    border-radius:10px;
+    border-radius: 10px;
   }
+}
+
+body {
+  font-size: 14px;
+  background: #444;
+}
+
+// 覆盖antd样式
+.ant-form-item, .ant-form-item > label {
+  color: #ccc;
+}
+
+// dropdown
+.ant-select-selection {
+  background-color: #444;
+  border-color: #222;
+  color: #ccc;
+}
+
+.ant-select-dropdown {
+  background-color: #444;
+  border: 1px solid #222;
+}
+
+.ant-select-dropdown-menu-item {
+  color: #ccc;
+}
+
+.ant-select-dropdown-menu-item:hover,
+.ant-select-dropdown-menu-item-active {
+  background-color: #555 !important;
+  color: #eee;
+}
+
+.ant-select-dropdown-menu-item-disabled {
+  color: #888;
+}
+
+// checkbox
+.ant-checkbox-inner, .ant-radio-inner {
+  border-color: #222;
+  background-color: #444;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  border-color: #1983B3;
+  background-color: #0087C3;
+}
+
+.ant-checkbox-disabled .ant-checkbox-inner {
+  border-color: #555;
+  background-color: #888;
+}
+
+// radio
+.ant-radio-checked .ant-radio-inner {
+  border-color: #444;
+}
+
+.ant-radio:hover {
+  border-color: #444;
+}
+
+// input
+.ant-input {
+  border-color: #222;
+  background-color: #444;
+  color: #ccc;
+}
+
+.ant-input::-moz-placeholder {
+  color: #888;
+  opacity: 1;
+}
+
+.ant-input:-ms-input-placeholder {
+  color: #888;
+}
+
+.ant-input::-webkit-input-placeholder {
+  color: #888;
 }

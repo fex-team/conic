@@ -10,7 +10,7 @@ module.exports = React.createClass({
         return {
             // 操作页面中当前选中对象
             selection: {}
-        };
+        }
     },
 
     render: function () {
@@ -29,9 +29,11 @@ module.exports = React.createClass({
                 </div>
 
                 <div className="g-mn">
-                    <div className="phone-dev">
-                        <div className="status-bar"></div>
-                        {this.props.children}
+                    <div className="phone-out">
+                        <div className="phone">
+                            <div className="status-bar"></div>
+                            <div className="children">{this.props.children}</div>
+                        </div>
                     </div>
                 </div>
                 <div className="g-ft">

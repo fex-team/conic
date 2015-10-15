@@ -22,6 +22,10 @@ module.exports = {
                 test: /\.(scss|css)/,
                 exclude: /node_modules/,
                 loaders: ['style', 'css', 'autoprefixer', 'sass', 'css-path-loader']
+            },{
+                test: /\.(scss|css)/,
+                include: /node_modules/,
+                loaders: ['style', 'css', 'autoprefixer', 'sass']
             }, {
                 test: /\.(png|jpg)$/,
                 exclude: /node_modules/,

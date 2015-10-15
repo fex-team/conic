@@ -1,11 +1,11 @@
 var React = require('react')
-var Button = require('./component/button')
+require('./index.scss')
 
 module.exports = React.createClass({
-    render: function(){
+    render: function () {
         return (
             <div>
-                <Button type="primary"/>
+                <div className={'btn btn-'+this.props.type}>默认按钮</div>
             </div>
         )
     }
