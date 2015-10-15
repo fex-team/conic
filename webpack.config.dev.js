@@ -31,16 +31,16 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'url'
             }, {
-                test: /\.woff$/,
+                test: /\.woff[\w\W]*$/,
                 loader: "url?limit=10000&minetype=application/font-woff"
             }, {
-                test: /\.ttf$/,
+                test: /\.ttf[\w\W]*$/,
                 loader: "file"
             }, {
-                test: /\.eot$/,
+                test: /\.eot[\w\W]*$/,
                 loader: "file"
             }, {
-                test: /\.svg$/,
+                test: /\.svg[\w\W]*$/,
                 loader: "file"
             }
         ]

@@ -1,0 +1,19 @@
+.menu-table {
+  td {
+    text-align: center;
+    background-color: #333;
+    height: 26px;
+    width: 86px;
+    padding: 0 10px;
+    line-height: 26px;
+    border: 1px solid #444;
+    cursor: pointer;
+    transition: color .3s ease;
+    &:hover {
+      background: #444;
+    }
+    &.active {
+      background: #444;
+    }
+  }
+}

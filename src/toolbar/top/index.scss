@@ -1,7 +1,51 @@
-.layout {
-  width: 100%;
-  height: 80px;
+::-webkit-scrollbar {
+  width: 7px;
+  height: 14px;
+}
+
+.layout{
   color: #ccc;
   background: #333;
   border-bottom: 1px solid #222;
+}
+
+.table-response {
+  height: 79px;
+  width: 350px;
+  overflow-y: auto;
+}
+
+// 三列中间自适应布局
+.f-cb:after {
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+
+.g-sd51, .g-sd52 {
+  position: relative;
+  float: left;
+  margin: 0 -350px 0 0;
+}
+
+.g-sd51{
+  width: 350px;
+}
+
+.g-sd52 {
+  float: right;
+  width: 250px;
+  margin: 0 0 0 -250px;
+}
+
+.g-mn5 {
+  float: left;
+  width: 100%;
+}
+
+.g-mn5c {
+  margin: 0 250px 0 350px;
 }

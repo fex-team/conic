@@ -13,7 +13,7 @@ module.exports = `
 
 <body></body>
 
-<script src="//localhost:8090/output/index.js"></script>
+<script src="/output/index.js"></script>
 
 </html>
 `

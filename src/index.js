@@ -1,6 +1,9 @@
 // antd样式
 require('antd/lib/index.css')
 
+// font-awesome
+require('font-awesome/css/font-awesome.css')
+
 // 全局样式
 require('./reset.scss')
 
