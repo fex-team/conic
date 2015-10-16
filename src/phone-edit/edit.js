@@ -1,4 +1,5 @@
 var React = require('react')
+var EditAction = require('../actions/edit-action')
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -6,7 +7,7 @@ module.exports = React.createClass({
     },
 
     onClick: function () {
-        console.log(123)
+        EditAction.selectComponent('obj')
     },
 
     render: function () {
