@@ -1,0 +1,15 @@
+.container {
+  background-color: white;
+  min-height: 800px;
+}
+
+// 拖拽目标
+.drag-target {
+  transition: all 0.15s ease;
+  &.can-drop {
+    outline: 1px solid #2db7f5;
+  }
+  &.active {
+    outline: 3px solid #2db7f5;
+  }
+}
