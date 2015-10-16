@@ -96,3 +96,13 @@ body {
 .ant-input::-webkit-input-placeholder {
   color: #888;
 }
+
+.ant-input:hover, .ant-select-selection:hover {
+  border-color: #005882;
+}
+
+.ant-input:focus, .ant-select-selection:focus {
+  border-color: #177098;
+  outline: 0;
+  box-shadow: 0 0 0 2px #136284;
+}

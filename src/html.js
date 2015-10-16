@@ -9,9 +9,11 @@ module.exports = `
 <meta name="format-detection"
       content="telephone=no">
 
-<title>开发专用</title>
+<title>Page 贴吧移动端构建平台</title>
 
-<body></body>
+<body>
+      <div id="react-dom"></div>
+</body>
 
 <script src="/output/index.js"></script>
 

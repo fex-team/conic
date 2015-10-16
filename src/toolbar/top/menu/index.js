@@ -27,6 +27,7 @@ module.exports = React.createClass({
         return (
             <div>
                 <table className="menu-table">
+                    <tbody>
                     <tr>
                         <td onClick={this.changeMenuType.bind(this,'layout')}
                             className={this.state.menuType=='layout'?'active':null}>布局
@@ -57,6 +58,7 @@ module.exports = React.createClass({
                         <td></td>
                         <td></td>
                     </tr>
+                    </tbody>
                 </table>
             </div>
         )

@@ -1,5 +1,22 @@
 .container {
+  height: 79px;
   display: flex;
   flex-direction: row;
+  align-items: center;
   flex-wrap: nowrap;
+  .component-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: all .3s ease;
+    i {
+      font-size: 30px;
+      margin-bottom: 5px;
+    }
+    &:hover {
+      background: #222;
+    }
+  }
 }

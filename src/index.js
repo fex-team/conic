@@ -9,8 +9,9 @@ require('./reset.scss')
 
 // 全局路由
 var React = require('react')
+var ReactDOM = require('react-dom')
 var reactRouter = require('react-router')
 var Router = reactRouter.Router
 var routes = require('./router')
 
-React.render(routes, document.body)
+ReactDOM.render(routes, document.getElementById('react-dom'))

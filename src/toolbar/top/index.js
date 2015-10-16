@@ -1,6 +1,7 @@
 var React = require('react')
 var Menu = require('./menu')
 var Component = require('./component')
+var OperateButton = require('./operate-button')
 require('./index.scss')
 
 module.exports = React.createClass({
@@ -32,7 +33,7 @@ module.exports = React.createClass({
                         </div>
                     </div>
                     <div className="g-sd52">
-                        <button className="ant-btn ant-btn-primary">保存</button>
+                        <OperateButton/>
                     </div>
                 </div>
             </div>

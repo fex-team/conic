@@ -5,7 +5,7 @@ var Route = reactRouter.Route
 var IndexRoute = reactRouter.IndexRoute
 
 var ToolBar = require('./toolbar')
-var Phone = require('./phone')
+var Phone = require('./phone-edit')
 
 module.exports = (
     <Router>

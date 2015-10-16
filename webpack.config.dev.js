@@ -22,7 +22,7 @@ module.exports = {
                 test: /\.(scss|css)/,
                 exclude: /node_modules/,
                 loaders: ['style', 'css', 'autoprefixer', 'sass', 'css-path-loader']
-            },{
+            }, {
                 test: /\.(scss|css)/,
                 include: /node_modules/,
                 loaders: ['style', 'css', 'autoprefixer', 'sass']
@@ -31,17 +31,8 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'url'
             }, {
-                test: /\.woff[\w\W]*$/,
-                loader: "url?limit=10000&minetype=application/font-woff"
-            }, {
-                test: /\.ttf[\w\W]*$/,
-                loader: "file"
-            }, {
-                test: /\.eot[\w\W]*$/,
-                loader: "file"
-            }, {
-                test: /\.svg[\w\W]*$/,
-                loader: "file"
+                test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'url'
             }
         ]
     },

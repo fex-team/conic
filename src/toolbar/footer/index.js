@@ -5,7 +5,8 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div>
-                <div className="layout">Pages 贴吧移动端H5在线构建平台</div>
+
+                <div className="layout">Page 贴吧移动端构建平台</div>
             </div>
         )
     }

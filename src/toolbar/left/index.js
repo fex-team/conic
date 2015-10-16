@@ -4,6 +4,7 @@ var Option = Select.Option
 var Checkbox = require('antd/lib/checkbox')
 var Radio = require('antd/lib/radio')
 var RadioGroup = require('antd/lib/radio/group')
+var EnterAnimation = require('antd/lib/enter-animation')
 var $ = require('jquery')
 require('./index.scss')
 
@@ -16,8 +17,17 @@ module.exports = React.createClass({
     },
 
     render: function () {
+        const animation = {
+            enter: {
+                type: 'bottom'
+            },
+            leave: {
+                type: 'top'
+            }
+        }
+
         let form = (
-            <form className="ant-form-horizontal">
+            <form key="form" className="ant-form-horizontal">
                 <div className="ant-form-item">
                     <label htmlFor="control-input"
                            className="col-6">输入框：</label>
@@ -100,13 +110,19 @@ module.exports = React.createClass({
 
         return (
             <div>
-                {
-                    $.isEmptyObject(this.state.selection) ? <div className="nothing">
-                        <div className="bold">编辑组件</div>
+                <EnterAnimation enter={animation.enter}
+                                leave={animation.leave}>
+                    {
+                        $.isEmptyObject(this.state.selection) ?
+                            <div key="empty"
+                                 className="nothing">
+                                <div className="bold">编辑组件</div>
 
-                        <div>请选中一个组件</div>
-                    </div> : form
-                }
+                                <div>请选中一个组件</div>
+                            </div>
+                            : form
+                    }
+                </EnterAnimation>
             </div>
         )
     }

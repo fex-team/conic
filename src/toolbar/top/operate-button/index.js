@@ -1,5 +1,4 @@
 var React = require('react')
-var Layout = require('./layout')
 require('./index.scss')
 
 module.exports = React.createClass({
@@ -8,18 +7,11 @@ module.exports = React.createClass({
     },
 
     render: function () {
-        let component
-        switch (this.props.type) {
-        case 'layout':
-            component = (
-                <Layout/>
-            )
-            break;
-        }
-
         return (
             <div>
-                {component}
+                <div className="operate-button-layout">
+                    <button className="ant-btn ant-btn-primary">保存</button>
+                </div>
             </div>
         )
     }

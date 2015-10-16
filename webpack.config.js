@@ -1,6 +1,6 @@
 module.exports = {
     entry: [
-        './index.js'
+        './src/index.js'
     ],
     output: {
         path: __dirname + '/output/',
@@ -12,7 +12,7 @@ module.exports = {
             {
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                loaders: ['jsx', 'babel',require('./auto-path-class')]
+                loaders: ['jsx', 'babel', 'path-class-loader']
             }, {
                 test: /\.(scss|css)/,
                 loader: 'style!css!autoprefixer!sass'
@@ -21,17 +21,8 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'url-loader'
             }, {
-                test: /\.woff$/,
-                loader: "url?limit=10000&minetype=application/font-woff"
-            }, {
-                test: /\.ttf$/,
-                loader: "file"
-            }, {
-                test: /\.eot$/,
-                loader: "file"
-            }, {
-                test: /\.svg$/,
-                loader: "file"
+                test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'url'
             }
         ]
     }

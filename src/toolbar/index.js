@@ -3,9 +3,12 @@ var Left = require('./left')
 var Top = require('./top')
 var Right = require('./right')
 var Footer = require('./footer')
+var ReactDnD = require('react-dnd')
+var HTML5Backend = require('react-dnd-html5-backend')
+
 require('./index.scss')
 
-module.exports = React.createClass({
+let Container = React.createClass({
     getInitialState: function () {
         return {
             // 操作页面中当前选中对象
@@ -43,3 +46,5 @@ module.exports = React.createClass({
         )
     }
 })
+
+module.exports = ReactDnD.DragDropContext(HTML5Backend)(Container)

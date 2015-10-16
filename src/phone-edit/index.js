@@ -1,5 +1,5 @@
 var React = require('react')
-var Layout = require('./layout')
+var DustBin = require('./dustbin')
 require('./index.scss')
 
 module.exports = React.createClass({
@@ -8,18 +8,9 @@ module.exports = React.createClass({
     },
 
     render: function () {
-        let component
-        switch (this.props.type) {
-        case 'layout':
-            component = (
-                <Layout/>
-            )
-            break;
-        }
-
         return (
             <div>
-                {component}
+                <DustBin/>
             </div>
         )
     }
