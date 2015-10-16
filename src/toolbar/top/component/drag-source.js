@@ -9,16 +9,15 @@ const source = {
     },
 
     beginDrag: function (props) {
-        console.log(props)
-        return {id: props.id}
+        return {type: props.type}
     },
 
     isDragging: function (props, monitor) {
         return monitor.getItem().id === props.id;
     },
 
-    endDrag: function (props) {
-        console.log(props)
+    endDrag: function (props, monitor) {
+
     }
 }
 
@@ -36,10 +35,7 @@ var Drag = React.createClass({
         return (
             this.props.connectDragSource(
                 <div>
-                    <div className="component-item">
-                        <i className={'fa fa-'+this.props.icon}></i>
-                        <span>{this.props.children}</span>
-                    </div>
+                    {this.props.children}
                 </div>
             )
         )

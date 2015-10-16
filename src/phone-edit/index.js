@@ -1,5 +1,7 @@
 var React = require('react')
-var DustBin = require('./dustbin')
+var DragTarget = require('./drag-target')
+var DragSource = require('../toolbar/top/component/drag-source')
+var Edit = require('./edit')
 require('./index.scss')
 
 module.exports = React.createClass({
@@ -10,7 +12,18 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div>
-                <DustBin/>
+                <DragTarget>
+                    <div className="container">
+                        <DragTarget>
+                            <DragSource>
+                                <Edit>123</Edit>
+                            </DragSource>
+                        </DragTarget>
+                        <DragTarget>123</DragTarget>
+                        <DragTarget>123</DragTarget>
+                        <DragTarget>123</DragTarget>
+                    </div>
+                </DragTarget>
             </div>
         )
     }

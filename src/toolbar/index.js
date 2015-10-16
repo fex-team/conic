@@ -35,7 +35,7 @@ let Container = React.createClass({
                     <div className="phone-out">
                         <div className="phone">
                             <div className="status-bar"></div>
-                            <div className="children">{this.props.children}</div>
+                            {this.props.children}
                         </div>
                     </div>
                 </div>
