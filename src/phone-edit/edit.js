@@ -6,6 +6,16 @@ var editStore = require('../stores/edit-store')
 var classNames = require('classnames')
 
 const Edit = React.createClass({
+    getDefaultProps: function () {
+        return {
+            name: 'edit',
+            desc: '编辑组件',
+            opts: {
+                
+            }
+        }
+    },
+
     getInitialState: function () {
         return {
             enabledTarget: true,

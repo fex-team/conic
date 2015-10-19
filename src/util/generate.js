@@ -5,6 +5,8 @@
  */
 
 var components = require('../components');
+var ReactDOM = require('react-dom');
+var React = require('react');
 var _ = require('lodash');
 
 /**
@@ -15,8 +17,6 @@ var _ = require('lodash');
 function unSerialize(name) {
     var obj = {};
     var splits = {};
-
-    //obj.name = ;
 
     if (splits.length === 2) {
         obj.index = splits[1];
@@ -57,6 +57,7 @@ function generate (pageSource) {
     var rootName;
     var rootProps;
     var rootElement;
+    var rootChildren;
     var element;
 
     // 检查组件依赖
@@ -66,12 +67,12 @@ function generate (pageSource) {
     if (_.isEmpty(missingComponents)) {
         root = pageSource[rootKey];
         rootName = root.component;
-        rootElement = components[rootName];
+        rootChildren = pageSource[root.children];
 
-        ReactDOM.render(
-            React.createElement(),
-            document.getElementById('main')
-        );
+        rootElement = React.createElement(rootName, root.props, rootChildren);
+
+
+        debugger;
     }
     else {
 

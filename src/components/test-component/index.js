@@ -1,6 +1,6 @@
 var React = require('react')
 
-module.exports = React.createClass({
+var Test = React.createClass({
     getDefaultProps: function () {
         return {
             name: 'testtt',
@@ -51,3 +51,6 @@ module.exports = React.createClass({
         )
     }
 })
+
+
+module.exports = Test;
