@@ -62,14 +62,11 @@ function generate (pageSource) {
     // 检查组件依赖
     var missingComponents = checkComponents(pageSource);
 
-    debugger;
     // 需要的组件完整
     if (_.isEmpty(missingComponents)) {
         root = pageSource[rootKey];
         rootName = root.component;
         rootElement = components[rootName];
-
-        debugger;
 
         ReactDOM.render(
             React.createElement(),
