@@ -43,7 +43,4 @@ var Root = React.createClass({
     }
 });
 
-
-
-
 module.exports = Root;

@@ -21,7 +21,7 @@ module.exports = React.createClass({
         }
     },
 
-    _onChange: function () {
+    _onComponentChange: function () {
         let component = editStore.get()
         this.setState({
             currentComponentProps: component && component.state.childProps
@@ -29,28 +29,16 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function () {
-        editStore.addChangeListener(this._onChange)
+        editStore.addChangeListener(this._onComponentChange)
     },
 
     componentWillUnmount: function () {
-        editStore.removeChangeListener(this._onChange)
-    },
-
-    onTextChange: function (key, event) {
-        let props = $.extend(true, {}, this.state.currentComponentProps)
-        props.opts[key].value = event.target.value
-
-        this.setState({
-            currentComponentProps: props
-        }, function () {
-            editAction.updateComponent(this.state.currentComponentProps)
-        })
+        editStore.removeChangeListener(this._onComponentChange)
     },
 
     onEditChange: function (key, item) {
         let props = $.extend(true, {}, this.state.currentComponentProps)
         props.opts[key] = item
-
         this.setState({
             currentComponentProps: props
         }, function () {
@@ -74,13 +62,15 @@ module.exports = React.createClass({
                 case 'text':
                     return (
                         <Text key={key}
+                              keyValue={key}
                               item={item}
-                              onChange={this.onTextChange.bind(this,key)}/>
+                              onChange={this.onEditChange}/>
                     )
 
                 case 'flex':
                     return (
                         <Flex key={key}
+                              keyValue={key}
                               item={item}
                               onChange={this.onEditChange}/>
                     )

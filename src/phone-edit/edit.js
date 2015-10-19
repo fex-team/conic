@@ -4,12 +4,13 @@ var DragTarget = require('./drag-target')
 var editAction = require('../actions/edit-action')
 var editStore = require('../stores/edit-store')
 var classNames = require('classnames')
+var $ = require('jquery')
 
 const Edit = React.createClass({
     getInitialState: function () {
         return {
             enabledTarget: true,
-            childProps: this.props.children && this.props.children.props,
+            childProps: this.props.children && $.extend(true, {}, this.props.children.props),
             selected: false
         }
     },
@@ -33,10 +34,10 @@ const Edit = React.createClass({
 
     // 触发选择组件事件
     onClick: function (event) {
+        event.stopPropagation()
         this.setState({
             selected: true
         })
-        event.stopPropagation()
         editAction.selectComponent(this)
     },
 

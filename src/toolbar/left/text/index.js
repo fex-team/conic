@@ -1,9 +1,9 @@
 var React = require('react')
 
 module.exports = React.createClass({
-    onChange: function (key, value) {
-        this.props.item.value[key] = value
-        this.props.onChange && this.props.onChange(this.props.key, this.props.item)
+    onChange: function (event) {
+        this.props.item.value = event.target.value
+        this.props.onChange && this.props.onChange(this.props.keyValue, this.props.item)
     },
 
     render: function () {
@@ -15,7 +15,7 @@ module.exports = React.createClass({
                 <div className="col-14">
                     <input type="text"
                            value={this.props.item.value}
-                           onChange={this.props.onChange}
+                           onChange={this.onChange}
                            className="ant-input"
                            id="control-input"/>
                 </div>

@@ -5,7 +5,8 @@ var Option = Select.Option
 module.exports = React.createClass({
     onChange: function (key, value) {
         this.props.item.value[key] = value
-        this.props.onChange && this.props.onChange(this.props.key, this.props.item)
+        console.log(this.props)
+        this.props.onChange && this.props.onChange(this.props.keyValue, this.props.item)
     },
 
     render: function () {
