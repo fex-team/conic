@@ -32,6 +32,12 @@ module.exports = React.createClass({
                         flexBasis: 'auto',
                         alignSelf: 'stretch'
                     }
+                },
+                style: {
+                    value: {
+                        color: 'red'
+                    },
+                    edit: 'style'
                 }
             }
         }
@@ -44,7 +50,7 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div>
-                <div className="container">
+                <div className="container" style={this.props.opts.style.value}>
                     {this.props.opts.text.value}
                 </div>
             </div>

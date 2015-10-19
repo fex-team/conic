@@ -11,7 +11,9 @@ var editAction = require('../../actions/edit-action')
 require('./index.scss')
 
 var Text = require('./text')
+var Number = require('./number')
 var Flex = require('./flex')
+var Style = require('./style')
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -67,12 +69,28 @@ module.exports = React.createClass({
                               onChange={this.onEditChange}/>
                     )
 
+                case 'number':
+                    return (
+                        <Number key={key}
+                              keyValue={key}
+                              item={item}
+                              onChange={this.onEditChange}/>
+                    )
+
                 case 'flex':
                     return (
                         <Flex key={key}
                               keyValue={key}
                               item={item}
                               onChange={this.onEditChange}/>
+                    )
+
+                case 'style':
+                    return (
+                        <Style key={key}
+                               keyValue={key}
+                               item={item}
+                               onChange={this.onEditChange}/>
                     )
                 }
             })
