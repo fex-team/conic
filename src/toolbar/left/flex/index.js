@@ -5,7 +5,6 @@ var Option = Select.Option
 module.exports = React.createClass({
     onChange: function (key, value) {
         this.props.item.value[key] = value
-        console.log(this.props)
         this.props.onChange && this.props.onChange(this.props.keyValue, this.props.item)
     },
 
@@ -77,6 +76,7 @@ module.exports = React.createClass({
                         </Select>
                     </div>
                 </div>
+                <hr/>
             </div>
         )
     }

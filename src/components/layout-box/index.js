@@ -7,11 +7,6 @@ let layoutBox = React.createClass({
             name: 'layout-box',
             desc: '万能矩形',
             opts: {
-                text: {
-                    value: 'Default Text',
-                    edit: 'text',
-                    desc: '随便写的'
-                },
                 flex: {
                     edit: 'flex',
                     value: {
@@ -20,6 +15,24 @@ let layoutBox = React.createClass({
                         justifyContent: 'flex-start',
                         alignItems: 'stretch'
                     }
+                },
+                base: {
+                    value: {
+                        width: 100,
+                        height: 50,
+                        color: '#333'
+                    },
+                    edit: 'style'
+                },
+                url: {
+                    value: 'http://tieba.baidu.com',
+                    edit: 'text',
+                    desc: '上传地址'
+                },
+                maxLength: {
+                    value: 5,
+                    edit: 'number',
+                    desc: '最大数量'
                 }
             }
         }
@@ -33,9 +46,7 @@ let layoutBox = React.createClass({
         return (
             <div>
                 <div className="container"
-                     style={this.props.opts.flex.value}>
-                    {this.props.opts.text.value}
-                </div>
+                     style={Object.assign(this.props.opts.flex.value,this.props.opts.base.value)}></div>
             </div>
         )
     }
