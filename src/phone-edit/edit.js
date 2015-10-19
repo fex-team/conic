@@ -9,7 +9,7 @@ module.exports = React.createClass({
     getInitialState: function () {
         return {
             enabledTarget: true,
-            childOpts: this.props.children && this.props.children.props.opts,
+            childProps: this.props.children && this.props.children.props,
             selected: false
         }
     },
@@ -41,9 +41,9 @@ module.exports = React.createClass({
     },
 
     // 触发修改子元素事件(由edit-action直接调用)
-    UpdateChildren: function (opts) {
+    UpdateChildren: function (props) {
         this.setState({
-            childOpts: opts
+            childProps: props
         })
     },
 
@@ -66,9 +66,7 @@ module.exports = React.createClass({
         let edit = (
             <div className={className}
                  onClick={this.onClick}>
-                {React.cloneElement(this.props.children, {
-                    opts: this.state.childOpts
-                })}
+                {React.cloneElement(this.props.children, this.state.childProps)}
             </div>
         )
 

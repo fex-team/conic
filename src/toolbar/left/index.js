@@ -14,14 +14,14 @@ module.exports = React.createClass({
     getInitialState: function () {
         return {
             // 当前选中组件的配置
-            currentComponentOpts: {}
+            currentComponentProps: {}
         }
     },
 
     _onChange: function () {
         let component = editStore.get()
         this.setState({
-            currentComponentOpts: component && component.state.childOpts
+            currentComponentProps: component && component.state.childProps
         })
     },
 
@@ -34,13 +34,13 @@ module.exports = React.createClass({
     },
 
     onTextChange: function (key, event) {
-        let opts = $.extend(true, {}, this.state.currentComponentOpts)
-        opts[key].value = event.target.value
+        let props = $.extend(true, {}, this.state.currentComponentProps)
+        props.opts[key].value = event.target.value
 
         this.setState({
-            currentComponentOpts: opts
+            currentComponentProps: props
         }, function () {
-            editAction.updateComponent(this.state.currentComponentOpts)
+            editAction.updateComponent(this.state.currentComponentProps)
         })
     },
 
@@ -52,10 +52,10 @@ module.exports = React.createClass({
         }
 
         let editForm
-        if (!$.isEmptyObject(this.state.currentComponentOpts)) {
+        if (!$.isEmptyObject(this.state.currentComponentProps)) {
             // 解析编辑项目
-            editForm = Object.keys(this.state.currentComponentOpts).map((key)=> {
-                let item = this.state.currentComponentOpts[key]
+            editForm = Object.keys(this.state.currentComponentProps.opts).map((key)=> {
+                let item = this.state.currentComponentProps.opts[key]
                 switch (item.edit) {
                 case'text':
                     return (
@@ -82,7 +82,7 @@ module.exports = React.createClass({
                                 className="ant-form-horizontal"
                                 enter={animation.enter}>
                     <div key="edit-form">
-                        名字
+                        {this.state.currentComponentProps.name}
                         {editForm}
                     </div>
                 </EnterAnimation>
