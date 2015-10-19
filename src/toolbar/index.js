@@ -5,6 +5,7 @@ var Right = require('./right')
 var Footer = require('./footer')
 var ReactDnD = require('react-dnd')
 var HTML5Backend = require('react-dnd-html5-backend')
+var editAction = require('../actions/edit-action')
 
 require('./index.scss')
 
@@ -14,6 +15,12 @@ let Container = React.createClass({
             // 操作页面中当前选中对象
             selection: {}
         }
+    },
+
+    // 点击空白区域
+    onClickEmpty: function (event) {
+        event.preventDefault()
+        editAction.selectComponent(null)
     },
 
     render: function () {
@@ -31,7 +38,8 @@ let Container = React.createClass({
                     <Right/>
                 </div>
 
-                <div className="g-mn">
+                <div className="g-mn"
+                     onClick={this.onClickEmpty}>
                     <div className="phone-out">
                         <div className="phone">
                             <div className="status-bar"></div>

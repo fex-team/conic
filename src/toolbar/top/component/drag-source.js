@@ -1,7 +1,6 @@
 var React = require('react')
 var ReactDnd = require('react-dnd')
 var dragItem = require('./drag-type')
-require('./index.scss')
 
 const source = {
     canDrag: function () {
@@ -9,6 +8,10 @@ const source = {
     },
 
     beginDrag: function (props) {
+        if (typeof props.onChangeEnableTarget==='function'){
+            props.onChangeEnableTarget(false)
+        }
+
         return {type: props.type}
     },
 
@@ -17,7 +20,9 @@ const source = {
     },
 
     endDrag: function (props, monitor) {
-
+        if (typeof props.onChangeEnableTarget==='function'){
+            props.onChangeEnableTarget(true)
+        }
     }
 }
 

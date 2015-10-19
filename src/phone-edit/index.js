@@ -4,6 +4,9 @@ var DragSource = require('../toolbar/top/component/drag-source')
 var Edit = require('./edit')
 require('./index.scss')
 
+var LayoutBoxComponent = require('../components/layout-box')
+var TestComponent = require('../components/test-component')
+
 module.exports = React.createClass({
     getInitialState: function () {
         return {}
@@ -12,19 +15,28 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div>
-                <DragTarget>
-                    <div className="container">
-                        <DragTarget>
-                            <DragSource>
-                                <Edit>123</Edit>
-                            </DragSource>
-                        </DragTarget>
-                        <DragTarget>123</DragTarget>
-                        <DragTarget>123</DragTarget>
-                        <DragTarget>123</DragTarget>
+                <Edit dragTarget="true">
+                    <div className="phone-edit-container">
+                        <Edit dragTarget="true"
+                              dragSource="true">
+                            <LayoutBoxComponent/>
+                        </Edit>
+                        <Edit dragSource="true">
+                            <LayoutBoxComponent/>
+                        </Edit>
+                        <Edit dragTarget="true">
+                            <LayoutBoxComponent/>
+                        </Edit>
+                        <Edit>
+                            <LayoutBoxComponent/>
+                        </Edit>
+                        <Edit dragTarget="true"
+                              dragSource="true">
+                            <TestComponent/>
+                        </Edit>
                     </div>
-                </DragTarget>
+                </Edit>
             </div>
         )
     }
-});
+})

@@ -1,15 +1,21 @@
-.container {
+.phone-edit-container {
   background-color: white;
   min-height: 800px;
 }
 
 // 拖拽目标
 .drag-target {
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
   &.can-drop {
     outline: 1px solid #2db7f5;
   }
   &.active {
     outline: 3px solid #2db7f5;
   }
+}
+
+// edit组件选中状态
+.selected {
+  transition: all 0.2s ease;
+  outline: 3px solid #2db7f5;
 }

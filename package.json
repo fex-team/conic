@@ -37,9 +37,12 @@
   },
   "dependencies": {
     "antd": "^0.9.1",
+    "classnames": "^2.1.5",
+    "events": "^1.1.0",
     "flux": "^2.1.1",
     "font-awesome": "^4.4.0",
     "jquery": "^2.1.4",
+    "object-assign": "^4.0.1",
     "react-dnd": "^2.0.0",
     "react-dnd-html5-backend": "^2.0.0",
     "react-dom": "^0.14.0"

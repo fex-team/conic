@@ -1,10 +1,14 @@
 var React = require('react')
 var ItemTypes = require('../toolbar/top/component/drag-type')
 var ReactDnD = require('react-dnd')
-require('./index.scss')
+var classNames = require('classnames')
 
 var boxTarget = {
     drop: function (props, monitor, component) {
+        if (!props.enabledTarget) {
+            return
+        }
+
         const hasDroppedOnChild = monitor.didDrop()
         if (hasDroppedOnChild) {
             return
@@ -12,7 +16,7 @@ var boxTarget = {
 
         // 获得拖拽的组件
         const item = monitor.getItem()
-        console.log(monitor)
+        props.onDrop(this, item)
     }
 }
 
@@ -24,16 +28,16 @@ var Dustbin = React.createClass({
     },
     render: function () {
         let isActive = this.props.canDrop && this.props.isOver
-        let dragTargetClassName = 'drag-target'
-        if (isActive) {
-            dragTargetClassName = dragTargetClassName + ' active'
-        } else if (this.props.canDrop) {
-            dragTargetClassName = dragTargetClassName + ' can-drop'
-        }
+
+        var className = classNames([
+            'drag-target',
+            {'active': isActive && this.props.enabledTarget},
+            {'can-drop': !isActive && this.props.canDrop && this.props.enabledTarget}
+        ])
 
         return this.props.connectDropTarget(
             <div>
-                <div className={dragTargetClassName}>
+                <div className={className}>
                     {this.props.children}
                 </div>
             </div>

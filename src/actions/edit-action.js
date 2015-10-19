@@ -6,5 +6,12 @@ module.exports = {
             type: 'selectComponent',
             component: component
         })
+    },
+
+    updateComponent: function (opts) {
+        dispatcher.dispatch({
+            type: 'updateComponent',
+            opts: opts
+        })
     }
 }

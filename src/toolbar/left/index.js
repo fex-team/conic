@@ -6,123 +6,103 @@ var Radio = require('antd/lib/radio')
 var RadioGroup = require('antd/lib/radio/group')
 var EnterAnimation = require('antd/lib/enter-animation')
 var $ = require('jquery')
+var editStore = require('../../stores/edit-store')
+var editAction = require('../../actions/edit-action')
 require('./index.scss')
 
 module.exports = React.createClass({
     getInitialState: function () {
         return {
-            // 当前选中的组件对象
-            selection: {}
+            // 当前选中组件的配置
+            currentComponentOpts: {}
         }
+    },
+
+    _onChange: function () {
+        let component = editStore.get()
+        this.setState({
+            currentComponentOpts: component && component.state.childOpts
+        })
+    },
+
+    componentDidMount: function () {
+        editStore.addChangeListener(this._onChange)
+    },
+
+    componentWillUnmount: function () {
+        editStore.removeChangeListener(this._onChange)
+    },
+
+    onTextChange: function (key, event) {
+        let opts = $.extend(true, {}, this.state.currentComponentOpts)
+        opts[key].value = event.target.value
+
+        this.setState({
+            currentComponentOpts: opts
+        }, function () {
+            editAction.updateComponent(this.state.currentComponentOpts)
+        })
     },
 
     render: function () {
         const animation = {
             enter: {
                 type: 'bottom'
-            },
-            leave: {
-                type: 'top'
             }
         }
 
-        let form = (
-            <form key="form" className="ant-form-horizontal">
-                <div className="ant-form-item">
-                    <label htmlFor="control-input"
-                           className="col-6">输入框：</label>
+        let editForm
+        if (!$.isEmptyObject(this.state.currentComponentOpts)) {
+            // 解析编辑项目
+            editForm = Object.keys(this.state.currentComponentOpts).map((key)=> {
+                let item = this.state.currentComponentOpts[key]
+                switch (item.edit) {
+                case'text':
+                    return (
+                        <div key={key}
+                             className="ant-form-item">
+                            <label htmlFor="control-input"
+                                   className="col-6">{item.desc}</label>
 
-                    <div className="col-14">
-                        <input type="text"
-                               className="ant-input"
-                               id="control-input"
-                               placeholder="Please enter..."/>
-                    </div>
-                </div>
-                <div className="ant-form-item">
-                    <label htmlFor="control-textarea"
-                           className="col-6">文本域：</label>
+                            <div className="col-14">
+                                <input type="text"
+                                       value={item.value}
+                                       onChange={this.onTextChange.bind(this,key)}
+                                       className="ant-input"
+                                       id="control-input"/>
+                            </div>
+                        </div>
+                    )
+                }
+            })
 
-                    <div className="col-14">
-                        <textarea className="ant-input"
-                                  id="control-textarea"></textarea>
+            // 包装动画
+            editForm = (
+                <EnterAnimation component="form"
+                                className="ant-form-horizontal"
+                                enter={animation.enter}>
+                    <div key="edit-form">
+                        名字
+                        {editForm}
                     </div>
-                </div>
-                <div className="ant-form-item">
-                    <label className="col-6">Select 选择器：</label>
+                </EnterAnimation>
+            )
+        } else {
+            editForm = (
+                <EnterAnimation enter={animation.enter}>
+                    <div key="empty"
+                         className="nothing">
+                        <div className="bold">编辑组件</div>
 
-                    <div className="col-14">
-                        <Select size="large"
-                                defaultValue="lucy"
-                                style={{width:200}}>
-                            <Option value="jack">jack</Option>
-                            <Option value="lucy">lucy</Option>
-                            <Option value="disabled"
-                                    disabled>disabled</Option>
-                            <Option value="yiminghe">yiminghe</Option>
-                        </Select>
+                        <div>请选中一个组件</div>
                     </div>
-                </div>
-                <div className="ant-form-item ant-form-item-compact">
-                    <label className="col-6">Checkbox 多选框：</label>
-
-                    <div className="col-18">
-                        <label className="ant-checkbox-vertical">
-                            <Checkbox />选项一
-                        </label>
-                        <label className="ant-checkbox-vertical">
-                            <Checkbox />选项二
-                        </label>
-                        <label className="ant-checkbox-vertical">
-                            <Checkbox disabled={true}/>选项三（不可选）
-                        </label>
-                    </div>
-                </div>
-                <div className="ant-form-item ant-form-item-compact">
-                    <label className="col-6">Checkbox 多选框：</label>
-
-                    <div className="col-18">
-                        <label className="ant-checkbox-inline">
-                            <Checkbox />选项一
-                        </label>
-                        <label className="ant-checkbox-inline">
-                            <Checkbox />选项二
-                        </label>
-                        <label className="ant-checkbox-inline">
-                            <Checkbox />选项三
-                        </label>
-                    </div>
-                </div>
-                <div className="ant-form-item ant-form-item-compact">
-                    <label className="col-6">Radio 单选框：</label>
-
-                    <div className="col-18">
-                        <RadioGroup value="b">
-                            <Radio value="a">A</Radio>
-                            <Radio value="b">B</Radio>
-                            <Radio value="c">C</Radio>
-                            <Radio value="d">D</Radio>
-                        </RadioGroup>
-                    </div>
-                </div>
-            </form>
-        )
+                </EnterAnimation>
+            )
+        }
 
         return (
             <div>
-                <EnterAnimation enter={animation.enter}
-                                leave={animation.leave}>
-                    {
-                        $.isEmptyObject(this.state.selection) ?
-                            <div key="empty"
-                                 className="nothing">
-                                <div className="bold">编辑组件</div>
-
-                                <div>请选中一个组件</div>
-                            </div>
-                            : form
-                    }
-                </EnterAnimation>
+                {editForm}
             </div>
         )
     }

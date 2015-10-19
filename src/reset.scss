@@ -14,6 +14,10 @@ html, body {
     border: thin solid #555;
     border-radius: 10px;
   }
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 14px;
+  }
 }
 
 body {
