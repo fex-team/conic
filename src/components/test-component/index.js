@@ -3,7 +3,8 @@ var React = require('react')
 module.exports = React.createClass({
     getDefaultProps: function () {
         return {
-            name: '捣乱的',
+            name: 'testtt',
+            desc: '捣乱的',
             opts: {
                 text: {
                     value: 'Default Text',
@@ -15,6 +16,22 @@ module.exports = React.createClass({
                     value: '123123',
                     edit: 'text',
                     desc: '推土机'
+                },
+                // 发帖频率
+                limit: {
+                    value: '10',
+                    edit: 'text',
+                    desc: '分钟粒度'
+                },
+                'flex-item': {
+                    edit: 'flex-item',
+                    value: {
+                        order: 0,
+                        flexGrow: 0,
+                        flexShrink: 0,
+                        flexBasis: 'auto',
+                        alignSelf: 'stretch'
+                    }
                 }
             }
         }

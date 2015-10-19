@@ -11,3 +11,18 @@
     margin-bottom: 15px;
   }
 }
+
+.component-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #ccc;
+}
+
+// 小标题
+h4 {
+  padding: 15px 20px;
+}

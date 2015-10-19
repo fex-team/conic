@@ -110,3 +110,13 @@ body {
   outline: 0;
   box-shadow: 0 0 0 2px #136284;
 }
+
+.ant-form-horizontal, .ant-form-inline {
+  label {
+    padding-right: 7px;
+  }
+}
+
+.ant-form-item {
+  margin-bottom: 15px;
+}

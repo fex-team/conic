@@ -5,7 +5,7 @@ var editAction = require('../actions/edit-action')
 var editStore = require('../stores/edit-store')
 var classNames = require('classnames')
 
-module.exports = React.createClass({
+const Edit = React.createClass({
     getInitialState: function () {
         return {
             enabledTarget: true,
@@ -90,3 +90,5 @@ module.exports = React.createClass({
         )
     }
 })
+
+module.exports = Edit

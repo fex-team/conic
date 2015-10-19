@@ -4,18 +4,22 @@ require('./index.scss')
 module.exports = React.createClass({
     getDefaultProps: function () {
         return {
-            name: '万能矩形',
+            name: 'layout-box',
+            desc: '万能矩形',
             opts: {
                 text: {
                     value: 'Default Text',
                     edit: 'text',
-                    desc: '标题内容'
+                    desc: '随便写的'
                 },
-                // 关注
-                focus: {
-                    value: 'http://tieba.baidu.com',
-                    edit: 'text',
-                    desc: '请求发送地址'
+                flex: {
+                    edit: 'flex',
+                    value: {
+                        flexDirection: 'row',
+                        flexWrap: 'nowrap',
+                        justifyContent: 'flex-start',
+                        alignItems: 'stretch'
+                    }
                 }
             }
         }
@@ -28,7 +32,8 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div>
-                <div className="container">
+                <div className="container"
+                     style={this.props.opts.flex.value}>
                     {this.props.opts.text.value}
                 </div>
             </div>
