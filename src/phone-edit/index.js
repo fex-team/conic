@@ -7,7 +7,9 @@ require('./index.scss')
 var LayoutBoxComponent = require('../components/layout-box')
 var TestComponent = require('../components/test-component')
 
-module.exports = React.createClass({
+//var analyse = require('../util/analyse');
+
+var Root = React.createClass({
     getInitialState: function () {
         return {}
     },
@@ -39,4 +41,9 @@ module.exports = React.createClass({
             </div>
         )
     }
-})
+});
+
+
+
+
+module.exports = Root;

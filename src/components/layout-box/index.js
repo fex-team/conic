@@ -1,7 +1,7 @@
 var React = require('react')
 require('./index.scss')
 
-module.exports = React.createClass({
+let layoutBox = React.createClass({
     getDefaultProps: function () {
         return {
             name: 'layout-box',
@@ -40,3 +40,5 @@ module.exports = React.createClass({
         )
     }
 })
+
+module.exports = layoutBox;
