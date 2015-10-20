@@ -72,9 +72,9 @@ module.exports = React.createClass({
                 case 'number':
                     return (
                         <Number key={key}
-                              keyValue={key}
-                              item={item}
-                              onChange={this.onEditChange}/>
+                                keyValue={key}
+                                item={item}
+                                onChange={this.onEditChange}/>
                     )
 
                 case 'flex':
