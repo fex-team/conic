@@ -7,7 +7,8 @@ require('./index.scss')
 var LayoutBoxComponent = require('../components/layout-box')
 var TestComponent = require('../components/test-component')
 
-//var analyse = require('../util/analyse');
+var pageSource = require('../default/page.json');
+var generator = require('./generate');
 
 var Root = React.createClass({
     getInitialState: function () {

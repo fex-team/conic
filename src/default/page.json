@@ -1,0 +1,440 @@
+{
+  "__root": "Root&0",
+  "Root&0": {
+    "component": "Root",
+    "isClass": true,
+    "props": {},
+    "children": [
+      {
+        "isClass": false,
+        "key": "div&{\"className\":\"src-phone-edit\"}&0"
+      }
+    ],
+    "deep": 0,
+    "parent": null
+  },
+  "div&{\"className\":\"src-phone-edit\"}&0": {
+    "component": "div",
+    "isClass": false,
+    "props": {
+      "className": "src-phone-edit"
+    },
+    "parent": "Root&0",
+    "deep": 1,
+    "children": [
+      {
+        "isClass": false,
+        "props": {
+          "className": "phone-edit-container"
+        },
+        "parent": "div&{\"className\":\"src-phone-edit\"}&0",
+        "key": "div&{\"className\":\"phone-edit-container\"}&0"
+      }
+    ]
+  },
+  "div&{\"className\":\"phone-edit-container\"}&0": {
+    "component": "div",
+    "isClass": false,
+    "props": {
+      "className": "phone-edit-container"
+    },
+    "parent": "div&{\"className\":\"src-phone-edit\"}&0",
+    "deep": 2,
+    "children": [
+      {
+        "isClass": true,
+        "props": {
+          "name": "layout-box",
+          "desc": "万能矩形",
+          "opts": {
+            "flex": {
+              "edit": "flex",
+              "value": {
+                "flexDirection": "row",
+                "flexWrap": "nowrap",
+                "justifyContent": "flex-start",
+                "alignItems": "stretch"
+              }
+            },
+            "base": {
+              "value": {
+                "width": 100,
+                "height": 50,
+                "color": "#333"
+              },
+              "edit": "style"
+            },
+            "url": {
+              "value": "http://tieba.baidu.com",
+              "edit": "text",
+              "desc": "上传地址"
+            },
+            "maxLength": {
+              "value": 5,
+              "edit": "number",
+              "desc": "最大数量"
+            }
+          }
+        },
+        "parent": "div&{\"className\":\"phone-edit-container\"}&0",
+        "key": "layoutBox&0"
+      },
+      {
+        "isClass": true,
+        "props": {
+          "name": "layout-box",
+          "desc": "万能矩形",
+          "opts": {
+            "flex": {
+              "edit": "flex",
+              "value": {
+                "flexDirection": "row",
+                "flexWrap": "nowrap",
+                "justifyContent": "flex-start",
+                "alignItems": "stretch"
+              }
+            },
+            "base": {
+              "value": {
+                "width": 100,
+                "height": 50,
+                "color": "#333"
+              },
+              "edit": "style"
+            },
+            "url": {
+              "value": "http://tieba.baidu.com",
+              "edit": "text",
+              "desc": "上传地址"
+            },
+            "maxLength": {
+              "value": 5,
+              "edit": "number",
+              "desc": "最大数量"
+            }
+          }
+        },
+        "parent": "div&{\"className\":\"phone-edit-container\"}&0",
+        "key": "layoutBox&1"
+      },
+      {
+        "isClass": true,
+        "props": {
+          "name": "layout-box",
+          "desc": "万能矩形",
+          "opts": {
+            "flex": {
+              "edit": "flex",
+              "value": {
+                "flexDirection": "row",
+                "flexWrap": "nowrap",
+                "justifyContent": "flex-start",
+                "alignItems": "stretch"
+              }
+            },
+            "base": {
+              "value": {
+                "width": 100,
+                "height": 50,
+                "color": "#333"
+              },
+              "edit": "style"
+            },
+            "url": {
+              "value": "http://tieba.baidu.com",
+              "edit": "text",
+              "desc": "上传地址"
+            },
+            "maxLength": {
+              "value": 5,
+              "edit": "number",
+              "desc": "最大数量"
+            }
+          }
+        },
+        "parent": "div&{\"className\":\"phone-edit-container\"}&0",
+        "key": "layoutBox&2"
+      },
+      {
+        "isClass": true,
+        "props": {
+          "name": "layout-box",
+          "desc": "万能矩形",
+          "opts": {
+            "flex": {
+              "edit": "flex",
+              "value": {
+                "flexDirection": "row",
+                "flexWrap": "nowrap",
+                "justifyContent": "flex-start",
+                "alignItems": "stretch"
+              }
+            },
+            "base": {
+              "value": {
+                "width": 100,
+                "height": 50,
+                "color": "#333"
+              },
+              "edit": "style"
+            },
+            "url": {
+              "value": "http://tieba.baidu.com",
+              "edit": "text",
+              "desc": "上传地址"
+            },
+            "maxLength": {
+              "value": 5,
+              "edit": "number",
+              "desc": "最大数量"
+            }
+          }
+        },
+        "parent": "div&{\"className\":\"phone-edit-container\"}&0",
+        "key": "layoutBox&3"
+      },
+      {
+        "isClass": true,
+        "props": {
+          "name": "testtt",
+          "desc": "捣乱的",
+          "opts": {
+            "text": {
+              "value": "Default Text",
+              "edit": "text",
+              "desc": "随便写的"
+            },
+            "aaa": {
+              "value": "123123",
+              "edit": "text",
+              "desc": "推土机"
+            },
+            "limit": {
+              "value": "10",
+              "edit": "text",
+              "desc": "分钟粒度"
+            },
+            "flex-item": {
+              "edit": "flex-item",
+              "value": {
+                "order": 0,
+                "flexGrow": 0,
+                "flexShrink": 0,
+                "flexBasis": "auto",
+                "alignSelf": "stretch"
+              }
+            },
+            "style": {
+              "value": {
+                "color": "red"
+              },
+              "edit": "style"
+            }
+          }
+        },
+        "parent": "div&{\"className\":\"phone-edit-container\"}&0",
+        "key": "Test&0"
+      }
+    ]
+  },
+  "layoutBox&0": {
+    "component": "layoutBox",
+    "props": {
+      "name": "layout-box",
+      "desc": "万能矩形",
+      "opts": {
+        "flex": {
+          "edit": "flex",
+          "value": {
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "justifyContent": "flex-start",
+            "alignItems": "stretch"
+          }
+        },
+        "base": {
+          "value": {
+            "width": 100,
+            "height": 50,
+            "color": "#333"
+          },
+          "edit": "style"
+        },
+        "url": {
+          "value": "http://tieba.baidu.com",
+          "edit": "text",
+          "desc": "上传地址"
+        },
+        "maxLength": {
+          "value": 5,
+          "edit": "number",
+          "desc": "最大数量"
+        }
+      }
+    },
+    "isClass": true,
+    "parent": "div&{\"className\":\"phone-edit-container\"}&0",
+    "deep": 3
+  },
+  "layoutBox&1": {
+    "component": "layoutBox",
+    "props": {
+      "name": "layout-box",
+      "desc": "万能矩形",
+      "opts": {
+        "flex": {
+          "edit": "flex",
+          "value": {
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "justifyContent": "flex-start",
+            "alignItems": "stretch"
+          }
+        },
+        "base": {
+          "value": {
+            "width": 100,
+            "height": 50,
+            "color": "#333"
+          },
+          "edit": "style"
+        },
+        "url": {
+          "value": "http://tieba.baidu.com",
+          "edit": "text",
+          "desc": "上传地址"
+        },
+        "maxLength": {
+          "value": 5,
+          "edit": "number",
+          "desc": "最大数量"
+        }
+      }
+    },
+    "isClass": true,
+    "parent": "div&{\"className\":\"phone-edit-container\"}&0",
+    "deep": 3
+  },
+  "layoutBox&2": {
+    "component": "layoutBox",
+    "props": {
+      "name": "layout-box",
+      "desc": "万能矩形",
+      "opts": {
+        "flex": {
+          "edit": "flex",
+          "value": {
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "justifyContent": "flex-start",
+            "alignItems": "stretch"
+          }
+        },
+        "base": {
+          "value": {
+            "width": 100,
+            "height": 50,
+            "color": "#333"
+          },
+          "edit": "style"
+        },
+        "url": {
+          "value": "http://tieba.baidu.com",
+          "edit": "text",
+          "desc": "上传地址"
+        },
+        "maxLength": {
+          "value": 5,
+          "edit": "number",
+          "desc": "最大数量"
+        }
+      }
+    },
+    "isClass": true,
+    "parent": "div&{\"className\":\"phone-edit-container\"}&0",
+    "deep": 3
+  },
+  "layoutBox&3": {
+    "component": "layoutBox",
+    "props": {
+      "name": "layout-box",
+      "desc": "万能矩形",
+      "opts": {
+        "flex": {
+          "edit": "flex",
+          "value": {
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "justifyContent": "flex-start",
+            "alignItems": "stretch"
+          }
+        },
+        "base": {
+          "value": {
+            "width": 100,
+            "height": 50,
+            "color": "#333"
+          },
+          "edit": "style"
+        },
+        "url": {
+          "value": "http://tieba.baidu.com",
+          "edit": "text",
+          "desc": "上传地址"
+        },
+        "maxLength": {
+          "value": 5,
+          "edit": "number",
+          "desc": "最大数量"
+        }
+      }
+    },
+    "isClass": true,
+    "parent": "div&{\"className\":\"phone-edit-container\"}&0",
+    "deep": 3
+  },
+  "Test&0": {
+    "component": "Test",
+    "props": {
+      "name": "testtt",
+      "desc": "捣乱的",
+      "opts": {
+        "text": {
+          "value": "Default Text",
+          "edit": "text",
+          "desc": "随便写的"
+        },
+        "aaa": {
+          "value": "123123",
+          "edit": "text",
+          "desc": "推土机"
+        },
+        "limit": {
+          "value": "10",
+          "edit": "text",
+          "desc": "分钟粒度"
+        },
+        "flex-item": {
+          "edit": "flex-item",
+          "value": {
+            "order": 0,
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "flexBasis": "auto",
+            "alignSelf": "stretch"
+          }
+        },
+        "style": {
+          "value": {
+            "color": "red"
+          },
+          "edit": "style"
+        }
+      }
+    },
+    "isClass": true,
+    "parent": "div&{\"className\":\"phone-edit-container\"}&0",
+    "deep": 3
+  },
+  "__deepest": 3
+}

@@ -125,6 +125,8 @@ function generator (Root, RootProps) {
     var Maps = {};
     var childName;
     var root = getRootChildElement(Root);
+    var deepest = 0;
+
     RootProps = RootProps || {};
 
     Maps['__root'] = Root.displayName + '&0';
@@ -137,16 +139,25 @@ function generator (Root, RootProps) {
                 isClass: isReactClass(root),
                 key: root.type + '&' + JSON.stringify(getNoChildrenProps(root.props)) + '&0'
             }
-        ]
+        ],
+        deep: 0,
+        parent: null
     };
 
-    function run (rootChild) {
+
+    function run (rootChild, parent, deep) {
         var index;
         var children;
         var childrens = getElementChildren(rootChild);
         var mapIndex;
         var rootChildType;
         var noChildrenProps = getNoChildrenProps(rootChild.props);
+
+        deep++;
+
+        if (deep > deepest) {
+            deepest = deep;
+        }
 
         if (isReactClass(rootChild)) {
             mapIndex = rootChild.type.displayName + '&0';
@@ -163,7 +174,9 @@ function generator (Root, RootProps) {
             Maps[mapIndex] = {
                 component: rootChild.type.displayName,
                 props: noChildrenProps,
-                isClass: true
+                isClass: true,
+                parent: parent,
+                deep: deep
             }
         }
         else if (isHtmlClass(rootChild)) {
@@ -183,7 +196,9 @@ function generator (Root, RootProps) {
             Maps[mapIndex] = {
                 component: rootChild.type,
                 isClass: false,
-                props: noChildrenProps
+                props: noChildrenProps,
+                parent: parent,
+                deep: deep
             }
         }
 
@@ -202,6 +217,7 @@ function generator (Root, RootProps) {
 
                     childrenObj.isClass =  true;
                     childrenObj.props = getNoChildrenProps(children.props);
+                    childrenObj.parent = mapIndex;
 
                     index = 0;
                     while (Maps[children.type.displayName + '&' + index]) {
@@ -214,12 +230,13 @@ function generator (Root, RootProps) {
                     Maps[mapIndex].children.push(childrenObj);
 
                     if (hasChildren(children)) {
-                        run(children);
+                        run(children, mapIndex, deep);
                     }
                 } else if (isHtmlClass(children)) {
 
                     childrenObj.isClass = false;
                     childrenObj.props = getNoChildrenProps(children.props);
+                    childrenObj.parent = mapIndex;
 
                     index = 0;
                     while (Maps[children.type + '&' + JSON.stringify(children.props) + '&' + index]) {
@@ -231,13 +248,14 @@ function generator (Root, RootProps) {
                     Maps[mapIndex].children.push(childrenObj);
 
                     if (hasChildren(children)) {
-                        run(children);
+                        run(children, mapIndex, deep);
                     }
                 } else if (_.isString(children)) {
 
                     childrenObj.isClass = false;
                     childrenObj.key = false;
                     childrenObj.text = children;
+                    childrenObj.parent = mapIndex;
 
                     Maps[mapIndex].children.push(childrenObj);
                 }
@@ -245,7 +263,9 @@ function generator (Root, RootProps) {
         }
     }
 
-    run(root);
+    run(root, Root.displayName + '&0', 0);
+
+    Maps['__deepest'] = deepest;
 
     return Maps;
 }
