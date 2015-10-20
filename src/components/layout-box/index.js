@@ -46,7 +46,9 @@ let layoutBox = React.createClass({
         return (
             <div>
                 <div className="container"
-                     style={Object.assign(this.props.opts.flex.value,this.props.opts.base.value)}></div>
+                     style={Object.assign(this.props.opts.flex.value,this.props.opts.base.value)}>
+                    123
+                </div>
             </div>
         )
     }

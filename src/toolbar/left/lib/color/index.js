@@ -5,16 +5,12 @@ require('./index.scss')
 module.exports = React.createClass({
     getInitialState: function () {
         return {
-            show: false,
-            color: this.props.value
+            show: false
         }
     },
 
     handleChange: function (color) {
         let rgba = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`
-        this.setState({
-            color: rgba
-        })
         this.props.onChange(rgba)
     },
 
@@ -39,11 +35,11 @@ module.exports = React.createClass({
             <div>
                 <div className="color-box"
                      onClick={this.onClick}>
-                    <div style={{backgroundColor: this.state.color}}
+                    <div style={{backgroundColor: this.props.value}}
                          className="color"></div>
                 </div>
                 <ColorPicker positionCSS={popupPosition}
-                             color={this.state.color}
+                             color={this.props.value}
                              display={this.state.show}
                              onChange={this.handleChange}
                              onClose={this.handleClose}
