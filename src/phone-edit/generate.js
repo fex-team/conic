@@ -81,12 +81,56 @@ function createReactElement (name, props, children) {
     }
 }
 
+function addEditComponent (pageSource) {
+    var tmpSource = _.cloneDeep(pageSource);
+    var deepest = 0;
+    var editIndex = 0;
+
+    _.each(tmpSource, function (component, index) {
+        if (_.isObject(component)) {
+            var name = component.component;
+
+            var deep = tmpSource[parent].deep + 2;
+
+            if (deep > deepest) {
+                tmpSource.__deepest = deep;
+            }
+
+            var editJson = {
+                component: 'Edit'
+            }
+
+
+
+            //parentChildren = _.filter(parentChildren, function (value) {
+            //    var name = tmpSource[value.key].component;
+            //
+            //    return componentBlackList.join(',').indexOf(name) === -1;
+            //});
+            //
+            //children = _.map(children, function (childComponent) {
+            //    var key = childComponent.key;
+            //    tmpSource[key].parent = parent;
+            //    tmpSource[key].deep = deep;
+            //    childComponent.parent = parent;
+            //    return childComponent;
+            //});
+            //
+            //tmpSource[parent].children = parentChildren.concat(children);
+            //
+            //delete tmpSource[index];
+        }
+    });
+}
+
 
 function generate (pageSource) {
     var root;
     var rootKey = pageSource.__root;
     var rootChild = pageSource[rootKey].children[0];
     var rootChildKey = rootChild.key;
+    var wrapper = pageSource[rootChildKey].children[0];
+    var wrapperKey = wrapper.key;
     var gradeChildrens;
     var gradeChildrenElements = [];
     var deep = pageSource.__deepest;
@@ -119,7 +163,7 @@ function generate (pageSource) {
             });
         });
 
-        return elementCache[rootChildKey];
+        return elementCache[wrapperKey];
     }
     else {
         console.warn('missing components:' + missingComponents.join(','));

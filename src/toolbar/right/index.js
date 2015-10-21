@@ -15,7 +15,9 @@ var root = require('../../phone-edit/index');
 
 var componentBlackList = ['Edit'];
 
-var treeState = removeBlackList(Analyse(root), componentBlackList);
+var treeState = Analyse(root);
+
+debugger;
 
 var treeData = {};
 
