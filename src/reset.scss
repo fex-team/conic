@@ -144,3 +144,32 @@ body {
 .ant-input-number-handler-down {
   border-color: #555;
 }
+
+// 上传
+.ant-upload-drag-container {
+  padding: 20px;
+}
+
+.ant-upload.ant-upload-drag p.ant-upload-drag-icon .anticon {
+  color: #ccc;
+}
+
+.ant-upload.ant-upload-drag {
+  border-color: #999;
+  &:hover {
+    border-color: #d9d9d9;
+  }
+}
+
+// tree
+.ant-tree li a {
+  color: #ccc;
+}
+
+.ant-tree-checkbox-inner {
+  border-color: #949494;
+}
+
+.ant-tree li span.ant-tree-switcher.ant-tree-roots_open:after, .ant-tree li span.ant-tree-switcher.ant-tree-center_open:after, .ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after, .ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
+  color: #ccc;
+}

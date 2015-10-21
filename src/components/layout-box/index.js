@@ -18,9 +18,13 @@ let layoutBox = React.createClass({
                 },
                 base: {
                     value: {
-                        width: 100,
+                        margin: 0,
+                        padding: 0,
+                        width: 500,
                         height: 50,
-                        color: '#333'
+                        fontSize: 14,
+                        color: '#333',
+                        background: 'white'
                     },
                     edit: 'style'
                 },
