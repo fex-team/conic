@@ -15,7 +15,7 @@ module.exports = React.createClass({
 
                 <div className="ant-form-item">
                     <label htmlFor="control-input"
-                           className="col-6">排列顺序</label>
+                           className="col-8">排列顺序</label>
 
                     <div className="col-14">
                         <Select value={this.props.item.value.flexDirection}
@@ -30,7 +30,7 @@ module.exports = React.createClass({
                 </div>
                 <div className="ant-form-item">
                     <label htmlFor="control-input"
-                           className="col-6">换行规则</label>
+                           className="col-8">换行规则</label>
 
                     <div className="col-14">
                         <Select value={this.props.item.value.flexWrap}
@@ -45,7 +45,7 @@ module.exports = React.createClass({
 
                 <div className="ant-form-item">
                     <label htmlFor="control-input"
-                           className="col-6">主轴对齐方式</label>
+                           className="col-8">主轴对齐方式</label>
 
                     <div className="col-14">
                         <Select value={this.props.item.value.justifyContent}
@@ -62,7 +62,7 @@ module.exports = React.createClass({
 
                 <div className="ant-form-item">
                     <label htmlFor="control-input"
-                           className="col-6">交叉轴布局</label>
+                           className="col-8">交叉轴布局</label>
 
                     <div className="col-14">
                         <Select value={this.props.item.value.alignItems}

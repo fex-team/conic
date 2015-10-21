@@ -92,7 +92,7 @@ let ComponentTree = React.createClass({
 
         tree = (
             <EnterAnimation enter={animation.enter}>
-               <div key="tree" class="layout">
+               <div key="tree" className="layout">
                    <Tree defaultExpandAll={true} checkable={true} onCheck={handleCheck}>
                        <TreeNode title="parent 1">
                            <TreeNode title="leaf" />

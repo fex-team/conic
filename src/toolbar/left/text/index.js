@@ -10,7 +10,7 @@ module.exports = React.createClass({
         return (
             <div className="ant-form-item">
                 <label htmlFor="control-input"
-                       className="col-6">{this.props.item.desc}</label>
+                       className="col-8">{this.props.item.desc}</label>
 
                 <div className="col-14">
                     <input type="text"

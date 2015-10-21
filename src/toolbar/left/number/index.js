@@ -11,11 +11,12 @@ module.exports = React.createClass({
         return (
             <div className="ant-form-item">
                 <label htmlFor="control-input"
-                       className="col-6">{this.props.item.desc}</label>
+                       className="col-8">{this.props.item.desc}</label>
 
                 <div className="col-14">
                     <InputNumber type="text"
                                  value={this.props.item.value}
+                                 style={{width:200}}
                                  onChange={this.onChange}
                                  className="ant-input"
                                  id="control-input"/>

@@ -3,6 +3,7 @@ var Select = require('antd/lib/select')
 var InputNumber = require('antd/lib/input-number')
 var Color = require('../lib/color')
 var Option = Select.Option
+var Background = require('./background')
 
 module.exports = React.createClass({
     onChange: function (key, event) {
@@ -24,11 +25,12 @@ module.exports = React.createClass({
                     <div key={key}
                          className="ant-form-item">
                         <label htmlFor="control-input"
-                               className="col-6">宽度</label>
+                               className="col-8">宽度</label>
 
                         <div className="col-14">
                             <InputNumber type="text"
                                          value={value}
+                                         style={{width:200}}
                                          onChange={this.onChange.bind(this,key)}
                                          className="ant-input"
                                          id="control-input"/>
@@ -40,26 +42,64 @@ module.exports = React.createClass({
                     <div key={key}
                          className="ant-form-item">
                         <label htmlFor="control-input"
-                               className="col-6">高度</label>
+                               className="col-8">高度</label>
 
                         <div className="col-14">
                             <InputNumber type="text"
                                          value={value}
+                                         style={{width:200}}
                                          onChange={this.onChange.bind(this,key)}
                                          className="ant-input"
                                          id="control-input"/>
                         </div>
                     </div>
                 )
+            case 'fontSize':
+                return (
+                    <div key={key}
+                         className="ant-form-item">
+                        <label htmlFor="control-input"
+                               className="col-8">字体大小</label>
+
+                        <div className="col-14">
+                            <InputNumber type="text"
+                                         value={value}
+                                         style={{width:200}}
+                                         onChange={this.onChange.bind(this,key)}
+                                         className="ant-input"
+                                         id="control-input"/>
+                        </div>
+                    </div>
+                )
+            case 'background':
+                return (
+                    <Background key={key}
+                                propKey={key}
+                                value={value}
+                                onChange={this.onChange}/>
+                )
             case 'color':
                 return (
                     <div key={key}
                          className="ant-form-item">
                         <label htmlFor="control-input"
-                               className="col-6">字体颜色</label>
+                               className="col-8">字体颜色</label>
 
                         <div className="col-14">
-                            <Color value={value} onChange={this.onChange.bind(this,key)}/>
+                            <Color value={value}
+                                   onChange={this.onChange.bind(this,key)}/>
+                        </div>
+                    </div>
+                )
+            case 'margin':
+                return (
+                    <div key={key}
+                         className="ant-form-item">
+                        <label htmlFor="control-input"
+                               className="col-8">外边距</label>
+
+                        <div className="col-14">
+                            123123
                         </div>
                     </div>
                 )
