@@ -35,7 +35,9 @@ var Test = React.createClass({
                 },
                 style: {
                     value: {
-                        color: 'red'
+                        color: 'red',
+                        margin: '5px',
+                        padding: '1px 2px 3px 4px'
                     },
                     edit: 'style'
                 }
@@ -50,7 +52,8 @@ var Test = React.createClass({
     render: function () {
         return (
             <div>
-                <div className="container" style={this.props.opts.style.value}>
+                <div className="container"
+                     style={this.props.opts.style.value}>
                     {this.props.opts.text.value}
                 </div>
             </div>

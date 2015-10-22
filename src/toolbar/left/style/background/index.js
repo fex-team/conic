@@ -40,7 +40,7 @@ module.exports = React.createClass({
         case 'color':
             bgComponent = (
                 <Color value={this.props.value}
-                       onChange={this.onChange.bind(this,this.props.propKey)}/>
+                       onChange={this.onChange}/>
             )
             break
         case 'image':

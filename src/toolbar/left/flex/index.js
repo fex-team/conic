@@ -3,9 +3,29 @@ var Select = require('antd/lib/select')
 var Option = Select.Option
 
 module.exports = React.createClass({
+    getInitialState: function () {
+        return {
+            item: this.props.item
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        if (this.state.item !== nextProps.item) {
+            this.setState({
+                item: nextProps.item
+            })
+        }
+    },
+
     onChange: function (key, value) {
-        this.props.item.value[key] = value
-        this.props.onChange && this.props.onChange(this.props.keyValue, this.props.item)
+        let newItem = this.state.item
+        newItem.value[key] = value
+
+        this.setState({
+            item: newItem
+        }, function () {
+            this.props.onChange(this.state.item)
+        })
     },
 
     render: function () {
@@ -18,7 +38,7 @@ module.exports = React.createClass({
                            className="col-8">排列顺序</label>
 
                     <div className="col-14">
-                        <Select value={this.props.item.value.flexDirection}
+                        <Select value={this.state.item.value.flexDirection}
                                 style={{width:'200px'}}
                                 onChange={this.onChange.bind(this,'flexDirection')}>
                             <Option value="row">从左到右</Option>
@@ -33,7 +53,7 @@ module.exports = React.createClass({
                            className="col-8">换行规则</label>
 
                     <div className="col-14">
-                        <Select value={this.props.item.value.flexWrap}
+                        <Select value={this.state.item.value.flexWrap}
                                 style={{width:'200px'}}
                                 onChange={this.onChange.bind(this,'flexWrap')}>
                             <Option value="nowrap">不换行</Option>
@@ -48,7 +68,7 @@ module.exports = React.createClass({
                            className="col-8">主轴对齐方式</label>
 
                     <div className="col-14">
-                        <Select value={this.props.item.value.justifyContent}
+                        <Select value={this.state.item.value.justifyContent}
                                 style={{width:'200px'}}
                                 onChange={this.onChange.bind(this,'justifyContent')}>
                             <Option value="flex-start">左对齐</Option>
@@ -65,7 +85,7 @@ module.exports = React.createClass({
                            className="col-8">交叉轴布局</label>
 
                     <div className="col-14">
-                        <Select value={this.props.item.value.alignItems}
+                        <Select value={this.state.item.value.alignItems}
                                 style={{width:'200px'}}
                                 onChange={this.onChange.bind(this,'alignItems')}>
                             <Option value="flex-start">左对齐</Option>

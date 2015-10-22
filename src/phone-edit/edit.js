@@ -4,23 +4,13 @@ var DragTarget = require('./drag-target')
 var editAction = require('../actions/edit-action')
 var editStore = require('../stores/edit-store')
 var classNames = require('classnames')
-var $ = require('jquery')
+var _ = require('lodash')
 
 const Edit = React.createClass({
-    getDefaultProps: function () {
-        return {
-            name: 'edit',
-            desc: '编辑组件',
-            opts: {
-                
-            }
-        }
-    },
-
     getInitialState: function () {
         return {
             enabledTarget: true,
-            childProps: this.props.children && $.extend(true, {}, this.props.children.props),
+            childProps: this.props.children && _.cloneDeep(this.props.children.props),
             selected: false
         }
     },

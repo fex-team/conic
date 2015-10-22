@@ -1,11 +1,23 @@
 var React = require('react')
+var $ = require('jquery')
+var components = require('../../components')
+var _ = require('lodash')
 require('./index.scss')
 
-let layoutBox = React.createClass({
+let LayoutBox = React.createClass({
     getDefaultProps: function () {
         return {
             name: 'layout-box',
             desc: '万能矩形',
+            childs: [{
+                name: 'LayoutBox',
+                props: {
+                    childs: [{
+                        name: 'LayoutBox',
+                        props: {}
+                    }]
+                }
+            }],
             opts: {
                 flex: {
                     edit: 'flex',
@@ -43,7 +55,9 @@ let layoutBox = React.createClass({
     },
 
     getInitialState: function () {
-        return {state: 'state'}
+        return {
+            childs: _.cloneDeep(this.props.childs)
+        }
     },
 
     render: function () {
@@ -58,4 +72,4 @@ let layoutBox = React.createClass({
     }
 })
 
-module.exports = layoutBox;
+module.exports = LayoutBox

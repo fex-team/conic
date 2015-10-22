@@ -6,6 +6,7 @@ var Radio = require('antd/lib/radio')
 var RadioGroup = require('antd/lib/radio/group')
 var EnterAnimation = require('antd/lib/enter-animation')
 var $ = require('jquery')
+var _ = require('lodash')
 var editStore = require('../../stores/edit-store')
 var editAction = require('../../actions/edit-action')
 require('./index.scss')
@@ -15,19 +16,17 @@ var Number = require('./number')
 var Flex = require('./flex')
 var Style = require('./style')
 
+let currentComponentProps
+
 module.exports = React.createClass({
     getInitialState: function () {
-        return {
-            // 当前选中组件的配置
-            currentComponentProps: {}
-        }
+        return {}
     },
 
     _onComponentChange: function () {
         let component = editStore.get()
-        this.setState({
-            currentComponentProps: component && component.state.childProps
-        })
+        currentComponentProps = component && _.cloneDeep(component.state.childProps)
+        this.forceUpdate()
     },
 
     componentDidMount: function () {
@@ -39,13 +38,8 @@ module.exports = React.createClass({
     },
 
     onEditChange: function (key, item) {
-        let props = $.extend(true, {}, this.state.currentComponentProps)
-        props.opts[key] = item
-        this.setState({
-            currentComponentProps: props
-        }, function () {
-            editAction.updateComponent(this.state.currentComponentProps)
-        })
+        currentComponentProps.opts[key] = item
+        editAction.updateComponent(currentComponentProps)
     },
 
     render: function () {
@@ -56,41 +50,37 @@ module.exports = React.createClass({
         }
 
         let editForm
-        if (!$.isEmptyObject(this.state.currentComponentProps) && this.state.currentComponentProps.opts) {
+        if (!$.isEmptyObject(currentComponentProps) && currentComponentProps.opts) {
             // 解析编辑项目
-            editForm = Object.keys(this.state.currentComponentProps.opts).map((key)=> {
-                let item = this.state.currentComponentProps.opts[key]
+            editForm = Object.keys(currentComponentProps.opts).map((key)=> {
+                let item = currentComponentProps.opts[key]
                 switch (item.edit) {
                 case 'text':
                     return (
                         <Text key={key}
-                              keyValue={key}
                               item={item}
-                              onChange={this.onEditChange}/>
+                              onChange={this.onEditChange.bind(this,key)}/>
                     )
 
                 case 'number':
                     return (
                         <Number key={key}
-                                keyValue={key}
                                 item={item}
-                                onChange={this.onEditChange}/>
+                                onChange={this.onEditChange.bind(this,key)}/>
                     )
 
                 case 'flex':
                     return (
                         <Flex key={key}
-                              keyValue={key}
                               item={item}
-                              onChange={this.onEditChange}/>
+                              onChange={this.onEditChange.bind(this,key)}/>
                     )
 
                 case 'style':
                     return (
                         <Style key={key}
-                               keyValue={key}
                                item={item}
-                               onChange={this.onEditChange}/>
+                               onChange={this.onEditChange.bind(this,key)}/>
                     )
                 }
             })
@@ -101,7 +91,7 @@ module.exports = React.createClass({
                                 className="ant-form-horizontal"
                                 enter={animation.enter}>
                     <div key="edit-form">
-                        <div className="component-name">{this.state.currentComponentProps.desc}</div>
+                        <div className="component-name">{currentComponentProps.desc}</div>
                         {editForm}
                     </div>
                 </EnterAnimation>

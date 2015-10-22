@@ -12,6 +12,6 @@ module.exports = {
     'ReactSlider': require('./swiper/swiper.react').Slider,
     'ReactPagination': require('./swiper/swiper.react').Pagination,
     'Edit': require('../phone-edit/edit'),
-    'layoutBox': require('./layout-box'),
+    'LayoutBox': require('./layout-box'),
     'Test': require('./test-component')
 };

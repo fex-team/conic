@@ -37,6 +37,14 @@ var Root = React.createClass({
                               dragSource="true">
                             <TestComponent/>
                         </Edit>
+                        <Edit dragTarget="true"
+                              dragSource="true">
+                            <TestComponent/>
+                        </Edit>
+                        <Edit dragTarget="true"
+                              dragSource="true">
+                            <TestComponent/>
+                        </Edit>
                     </div>
                 </Edit>
             </div>
