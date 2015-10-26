@@ -14,6 +14,7 @@ let LayoutBox = React.createClass({
                 flex: {
                     edit: 'flex',
                     value: {
+                        display: 'flex',
                         flexDirection: 'row',
                         flexWrap: 'nowrap',
                         justifyContent: 'flex-start',
