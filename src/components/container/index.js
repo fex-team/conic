@@ -4,6 +4,7 @@ var _ = require('lodash')
 var Edit = require('../../phone-edit/edit')
 var LayoutBox = require('../../components/layout-box')
 var Components = require('../../components')
+var editStore = require('../../stores/edit-store')
 
 let Container = React.createClass({
     getDefaultProps: function () {
@@ -24,8 +25,6 @@ let Container = React.createClass({
                     value: {
                         margin: 0,
                         padding: 0,
-                        width: 500,
-                        height: 800,
                         fontSize: 14,
                         color: '#333',
                         background: 'white'
@@ -40,6 +39,21 @@ let Container = React.createClass({
         return {
             childs: this.props.childs || []
         }
+    },
+
+    onSelectContainer: function () {
+        // 保证上一个dispatcher已完成
+        setTimeout(()=> {
+            this.props.edit.onClick()
+        })
+    },
+
+    componentDidMount: function () {
+        editStore.addSelectContainerListener(this.onSelectContainer)
+    },
+
+    componentWillUnmount: function () {
+        editStore.removeSelectContainerListener(this.onSelectContainer)
     },
 
     componentWillMount: function () {
@@ -67,9 +81,13 @@ let Container = React.createClass({
             return React.createElement(Edit, Editprops, React.createElement(component))
         })
 
+        const defaultStyle = {
+            minHeight: 800
+        }
+
         return (
             <div>
-                <div style={Object.assign(this.props.opts.flex.value,this.props.opts.base.value)}>
+                <div style={Object.assign(this.props.opts.flex.value,this.props.opts.base.value,defaultStyle)}>
                     {children}
                 </div>
             </div>

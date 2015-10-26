@@ -19,8 +19,14 @@ let Container = React.createClass({
 
     // 点击空白区域
     onClickEmpty: function (event) {
-        event.preventDefault()
+        event.stopPropagation()
         editAction.selectComponent(null)
+    },
+
+    // 点击手机外部，选中手机壳
+    onClickPhoneOut: function (event) {
+        event.stopPropagation()
+        editAction.selectContainer()
     },
 
     render: function () {
@@ -38,9 +44,10 @@ let Container = React.createClass({
                     <Right/>
                 </div>
 
-                <div className="g-mn">
+                <div className="g-mn"
+                     onClick={this.onClickEmpty}>
                     <div className="phone-out"
-                         onClick={this.onClickEmpty}>
+                         onClick={this.onClickPhoneOut}>
                         <div className="phone">
                             <div className="status-bar"></div>
                             {this.props.children}

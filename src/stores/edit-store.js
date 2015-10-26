@@ -3,6 +3,7 @@ let EventEmitter = require('events').EventEmitter
 let assign = require('object-assign')
 
 let CHANGE_EVENT = 'changeComponent'
+let CHANGE_SELECT_CONTAINER_EVENT = 'changeSelectContainer'
 let currentComponent = null
 let previousComponent = null
 
@@ -17,6 +18,18 @@ var EditStore = assign({}, EventEmitter.prototype, {
 
     removeChangeListener: function (callback) {
         this.removeListener(CHANGE_EVENT, callback)
+    },
+
+    emitSelectContainer: function () {
+        this.emit(CHANGE_SELECT_CONTAINER_EVENT)
+    },
+
+    addSelectContainerListener: function (callback) {
+        this.on(CHANGE_SELECT_CONTAINER_EVENT, callback)
+    },
+
+    removeSelectContainerListener: function (callback) {
+        this.removeListener(CHANGE_SELECT_CONTAINER_EVENT, callback)
     },
 
     get: function () {
@@ -44,6 +57,9 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
     case 'removeCurrent':
         currentComponent.removeSelf()
         previousComponent = currentComponent = null
+        break
+    case 'selectContainer':
+        EditStore.emitSelectContainer()
         break
     }
 })
