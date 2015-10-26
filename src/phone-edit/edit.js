@@ -103,7 +103,6 @@ const Edit = React.createClass({
         if (item.childs) {
             childInfo.childs = item.childs
         }
-        console.log(item)
         newChilds.push(childInfo)
 
         this.setState({
