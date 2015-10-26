@@ -15,7 +15,11 @@ var _ = require('lodash');
  * @returns {*}
  */
 function isReactElement (element) {
-    return _.isString(element.type);
+    if (_.isString(element)) {
+        return _.isString(element.type);
+    }
+    else if (_.isFunction(element)){
+    }
 }
 
 
@@ -74,11 +78,15 @@ function createReactElement (name, props, children) {
         return {};
     }
 
+    if (_.isString(name)) {
+
+    }
+
     props = props || {};
 
-    if (_.isString(name) && _.isArray(children) && _.every(children, isReactElement)) {
-        return React.createElement.apply(null, [name, props].concat(children));
-    }
+    //if (_.isArray(children) && _.every(children, isReactElement)) {
+    //    return React.createElement.apply(null, [name, props].concat(children));
+    //}
 }
 
 function addEditComponent (pageSource) {
@@ -98,9 +106,7 @@ function addEditComponent (pageSource) {
 
             var editJson = {
                 component: 'Edit'
-            }
-
-
+            };
 
             //parentChildren = _.filter(parentChildren, function (value) {
             //    var name = tmpSource[value.key].component;
@@ -148,18 +154,29 @@ function generate (pageSource) {
             deep--;
         }
 
+        // 这三个 each 其实是遍历被拆分成二维数组的一维数组. 效率小于 n2
         _.each(gradeChildrenElements, function (childArr, index) {
             _.each(childArr, function (child) {
                 var key = child.key;
+                var name = child.component;
                 var childElements = [];
 
+                // 非子代元素要需要子代元素对象才能构建
                 if (index > 0) {
                     _.each(child.children, function (value) {
                         var element = elementCache[value.key];
                         childElements.push(element);
                     });
                 }
-                elementCache[key] = createReactElement(child.component, child.props, childElements);
+
+                debugger;
+
+                if (name in components) {
+                    elementCache[key] = createReactElement(components[name], child.props, childElements);
+                }
+                else {
+                    elementCache[key] = createReactElement(name, child.props, childElements);
+                }
             });
         });
 

@@ -18,27 +18,7 @@ var Root = React.createClass({
     render: function () {
         return (
             <div>
-                <Edit dragTarget="true">
-                    <div className="phone-edit-container">
-                        <Edit dragTarget="true"
-                              dragSource="true">
-                            <LayoutBoxComponent/>
-                        </Edit>
-                        <Edit dragSource="true">
-                            <LayoutBoxComponent/>
-                        </Edit>
-                        <Edit dragTarget="true">
-                            <LayoutBoxComponent/>
-                        </Edit>
-                        <Edit>
-                            <LayoutBoxComponent/>
-                        </Edit>
-                        <Edit dragTarget="true"
-                              dragSource="true">
-                            <TestComponent/>
-                        </Edit>
-                    </div>
-                </Edit>
+                {generator(pageSource)}
             </div>
         )
     }

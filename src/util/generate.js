@@ -71,8 +71,6 @@ function generate (pageSource) {
 
         rootElement = React.createElement(rootName, root.props, rootChildren);
 
-
-        debugger;
     }
     else {
 
