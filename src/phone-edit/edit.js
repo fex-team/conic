@@ -81,16 +81,38 @@ const Edit = React.createClass({
     // 拖拽某个元素进来
     onDrop: function (item) {
         let newChilds = this.state.childs
+
+        // 分配一个唯一key
         let uniqueKey = 0
         if (newChilds.length > 0) {
             uniqueKey = newChilds[newChilds.length - 1].uniqueKey + 1
         }
-        newChilds.push({
+
+        // 添加子元素的属性
+        let childInfo = {
             name: item.type,
             uniqueKey: uniqueKey
-        })
+        }
+
+        // 如果有自定义属性，添加上
+        if (item.customOpts) {
+            childInfo.opts = item.customOpts
+        }
+
+        // 如果拖拽进来的元素还有子元素，添加上
+        if (item.childs) {
+            childInfo.childs = item.childs
+        }
+        console.log(item)
+        newChilds.push(childInfo)
+
         this.setState({
             childs: newChilds
+        }, function () {
+            // 如果是已在界面上的组件，移除
+            if (item.existComponent) {
+                item.removeEditSelf()
+            }
         })
     },
 
@@ -128,7 +150,12 @@ const Edit = React.createClass({
 
         if (this.props.dragSource) {
             childComponent = (
-                <DragSource onChangeEnableTarget={this.onChangeEnableTarget}>{childComponent}</DragSource>
+                <DragSource onChangeEnableTarget={this.onChangeEnableTarget}
+                            type={newChildProps.name}
+                            existComponent={true}
+                            edit={this}>
+                    {childComponent}
+                </DragSource>
             )
         }
 

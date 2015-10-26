@@ -107,12 +107,12 @@ module.exports = React.createClass({
                     <div key="edit-form">
                         <div className="component-name">
                             {currentComponentDesc === '手机壳' ? <div className="out-bg">手机壳</div> :
-                                <button onClick={this.removeSelf}
-                                        className="ant-btn ant-btn-default title-button">
+                                <div onClick={this.removeSelf}
+                                     className="ant-btn ant-btn-danger title-button">
                                     <i className="fa fa-remove"
                                        style={{marginRight: 5}}></i>
                                     {currentComponentDesc}
-                                </button>
+                                </div>
                             }
                         </div>
                         {editForm}
