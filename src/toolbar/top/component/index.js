@@ -1,5 +1,6 @@
 var React = require('react')
 var Layout = require('./layout')
+var Base = require('./base')
 require('./index.scss')
 
 module.exports = React.createClass({
@@ -14,7 +15,12 @@ module.exports = React.createClass({
             component = (
                 <Layout/>
             )
-            break;
+            break
+        case 'base':
+            component = (
+                <Base/>
+            )
+            break
         }
 
         return (

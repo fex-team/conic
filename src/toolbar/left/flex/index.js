@@ -96,7 +96,6 @@ module.exports = React.createClass({
                         </Select>
                     </div>
                 </div>
-                <hr/>
             </div>
         )
     }

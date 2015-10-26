@@ -122,7 +122,6 @@ module.exports = React.createClass({
             <div>
                 <h4>样式</h4>
                 {forms}
-                <hr/>
             </div>
         )
     }

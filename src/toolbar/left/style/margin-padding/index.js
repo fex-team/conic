@@ -1,5 +1,6 @@
 var React = require('react')
 var $ = require('jquery')
+var classnames = require('classnames')
 require('./index.scss')
 
 // margin or padding 转换成4纬数字
@@ -55,8 +56,8 @@ module.exports = React.createClass({
     },
 
     componentWillReceiveProps: function (nextProps) {
-        let margin = distanceToFourLatitude(this.props.margin)
-        let padding = distanceToFourLatitude(this.props.padding)
+        let margin = distanceToFourLatitude(nextProps.margin)
+        let padding = distanceToFourLatitude(nextProps.padding)
 
         if (this.state.margin !== margin || this.state.padding !== padding) {
             this.setState({
@@ -72,6 +73,7 @@ module.exports = React.createClass({
                 return
             }
 
+            document.body.style.cursor = 'default'
             this.setState({
                 currentType: null
             })
@@ -85,12 +87,19 @@ module.exports = React.createClass({
             let offset
             if (this.state.currentDirection === 'left' || this.state.currentDirection === 'right') {
                 offset = this.state.clientX - e.pageX
+                document.body.style.cursor = 'ew-resize'
             } else {
                 offset = this.state.clientY - e.pageY
+                document.body.style.cursor = 'ns-resize'
             }
 
             let newType = this.state[this.state.currentType]
-            newType[this.state.currentDirection] = offset + newType[this.state.currentDirection]
+            if (this.state.currentDirection === 'top' || this.state.currentDirection === 'left') {
+                newType[this.state.currentDirection] = offset + newType[this.state.currentDirection]
+            } else {
+                newType[this.state.currentDirection] = -offset + newType[this.state.currentDirection]
+            }
+
             if (newType[this.state.currentDirection] < 0) {
                 newType[this.state.currentDirection] = 0
             }
@@ -125,6 +134,28 @@ module.exports = React.createClass({
     },
 
     render: function () {
+        let types = ['margin', 'padding']
+        let directions = ['top', 'right', 'bottom', 'left']
+
+        let buttons = types.map((type)=> {
+            return directions.map((direction)=> {
+                let buttonClass = classnames({
+                    [type + '-' + direction]: true,
+                    active: this.state.currentType === type && this.state.currentDirection === direction
+                })
+                return (
+                    <div key={type+direction}>
+                        <div className={type + '-' + direction + '-box'}
+                             onMouseDown={this.onMouseDown.bind(this,type,direction)}>
+                            <div className={buttonClass}></div>
+                        </div>
+                        <span className={type+'-'+direction+'-label'}>{this.state[type][direction]}</span>
+                    </div>
+
+                )
+            })
+        })
+
         return (
             <div>
                 <div className="ant-form-item">
@@ -132,53 +163,7 @@ module.exports = React.createClass({
 
                     <div className="col-14">
                         <div className="tool-box">
-                            <div className="margin-top-box"
-                                 onMouseDown={this.onMouseDown.bind(this,'margin','top')}>
-                                <div className="margin-top"></div>
-                            </div>
-                            <span className="margin-top-label">{this.state.margin.top}</span>
-
-                            <div className="padding-top-box"
-                                 onMouseDown={this.onMouseDown.bind(this,'padding','top')}>
-                                <div className="padding-top"></div>
-                            </div>
-                            <span className="padding-top-label">{this.state.padding.top}</span>
-
-                            <div className="margin-right-box"
-                                 onMouseDown={this.onMouseDown.bind(this,'margin','right')}>
-                                <div className="margin-right"></div>
-                            </div>
-                            <span className="margin-right-label">{this.state.margin.right}</span>
-
-                            <div className="padding-right-box"
-                                 onMouseDown={this.onMouseDown.bind(this,'padding','right')}>
-                                <div className="padding-right"></div>
-                            </div>
-                            <span className="padding-right-label">{this.state.padding.right}</span>
-
-                            <div className="margin-bottom-box"
-                                 onMouseDown={this.onMouseDown.bind(this,'margin','bottom')}>
-                                <div className="margin-bottom"></div>
-                            </div>
-                            <span className="margin-bottom-label">{this.state.margin.bottom}</span>
-
-                            <div className="padding-bottom-box"
-                                 onMouseDown={this.onMouseDown.bind(this,'padding','bottom')}>
-                                <div className="padding-bottom"></div>
-                            </div>
-                            <span className="padding-bottom-label">{this.state.padding.bottom}</span>
-
-                            <div className="margin-left-box"
-                                 onMouseDown={this.onMouseDown.bind(this,'margin','left')}>
-                                <div className="margin-left"></div>
-                            </div>
-                            <span className="margin-left-label">{this.state.margin.left}</span>
-
-                            <div className="padding-left-box"
-                                 onMouseDown={this.onMouseDown.bind(this,'padding','left')}>
-                                <div className="padding-left"></div>
-                            </div>
-                            <span className="padding-left-label">{this.state.padding.left}</span>
+                            {buttons}
                         </div>
                     </div>
                 </div>

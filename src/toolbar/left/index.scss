@@ -16,18 +16,34 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
+  height: 60px;
   font-weight: bold;
   font-size: 18px;
   color: #ccc;
 }
 
+// 手机壳标题
+.out-bg {
+  padding: 5px 20px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
 // 小标题
 h4 {
-  padding: 0 20px 15px 20px;
+  padding: 7px 20px;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #222;
+  margin-bottom: 20px;
+  background-color: #444;
 }
 
 // 输入框宽度
 .ant-input {
   width: 200px;
+}
+
+// 标题按钮（点击后删除）
+.title-button {
+  font-size: 16px;
 }

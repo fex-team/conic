@@ -11,8 +11,8 @@ module.exports = React.createClass({
         return (
             <div>
                 <div className="container">
-                    <DragSource type="LayoutBox">
-                        <Component icon="square-o">万能矩形</Component>
+                    <DragSource type="BaseText">
+                        <Component icon="font">文字</Component>
                     </DragSource>
                 </div>
             </div>

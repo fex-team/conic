@@ -16,30 +16,44 @@ var Number = require('./number')
 var Flex = require('./flex')
 var Style = require('./style')
 
-let currentComponentProps
+let currentComponentOpts = null
+let currentComponentDesc = null
 
 module.exports = React.createClass({
     getInitialState: function () {
         return {}
     },
 
-    _onComponentChange: function () {
+    onComponentChange: function () {
         let component = editStore.get()
-        currentComponentProps = component && _.cloneDeep(component.state.childProps)
+        if (component) {
+            currentComponentDesc = component.state.childProps.desc || '未命名组件'
+            currentComponentOpts = $.extend(true, _.cloneDeep(component.state.childProps.opts), component.state.customOpts)
+        } else {
+            currentComponentOpts = currentComponentDesc = null
+        }
         this.forceUpdate()
     },
 
     componentDidMount: function () {
-        editStore.addChangeListener(this._onComponentChange)
+        editStore.addChangeListener(this.onComponentChange)
     },
 
     componentWillUnmount: function () {
-        editStore.removeChangeListener(this._onComponentChange)
+        editStore.removeChangeListener(this.onComponentChange)
     },
 
     onEditChange: function (key, item) {
-        currentComponentProps.opts[key] = item
-        editAction.updateComponent(currentComponentProps)
+        let opts = {
+            [key]: item
+        }
+        editAction.updateComponent(opts)
+    },
+
+    removeSelf: function () {
+        editAction.removeCurrent()
+        currentComponentOpts = null
+        this.forceUpdate()
     },
 
     render: function () {
@@ -50,10 +64,10 @@ module.exports = React.createClass({
         }
 
         let editForm
-        if (!$.isEmptyObject(currentComponentProps) && currentComponentProps.opts) {
+        if (currentComponentOpts !== null) {
             // 解析编辑项目
-            editForm = Object.keys(currentComponentProps.opts).map((key)=> {
-                let item = currentComponentProps.opts[key]
+            editForm = Object.keys(currentComponentOpts).map((key)=> {
+                let item = currentComponentOpts[key]
                 switch (item.edit) {
                 case 'text':
                     return (
@@ -91,7 +105,16 @@ module.exports = React.createClass({
                                 className="ant-form-horizontal"
                                 enter={animation.enter}>
                     <div key="edit-form">
-                        <div className="component-name">{currentComponentProps.desc}</div>
+                        <div className="component-name">
+                            {currentComponentDesc === '手机壳' ? <div className="out-bg">手机壳</div> :
+                                <button onClick={this.removeSelf}
+                                        className="ant-btn ant-btn-default title-button">
+                                    <i className="fa fa-remove"
+                                       style={{marginRight: 5}}></i>
+                                    {currentComponentDesc}
+                                </button>
+                            }
+                        </div>
                         {editForm}
                     </div>
                 </EnterAnimation>

@@ -173,3 +173,10 @@ body {
 .ant-tree li span.ant-tree-switcher.ant-tree-roots_open:after, .ant-tree li span.ant-tree-switcher.ant-tree-center_open:after, .ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after, .ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
   color: #ccc;
 }
+
+// 按钮
+.ant-btn-default {
+  background: #444;
+  color: #ccc;
+  border-color: #222;
+}

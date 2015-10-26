@@ -1,15 +1,15 @@
 var React = require('react')
 var $ = require('jquery')
-var Components = require('../../components')
-var Edit = require('../../phone-edit/edit')
 var _ = require('lodash')
-require('./index.scss')
+var Edit = require('../../phone-edit/edit')
+var LayoutBox = require('../../components/layout-box')
+var Components = require('../../components')
 
-let LayoutBox = React.createClass({
+let Container = React.createClass({
     getDefaultProps: function () {
         return {
-            name: 'LayoutBox',
-            desc: '万能矩形',
+            name: 'Container',
+            desc: '手机壳',
             opts: {
                 flex: {
                     edit: 'flex',
@@ -25,22 +25,12 @@ let LayoutBox = React.createClass({
                         margin: 0,
                         padding: 0,
                         width: 500,
-                        height: 50,
+                        height: 800,
                         fontSize: 14,
                         color: '#333',
                         background: 'white'
                     },
                     edit: 'style'
-                },
-                url: {
-                    value: 'http://tieba.baidu.com',
-                    edit: 'text',
-                    desc: '上传地址'
-                },
-                maxLength: {
-                    value: 5,
-                    edit: 'number',
-                    desc: '最大数量'
                 }
             }
         }
@@ -48,7 +38,7 @@ let LayoutBox = React.createClass({
 
     getInitialState: function () {
         return {
-            childs: this.props.childs
+            childs: this.props.childs || []
         }
     },
 
@@ -61,7 +51,7 @@ let LayoutBox = React.createClass({
 
     render: function () {
         let children = this.state.childs.map((item, index)=> {
-            let component = Components[item.name] || LayoutBox
+            let component = Components[item.name]
             let Editprops = {
                 key: item.uniqueKey,
                 parent: this.props.edit || null,
@@ -71,6 +61,7 @@ let LayoutBox = React.createClass({
                 childs: item.childs || []
             }
             if (item.name === 'LayoutBox') {
+                component = LayoutBox
                 Editprops.dragTarget = true
             }
             return React.createElement(Edit, Editprops, React.createElement(component))
@@ -78,8 +69,7 @@ let LayoutBox = React.createClass({
 
         return (
             <div>
-                <div className="container"
-                     style={Object.assign(this.props.opts.flex.value,this.props.opts.base.value)}>
+                <div style={Object.assign(this.props.opts.flex.value,this.props.opts.base.value)}>
                     {children}
                 </div>
             </div>
@@ -87,4 +77,4 @@ let LayoutBox = React.createClass({
     }
 })
 
-module.exports = LayoutBox
+module.exports = Container

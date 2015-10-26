@@ -13,5 +13,11 @@ module.exports = {
             type: 'updateComponent',
             opts: opts
         })
+    },
+
+    removeCurrent:function(){
+        dispatcher.dispatch({
+            type: 'removeCurrent'
+        })
     }
 }
