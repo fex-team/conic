@@ -80,6 +80,11 @@ const Edit = React.createClass({
 
     // 拖拽某个元素进来
     onDrop: function (item) {
+        // 如果item的edit的parent是自己，则不执行任何操作
+        if (item.edit && item.edit.props.parent === this) {
+            return
+        }
+
         let newChilds = this.state.childs
 
         // 分配一个唯一key
@@ -94,15 +99,12 @@ const Edit = React.createClass({
             uniqueKey: uniqueKey
         }
 
-        // 如果有自定义属性，添加上
-        if (item.customOpts) {
-            childInfo.opts = item.customOpts
+        // 如果有edit，加上属性
+        if (item.edit) {
+            childInfo.opts = item.edit.state.customOpts
+            childInfo.childs = item.edit.state.childs
         }
 
-        // 如果拖拽进来的元素还有子元素，添加上
-        if (item.childs) {
-            childInfo.childs = item.childs
-        }
         newChilds.push(childInfo)
 
         this.setState({
@@ -110,7 +112,7 @@ const Edit = React.createClass({
         }, function () {
             // 如果是已在界面上的组件，移除
             if (item.existComponent) {
-                item.removeEditSelf()
+                item.edit.removeSelf()
             }
         })
     },

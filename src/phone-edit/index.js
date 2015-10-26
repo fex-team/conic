@@ -3,11 +3,12 @@ var DragTarget = require('./drag-target')
 var DragSource = require('../toolbar/top/component/drag-source')
 var Edit = require('./edit')
 var Container = require('../components/container')
+var dragDropManager = require('../drag-drop-manager')
 require('./index.scss')
 
 var defaultJson = require('./default.json')
 
-var Root = React.createClass({
+var PhoneEdit = React.createClass({
     getInitialState: function () {
         return {}
     },
@@ -24,4 +25,4 @@ var Root = React.createClass({
     }
 })
 
-module.exports = Root
+module.exports = dragDropManager.getDefaultManager()(PhoneEdit)

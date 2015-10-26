@@ -83,7 +83,8 @@ let Container = React.createClass({
         })
 
         const defaultStyle = {
-            minHeight: 800
+            minHeight: 800,
+            position: 'relative'
         }
 
         return (

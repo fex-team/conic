@@ -1,3 +1,4 @@
 module.exports = {
-    layout: 'layout'
+    layout: 'layout',
+    layoutAbsolute: 'layoutAbsolute'
 }

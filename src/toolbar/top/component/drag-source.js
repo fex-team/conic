@@ -19,9 +19,7 @@ const source = {
         return {
             type: props.type,
             existComponent: props.existComponent || false,
-            removeEditSelf: props.edit && props.edit.removeSelf,
-            customOpts: props.edit && props.edit.state.customOpts,
-            childs: props.edit && props.edit.state.childs
+            edit: props.edit
         }
     },
 
@@ -36,7 +34,7 @@ const source = {
     }
 }
 
-var Drag = React.createClass({
+var DragSource = React.createClass({
     propTypes: {
         connectDragSource: React.PropTypes.func.isRequired,
         isDragging: React.PropTypes.bool.isRequired,
@@ -62,4 +60,4 @@ module.exports = ReactDnd.DragSource(dragItem.layout, source, function collect(c
         connectDragSource: connect.dragSource(),
         isDragging: monitor.isDragging()
     }
-})(Drag)
+})(DragSource)

@@ -17,8 +17,6 @@ var boxTarget = {
 
         // 获得拖拽的组件
         const item = monitor.getItem()
-        // TODO: 拖拽组件父级没有变情况的处理
-        console.log(props, item)
         props.onDrop(item)
     }
 }
