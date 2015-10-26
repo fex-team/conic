@@ -2,6 +2,7 @@ var React = require('react')
 var ItemTypes = require('../toolbar/top/component/drag-type')
 var ReactDnD = require('react-dnd')
 var classNames = require('classnames')
+var auxiliartStore = require('../stores/auxiliary-store')
 
 var boxTarget = {
     drop: function (props, monitor, component) {
@@ -16,22 +17,48 @@ var boxTarget = {
 
         // 获得拖拽的组件
         const item = monitor.getItem()
+        // TODO: 拖拽组件父级没有变情况的处理
+        console.log(props, item)
+        props.onDrop(item)
     }
 }
 
 var Dustbin = React.createClass({
+    getInitialState: function () {
+        return {
+            show: false
+        }
+    },
+
     propTypes: {
         connectDropTarget: React.PropTypes.func.isRequired,
         isOver: React.PropTypes.bool.isRequired,
         canDrop: React.PropTypes.bool.isRequired
     },
+
+    onChange: function () {
+        const auxiliartInfo = auxiliartStore.get()
+        this.setState({
+            show: auxiliartInfo.showLayoutBox
+        })
+    },
+
+    componentDidMount: function () {
+        auxiliartStore.addChangeListener(this.onChange)
+        this.onChange()
+    },
+
+    componentWillUnmount: function () {
+        auxiliartStore.removeChangeListener(this.onChange)
+    },
+
     render: function () {
         let isActive = this.props.canDrop && this.props.isOver
 
         var className = classNames([
             'drag-target',
             {'active': isActive && this.props.enabledTarget},
-            {'can-drop': !isActive && this.props.canDrop && this.props.enabledTarget}
+            {'can-drop': !isActive && ((this.props.canDrop && this.props.enabledTarget) || this.state.show)}
         ])
 
         return this.props.connectDropTarget(
