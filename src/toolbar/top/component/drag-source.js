@@ -19,9 +19,9 @@ const source = {
         return {
             type: props.type,
             existComponent: props.existComponent || false,
-            removeEditSelf: props.edit.removeSelf,
-            customOpts: props.edit.state.customOpts,
-            childs: props.edit.state.childs
+            removeEditSelf: props.edit && props.edit.removeSelf,
+            customOpts: props.edit && props.edit.state.customOpts,
+            childs: props.edit && props.edit.state.childs
         }
     },
 
