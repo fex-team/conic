@@ -186,3 +186,32 @@ body {
   background-color: #353535;
   border-color: #232323;
 }
+
+// Collapse 折叠面板
+.ant-collapse {
+  background-color: #333;
+  border: 1px solid #444;
+  margin-top: -1px;
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+  color: #ccc;
+}
+
+.ant-collapse-content {
+  border-top: 1px solid #444;
+  background-color: #272727;
+}
+
+.ant-collapse > .ant-collapse-item {
+  border-color: #444;
+}
+
+// switch 开关
+.ant-switch {
+  background-color: #333;
+}
+
+.ant-switch-checked {
+  background-color: #2db7f5;
+}
