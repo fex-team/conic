@@ -15,9 +15,15 @@ module.exports = {
         })
     },
 
-    removeCurrent:function(){
+    removeCurrent: function () {
         dispatcher.dispatch({
             type: 'removeCurrent'
+        })
+    },
+
+    selectContainer: function () {
+        dispatcher.dispatch({
+            type: 'selectContainer'
         })
     }
 }

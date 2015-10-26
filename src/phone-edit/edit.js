@@ -40,7 +40,7 @@ const Edit = React.createClass({
 
     // 触发选择组件事件
     onClick: function (event) {
-        event.stopPropagation()
+        event && event.stopPropagation()
 
         if (this.state.selected) {
             return
@@ -57,8 +57,8 @@ const Edit = React.createClass({
         this.setState({
             customOpts: $.extend(true, this.state.customOpts, opts)
         }, function () {
-            // 更新父级childs
-            this.props.parent.UpdateChilds(this.props.index, this.state.customOpts)
+            // 更新父级childs 如果有父级的话（手机壳就没有）
+            this.props.parent && this.props.parent.UpdateChilds(this.props.index, this.state.customOpts)
         })
     },
 
