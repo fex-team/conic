@@ -38,9 +38,9 @@ let Container = React.createClass({
                     <Right/>
                 </div>
 
-                <div className="g-mn"
-                     onClick={this.onClickEmpty}>
-                    <div className="phone-out">
+                <div className="g-mn">
+                    <div className="phone-out"
+                         onClick={this.onClickEmpty}>
                         <div className="phone">
                             <div className="status-bar"></div>
                             {this.props.children}

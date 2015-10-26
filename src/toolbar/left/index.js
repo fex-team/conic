@@ -6,6 +6,7 @@ var Radio = require('antd/lib/radio')
 var RadioGroup = require('antd/lib/radio/group')
 var EnterAnimation = require('antd/lib/enter-animation')
 var $ = require('jquery')
+var _ = require('lodash')
 var editStore = require('../../stores/edit-store')
 var editAction = require('../../actions/edit-action')
 require('./index.scss')
@@ -15,37 +16,44 @@ var Number = require('./number')
 var Flex = require('./flex')
 var Style = require('./style')
 
+let currentComponentOpts = null
+let currentComponentDesc = null
+
 module.exports = React.createClass({
     getInitialState: function () {
-        return {
-            // 当前选中组件的配置
-            currentComponentProps: {}
-        }
+        return {}
     },
 
-    _onComponentChange: function () {
+    onComponentChange: function () {
         let component = editStore.get()
-        this.setState({
-            currentComponentProps: component && component.state.childProps
-        })
+        if (component) {
+            currentComponentDesc = component.state.childProps.desc || '未命名组件'
+            currentComponentOpts = $.extend(true, _.cloneDeep(component.state.childProps.opts), component.state.customOpts)
+        } else {
+            currentComponentOpts = currentComponentDesc = null
+        }
+        this.forceUpdate()
     },
 
     componentDidMount: function () {
-        editStore.addChangeListener(this._onComponentChange)
+        editStore.addChangeListener(this.onComponentChange)
     },
 
     componentWillUnmount: function () {
-        editStore.removeChangeListener(this._onComponentChange)
+        editStore.removeChangeListener(this.onComponentChange)
     },
 
     onEditChange: function (key, item) {
-        let props = $.extend(true, {}, this.state.currentComponentProps)
-        props.opts[key] = item
-        this.setState({
-            currentComponentProps: props
-        }, function () {
-            editAction.updateComponent(this.state.currentComponentProps)
-        })
+        let opts = {
+            [key]: item
+        }
+        editAction.updateComponent(opts)
+    },
+
+    removeSelf: function () {
+        editAction.removeCurrent()
+        currentComponentOpts = null
+        this.forceUpdate()
     },
 
     render: function () {
@@ -56,41 +64,37 @@ module.exports = React.createClass({
         }
 
         let editForm
-        if (!$.isEmptyObject(this.state.currentComponentProps) && this.state.currentComponentProps.opts) {
+        if (currentComponentOpts !== null) {
             // 解析编辑项目
-            editForm = Object.keys(this.state.currentComponentProps.opts).map((key)=> {
-                let item = this.state.currentComponentProps.opts[key]
+            editForm = Object.keys(currentComponentOpts).map((key)=> {
+                let item = currentComponentOpts[key]
                 switch (item.edit) {
                 case 'text':
                     return (
                         <Text key={key}
-                              keyValue={key}
                               item={item}
-                              onChange={this.onEditChange}/>
+                              onChange={this.onEditChange.bind(this,key)}/>
                     )
 
                 case 'number':
                     return (
                         <Number key={key}
-                                keyValue={key}
                                 item={item}
-                                onChange={this.onEditChange}/>
+                                onChange={this.onEditChange.bind(this,key)}/>
                     )
 
                 case 'flex':
                     return (
                         <Flex key={key}
-                              keyValue={key}
                               item={item}
-                              onChange={this.onEditChange}/>
+                              onChange={this.onEditChange.bind(this,key)}/>
                     )
 
                 case 'style':
                     return (
                         <Style key={key}
-                               keyValue={key}
                                item={item}
-                               onChange={this.onEditChange}/>
+                               onChange={this.onEditChange.bind(this,key)}/>
                     )
                 }
             })
@@ -101,7 +105,16 @@ module.exports = React.createClass({
                                 className="ant-form-horizontal"
                                 enter={animation.enter}>
                     <div key="edit-form">
-                        <div className="component-name">{this.state.currentComponentProps.desc}</div>
+                        <div className="component-name">
+                            {currentComponentDesc === '手机壳' ? <div className="out-bg">手机壳</div> :
+                                <div onClick={this.removeSelf}
+                                     className="ant-btn ant-btn-danger title-button">
+                                    <i className="fa fa-remove"
+                                       style={{marginRight: 5}}></i>
+                                    {currentComponentDesc}
+                                </div>
+                            }
+                        </div>
                         {editForm}
                     </div>
                 </EnterAnimation>

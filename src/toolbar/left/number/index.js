@@ -2,20 +2,40 @@ var React = require('react')
 var InputNumber = require('antd/lib/input-number')
 
 module.exports = React.createClass({
+    getInitialState: function () {
+        return {
+            item: this.props.item
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        if (this.state.item !== nextProps.item) {
+            this.setState({
+                item: nextProps.item
+            })
+        }
+    },
+
     onChange: function (value) {
-        this.props.item.value = value
-        this.props.onChange && this.props.onChange(this.props.keyValue, this.props.item)
+        let newItem = this.state.item
+        newItem.value = value
+
+        this.setState({
+            item: newItem
+        }, function () {
+            this.props.onChange(this.state.item)
+        })
     },
 
     render: function () {
         return (
             <div className="ant-form-item">
                 <label htmlFor="control-input"
-                       className="col-8">{this.props.item.desc}</label>
+                       className="col-8">{this.state.item.desc}</label>
 
                 <div className="col-14">
                     <InputNumber type="text"
-                                 value={this.props.item.value}
+                                 value={this.state.item.value}
                                  style={{width:200}}
                                  onChange={this.onChange}
                                  className="ant-input"

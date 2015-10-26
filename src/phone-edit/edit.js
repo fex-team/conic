@@ -4,47 +4,48 @@ var DragTarget = require('./drag-target')
 var editAction = require('../actions/edit-action')
 var editStore = require('../stores/edit-store')
 var classNames = require('classnames')
+var _ = require('lodash')
 var $ = require('jquery')
 
 const Edit = React.createClass({
-    getDefaultProps: function () {
-        return {
-            name: 'edit',
-            desc: '编辑组件',
-            opts: {
-                
-            }
-        }
-    },
-
     getInitialState: function () {
         return {
             enabledTarget: true,
-            childProps: this.props.children && $.extend(true, {}, this.props.children.props),
+            // 自定义属性
+            customOpts: this.props.customOpts,
+            // 包含的组件属性
+            childProps: this.props.children && _.cloneDeep(this.props.children.props),
+            // 子元素属性数组
+            childs: this.props.childs,
             selected: false
         }
     },
 
-    _onChange: function () {
-        // 如果不是自己，取消选择
-        if (this !== editStore.get()) {
+    componentWillReceiveProps: function (nextProps) {
+        // 更新state中customOpts
+        if (!_.isEqual(this.state.customOpts, nextProps.customOpts) || (this.state.selected && editStore.get() !== this)) {
             this.setState({
+                customOpts: nextProps.customOpts,
                 selected: false
             })
         }
     },
 
-    componentDidMount: function () {
-        editStore.addChangeListener(this._onChange)
-    },
-
-    componentWillUnmount: function () {
-        editStore.removeChangeListener(this._onChange)
+    // 取消选择状态
+    unSelected: function () {
+        this.setState({
+            selected: false
+        })
     },
 
     // 触发选择组件事件
     onClick: function (event) {
         event.stopPropagation()
+
+        if (this.state.selected) {
+            return
+        }
+
         this.setState({
             selected: true
         })
@@ -52,9 +53,21 @@ const Edit = React.createClass({
     },
 
     // 触发修改子元素事件(由edit-action直接调用)
-    UpdateChildren: function (props) {
+    UpdateChildren: function (opts) {
         this.setState({
-            childProps: props
+            customOpts: $.extend(true, this.state.customOpts, opts)
+        }, function () {
+            // 更新父级childs
+            this.props.parent.UpdateChilds(this.props.index, this.state.customOpts)
+        })
+    },
+
+    // 更新自身childs
+    UpdateChilds: function (index, opts) {
+        let newChilds = this.state.childs
+        newChilds[index].opts = opts
+        this.setState({
+            childs: newChilds
         })
     },
 
@@ -65,38 +78,97 @@ const Edit = React.createClass({
         })
     },
 
-    // 拖拽某个元素
-    onDrop: function (container, item) {
-        console.log(container, item)
+    // 拖拽某个元素进来
+    onDrop: function (item) {
+        let newChilds = this.state.childs
+
+        // 分配一个唯一key
+        let uniqueKey = 0
+        if (newChilds.length > 0) {
+            uniqueKey = newChilds[newChilds.length - 1].uniqueKey + 1
+        }
+
+        // 添加子元素的属性
+        let childInfo = {
+            name: item.type,
+            uniqueKey: uniqueKey
+        }
+
+        // 如果有自定义属性，添加上
+        if (item.customOpts) {
+            childInfo.opts = item.customOpts
+        }
+
+        // 如果拖拽进来的元素还有子元素，添加上
+        if (item.childs) {
+            childInfo.childs = item.childs
+        }
+        console.log(item)
+        newChilds.push(childInfo)
+
+        this.setState({
+            childs: newChilds
+        }, function () {
+            // 如果是已在界面上的组件，移除
+            if (item.existComponent) {
+                item.removeEditSelf()
+            }
+        })
+    },
+
+    removeChild: function (index) {
+        let newChilds = this.state.childs
+        _.pullAt(newChilds, index)
+
+        this.setState({
+            childs: newChilds
+        })
+    },
+
+    removeSelf: function () {
+        this.props.parent.removeChild(this.props.index)
     },
 
     render: function () {
         let className = classNames([
             {'selected': this.state.selected}
         ])
-        let edit = (
+
+        let newChildProps = _.cloneDeep(this.state.childProps)
+        // 将edit本身传给子组件
+        newChildProps.edit = this
+        // 将自定义属性与组件原本属性merge
+        newChildProps.opts = $.extend(true, newChildProps.opts, this.state.customOpts)
+        newChildProps.childs = this.state.childs
+
+        let childComponent = (
             <div className={className}
                  onClick={this.onClick}>
-                {React.cloneElement(this.props.children, this.state.childProps)}
+                {React.cloneElement(this.props.children, newChildProps)}
             </div>
         )
 
         if (this.props.dragSource) {
-            edit = (
-                <DragSource onChangeEnableTarget={this.onChangeEnableTarget}>{edit}</DragSource>
+            childComponent = (
+                <DragSource onChangeEnableTarget={this.onChangeEnableTarget}
+                            type={newChildProps.name}
+                            existComponent={true}
+                            edit={this}>
+                    {childComponent}
+                </DragSource>
             )
         }
 
         if (this.props.dragTarget) {
-            edit = (
+            childComponent = (
                 <DragTarget enabledTarget={this.state.enabledTarget}
-                            onDrop={this.onDrop}>{edit}</DragTarget>
+                            onDrop={this.onDrop}>{childComponent}</DragTarget>
             )
         }
 
         return (
             <div>
-                {edit}
+                {childComponent}
             </div>
         )
     }

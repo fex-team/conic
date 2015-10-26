@@ -16,7 +16,7 @@ var boxTarget = {
 
         // 获得拖拽的组件
         const item = monitor.getItem()
-        props.onDrop(this, item)
+        props.onDrop(item)
     }
 }
 

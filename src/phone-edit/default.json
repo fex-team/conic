@@ -1,0 +1,48 @@
+[
+  {
+    "name": "LayoutBox",
+    "childs": [
+      {
+        "name": "LayoutBox"
+      }
+    ]
+  },
+  {
+    "name": "LayoutBox",
+    "childs": [
+      {
+        "name": "BaseText"
+      }
+    ]
+  },
+  {
+    "name": "BaseText",
+    "opts": {
+      "style": {
+        "value": {
+          "color": "red"
+        }
+      }
+    }
+  },
+  {
+    "name": "BaseText",
+    "opts": {
+      "text": {
+        "value": "customText"
+      }
+    }
+  },
+  {
+    "name": "BaseText"
+  },
+  {
+    "name": "BaseText"
+  },
+  {
+    "name": "BaseText"
+  },
+  {
+    "name": "BaseText"
+  }
+]

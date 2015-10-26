@@ -1,49 +1,42 @@
 var React = require('react')
-var ColorPicker = require('react-color')
-require('./index.scss')
+var ColorBox = require('./color-box')
+var ColorPicker = require('./color-picker')
 
 module.exports = React.createClass({
     getInitialState: function () {
         return {
-            show: false
+            value: this.props.value,
+            showPicker: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        if (this.state.value !== nextProps.value) {
+            this.setState({
+                value: nextProps.value
+            })
         }
     },
 
     handleChange: function (color) {
-        let rgba = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`
-        this.props.onChange(rgba)
+        this.props.onChange(color)
     },
 
-    handleClose() {
-        this.setState({show: false})
-    },
-
-    onClick: function () {
+    onChangeShow: function () {
         this.setState({
-            show: !this.state.show
+            showPicker: !this.state.showPicker
         })
     },
 
     render: function () {
-        let popupPosition = {
-            position: 'absolute',
-            top: '-120px',
-            left: '10px'
-        }
-
         return (
             <div>
-                <div className="color-box"
-                     onClick={this.onClick}>
-                    <div style={{backgroundColor: this.props.value}}
-                         className="color"></div>
-                </div>
-                <ColorPicker positionCSS={popupPosition}
-                             color={this.props.value}
-                             display={this.state.show}
+                <ColorBox onChangeShow={this.onChangeShow}
+                          color={this.state.value}/>
+                <ColorPicker color={this.state.value}
+                             onChangeShow={this.onChangeShow}
                              onChange={this.handleChange}
-                             onClose={this.handleClose}
-                             type="chrome"/>
+                             show={this.state.showPicker}/>
             </div>
         )
     }

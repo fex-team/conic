@@ -2,13 +2,10 @@ var React = require('react')
 var DragTarget = require('./drag-target')
 var DragSource = require('../toolbar/top/component/drag-source')
 var Edit = require('./edit')
+var Container = require('../components/container')
 require('./index.scss')
 
-var LayoutBoxComponent = require('../components/layout-box')
-var TestComponent = require('../components/test-component')
-
-var pageSource = require('../default/page.json');
-var generator = require('./generate');
+var defaultJson = require('./default.json')
 
 var Root = React.createClass({
     getInitialState: function () {
@@ -18,10 +15,13 @@ var Root = React.createClass({
     render: function () {
         return (
             <div>
-                {generator(pageSource)}
+                <Edit childs={defaultJson}
+                      dragTarget="true">
+                    <Container/>
+                </Edit>
             </div>
         )
     }
-});
+})
 
-module.exports = Root;
+module.exports = Root
