@@ -16,7 +16,7 @@ module.exports = React.createClass({
                         <Component icon="square-o">万能矩形</Component>
                     </DragSource>
                     <DragSourceAbsolute type="LayoutBox">
-                        <Component icon="square">绝对矩形</Component>
+                        <Component icon="square">自由矩形</Component>
                     </DragSourceAbsolute>
                 </div>
             </div>

@@ -56,7 +56,8 @@ var Dustbin = React.createClass({
         var className = classNames([
             'drag-target',
             {'active': isActive && this.props.enabledTarget},
-            {'can-drop': !isActive && ((this.props.canDrop && this.props.enabledTarget) || this.state.show)}
+            {'can-drop': !isActive && ((this.props.canDrop && this.props.enabledTarget) || this.state.show)},
+            {'absolute': this.props.absolute}
         ])
 
         return this.props.connectDropTarget(

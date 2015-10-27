@@ -1,5 +1,6 @@
 var React = require('react')
 var DragSource = require('../toolbar/top/component/drag-source')
+var DragSourceAbsolute = require('../toolbar/top/component/drag-source-absolute')
 var DragTarget = require('./drag-target')
 var editAction = require('../actions/edit-action')
 var editStore = require('../stores/edit-store')
@@ -52,7 +53,7 @@ const Edit = React.createClass({
         editAction.selectComponent(this)
     },
 
-    // 触发修改子元素事件(由edit-action直接调用)
+    // 触发修改子元素事件(由edit-store直接调用)
     UpdateChildren: function (opts) {
         this.setState({
             customOpts: $.extend(true, this.state.customOpts, opts)
@@ -130,9 +131,23 @@ const Edit = React.createClass({
         this.props.parent.removeChild(this.props.index)
     },
 
+    // 绝对定位拖拽元素属性变化
+    onDragSourceAbsoluteChange: function (opts) {
+        // 与customOpts作merge
+        this.setState({
+            customOpts: $.extend(true, this.state.customOpts, opts)
+        }, function () {
+            // 更新父级childs 如果有父级的话（手机壳就没有）
+            this.props.parent && this.props.parent.UpdateChilds(this.props.index, this.state.customOpts)
+            // 同步左侧编辑器内容
+            editAction.selectComponent(this)
+        })
+    },
+
     render: function () {
         let className = classNames([
-            {'selected': this.state.selected}
+            {'selected': this.state.selected},
+            {'absolute': this.props.dragSourceAbsolute}
         ])
 
         let newChildProps = _.cloneDeep(this.state.childProps)
@@ -163,7 +178,21 @@ const Edit = React.createClass({
         if (this.props.dragTarget) {
             childComponent = (
                 <DragTarget enabledTarget={this.state.enabledTarget}
-                            onDrop={this.onDrop}>{childComponent}</DragTarget>
+                            onDrop={this.onDrop}
+                            absolute={this.props.dragSourceAbsolute}>{childComponent}</DragTarget>
+            )
+        }
+
+        // 绝对定位要包在最外层，所以判断逻辑放最后
+        if (this.props.dragSourceAbsolute) {
+            childComponent = (
+                <DragSourceAbsolute type={newChildProps.name}
+                                    left={newChildProps.opts.position.value.left}
+                                    top={newChildProps.opts.position.value.top}
+                                    onChange={this.onDragSourceAbsoluteChange}
+                                    edit={this}>
+                    {childComponent}
+                </DragSourceAbsolute>
             )
         }
 

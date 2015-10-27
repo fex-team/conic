@@ -3,6 +3,7 @@ var $ = require('jquery')
 var _ = require('lodash')
 var Edit = require('../../phone-edit/edit')
 var LayoutBox = require('../../components/layout-box')
+var LayoutBoxAbsolute = require('../../components/layout-box-absolute')
 var Components = require('../../components')
 var editStore = require('../../stores/edit-store')
 
@@ -77,6 +78,12 @@ let Container = React.createClass({
             }
             if (item.name === 'LayoutBox') {
                 component = LayoutBox
+                Editprops.dragTarget = true
+            }
+            if (item.name === 'LayoutBoxAbsolute') {
+                component = LayoutBoxAbsolute
+                Editprops.dragSource = false
+                Editprops.dragSourceAbsolute = true
                 Editprops.dragTarget = true
             }
             return React.createElement(Edit, Editprops, React.createElement(component))

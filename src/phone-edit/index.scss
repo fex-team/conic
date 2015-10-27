@@ -1,11 +1,19 @@
+$absolute-color: #A900FF;
+
 // 拖拽目标
 .drag-target {
   transition: all 0.2s ease;
   &.can-drop {
     outline: 1px solid #2db7f5;
+    &.absolute {
+      outline-color: $absolute-color;
+    }
   }
   &.active {
     outline: 3px solid #2db7f5;
+    &.absolute {
+      outline-color: $absolute-color;
+    }
   }
 }
 
@@ -13,4 +21,7 @@
 .selected {
   transition: all 0.2s ease;
   outline: 3px solid #2db7f5;
+  &.absolute {
+    outline-color: $absolute-color;
+  }
 }

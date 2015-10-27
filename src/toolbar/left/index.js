@@ -15,6 +15,7 @@ var Text = require('./text')
 var Number = require('./number')
 var Flex = require('./flex')
 var Style = require('./style')
+var Position = require('./position')
 
 let currentComponentOpts = null
 let currentComponentDesc = null
@@ -95,6 +96,12 @@ module.exports = React.createClass({
                         <Style key={key}
                                item={item}
                                onChange={this.onEditChange.bind(this,key)}/>
+                    )
+                case 'position':
+                    return (
+                        <Position key={key}
+                                  item={item}
+                                  onChange={this.onEditChange.bind(this,key)}/>
                     )
                 }
             })
