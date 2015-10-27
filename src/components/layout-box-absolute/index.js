@@ -82,7 +82,6 @@ let LayoutBoxAbsolute = React.createClass({
                 Editprops.dragSourceAbsolute = true
                 Editprops.dragTarget = true
             }
-            console.log(component, LayoutBox)
             return React.createElement(Edit, Editprops, React.createElement(component))
         })
 
