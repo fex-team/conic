@@ -5,7 +5,7 @@ module.exports = {
     output: {
         path: __dirname + '/output/',
         publicPath: '/output/',
-        filename: './src/index.js'
+        filename: './index.js'
     },
     module: {
         loaders: [
@@ -15,17 +15,21 @@ module.exports = {
                 loaders: ['jsx', 'babel', 'path-class-loader']
             }, {
                 test: /\.(scss|css)/,
-                loader: 'style!css!autoprefixer!sass'
+                exclude: /node_modules/,
+                loaders: ['style', 'css', 'autoprefixer', 'sass', 'css-path-loader']
+            }, {
+                test: /\.(scss|css)/,
+                include: /node_modules/,
+                loaders: ['style', 'css', 'autoprefixer', 'sass']
             }, {
                 test: /\.(png|jpg)$/,
                 exclude: /node_modules/,
-                loader: 'url-loader'
+                loader: 'url'
             }, {
                 test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: 'url'
             }, {
                 test: /\.json$/,
-                exclude: /node_modules/,
                 loader: 'json-loader'
             }
         ]
