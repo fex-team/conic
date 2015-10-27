@@ -15,7 +15,11 @@ var _ = require('lodash');
  * @returns {*}
  */
 function isReactElement (element) {
-    return _.isString(element.type);
+    if (_.isString(element)) {
+        return _.isString(element.type);
+    }
+    else if (_.isFunction(element)){
+    }
 }
 
 
@@ -74,11 +78,55 @@ function createReactElement (name, props, children) {
         return {};
     }
 
+    if (_.isString(name)) {
+
+    }
+
     props = props || {};
 
-    if (_.isString(name) && _.isArray(children) && _.every(children, isReactElement)) {
-        return React.createElement.apply(null, [name, props].concat(children));
-    }
+    //if (_.isArray(children) && _.every(children, isReactElement)) {
+    //    return React.createElement.apply(null, [name, props].concat(children));
+    //}
+}
+
+function addEditComponent (pageSource) {
+    var tmpSource = _.cloneDeep(pageSource);
+    var deepest = 0;
+    var editIndex = 0;
+
+    _.each(tmpSource, function (component, index) {
+        if (_.isObject(component)) {
+            var name = component.component;
+
+            var deep = tmpSource[parent].deep + 2;
+
+            if (deep > deepest) {
+                tmpSource.__deepest = deep;
+            }
+
+            var editJson = {
+                component: 'Edit'
+            };
+
+            //parentChildren = _.filter(parentChildren, function (value) {
+            //    var name = tmpSource[value.key].component;
+            //
+            //    return componentBlackList.join(',').indexOf(name) === -1;
+            //});
+            //
+            //children = _.map(children, function (childComponent) {
+            //    var key = childComponent.key;
+            //    tmpSource[key].parent = parent;
+            //    tmpSource[key].deep = deep;
+            //    childComponent.parent = parent;
+            //    return childComponent;
+            //});
+            //
+            //tmpSource[parent].children = parentChildren.concat(children);
+            //
+            //delete tmpSource[index];
+        }
+    });
 }
 
 
@@ -87,6 +135,8 @@ function generate (pageSource) {
     var rootKey = pageSource.__root;
     var rootChild = pageSource[rootKey].children[0];
     var rootChildKey = rootChild.key;
+    var wrapper = pageSource[rootChildKey].children[0];
+    var wrapperKey = wrapper.key;
     var gradeChildrens;
     var gradeChildrenElements = [];
     var deep = pageSource.__deepest;
@@ -104,22 +154,33 @@ function generate (pageSource) {
             deep--;
         }
 
+        // 这三个 each 其实是遍历被拆分成二维数组的一维数组. 效率小于 n2
         _.each(gradeChildrenElements, function (childArr, index) {
             _.each(childArr, function (child) {
                 var key = child.key;
+                var name = child.component;
                 var childElements = [];
 
+                // 非子代元素要需要子代元素对象才能构建
                 if (index > 0) {
                     _.each(child.children, function (value) {
                         var element = elementCache[value.key];
                         childElements.push(element);
                     });
                 }
-                elementCache[key] = createReactElement(child.component, child.props, childElements);
+
+                debugger;
+
+                if (name in components) {
+                    elementCache[key] = createReactElement(components[name], child.props, childElements);
+                }
+                else {
+                    elementCache[key] = createReactElement(name, child.props, childElements);
+                }
             });
         });
 
-        return elementCache[rootChildKey];
+        return elementCache[wrapperKey];
     }
     else {
         console.warn('missing components:' + missingComponents.join(','));
