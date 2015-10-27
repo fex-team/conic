@@ -18,7 +18,16 @@ const Edit = React.createClass({
             childProps: this.props.children && _.cloneDeep(this.props.children.props),
             // 子元素属性数组
             childs: this.props.childs,
-            selected: false
+            selected: this.props.selected || false
+        }
+    },
+
+    componentDidMount: function () {
+        // 如果默认是选中状态，通知左侧组件更新
+        if (this.props.selected) {
+            setTimeout(()=> {
+                editAction.selectComponent(this)
+            })
         }
     },
 
@@ -97,8 +106,11 @@ const Edit = React.createClass({
         // 添加子元素的属性
         let childInfo = {
             name: item.type,
-            uniqueKey: uniqueKey
+            uniqueKey: uniqueKey,
+            selected: item.edit ? item.edit.state.selected : false
         }
+
+        // 如果有edit，是选中状态，因为组件会先被销毁，所以更新左侧编辑信息
 
         // 如果有edit，加上属性
         if (item.edit) {
@@ -111,9 +123,16 @@ const Edit = React.createClass({
         this.setState({
             childs: newChilds
         }, function () {
-            // 如果是已在界面上的组件，移除
             if (item.existComponent) {
-                item.edit.removeSelf()
+                // 如果是已在界面上的组件且是选中状态，移除左侧编辑
+                if (item.edit && item.edit.state.selected) {
+                    editAction.selectComponent(null)
+                }
+
+                // 等左侧编辑移除完毕了，再销毁组件
+                setTimeout(function () {
+                    item.edit.removeSelf()
+                })
             }
         })
     },

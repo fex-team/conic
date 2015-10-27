@@ -13,9 +13,6 @@ const source = {
             props.onChangeEnableTarget(false)
         }
 
-        // 选择为空
-        editAction.selectComponent(null)
-
         return {
             type: props.type,
             existComponent: props.existComponent || false,

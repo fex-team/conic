@@ -41,6 +41,11 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
     // 选择编辑组件
     switch (action.type) {
     case 'selectComponent':
+        // 如果是同一个组件，不做处理
+        if (action.component === currentComponent){
+            return
+        }
+
         previousComponent = currentComponent
         currentComponent = action.component
 

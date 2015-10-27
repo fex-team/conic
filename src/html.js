@@ -9,7 +9,7 @@ module.exports = `
 <meta name="format-detection"
       content="telephone=no">
 
-<title>Page 贴吧移动端构建平台</title>
+<title>gaea 贴吧移动端构建平台</title>
 
 <body>
       <div id="react-dom"></div>
