@@ -15,10 +15,11 @@ let Container = React.createClass({
                 flex: {
                     edit: 'flex',
                     value: {
-                        flexDirection: 'row',
+                        display: 'flex',
+                        flexDirection: 'column',
                         flexWrap: 'nowrap',
                         justifyContent: 'flex-start',
-                        alignItems: 'stretch'
+                        alignItems: 'flex-start'
                     }
                 },
                 base: {
