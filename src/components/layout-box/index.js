@@ -58,7 +58,8 @@ let LayoutBox = React.createClass({
                 index: index,
                 customOpts: item.opts || {},
                 dragSource: true,
-                childs: item.childs || []
+                childs: item.childs || [],
+                selected: item.selected || false
             }
             if (item.name === 'LayoutBox') {
                 component = LayoutBox
