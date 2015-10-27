@@ -6,3 +6,6 @@ install:
 before_script:
   - npm install -g webpack
 script: npm start
+branches:
+  only:
+      - gh-pages
