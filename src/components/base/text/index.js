@@ -1,5 +1,9 @@
 const React = require('react')
 
+const defaultStyle = {
+    wordBreak: 'break-all'
+}
+
 const Text = React.createClass({
     getDefaultProps: function () {
         return {
@@ -30,7 +34,7 @@ const Text = React.createClass({
 
     render: function () {
         return (
-            <div style={this.props.opts.style.value}>
+            <div style={Object.assign(this.props.opts.style.value,defaultStyle)}>
                 {this.props.opts.text.value}
             </div>
         )

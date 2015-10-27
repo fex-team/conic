@@ -1,5 +1,6 @@
 var React = require('react')
 var DragSource = require('../drag-source')
+var DragSourceAbsolute = require('../drag-source-absolute')
 var Component = require('../component')
 
 module.exports = React.createClass({
@@ -14,6 +15,9 @@ module.exports = React.createClass({
                     <DragSource type="LayoutBox">
                         <Component icon="square-o">万能矩形</Component>
                     </DragSource>
+                    <DragSourceAbsolute type="LayoutBox">
+                        <Component icon="square">自由矩形</Component>
+                    </DragSourceAbsolute>
                 </div>
             </div>
         )

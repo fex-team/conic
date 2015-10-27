@@ -17,8 +17,6 @@ var boxTarget = {
 
         // 获得拖拽的组件
         const item = monitor.getItem()
-        // TODO: 拖拽组件父级没有变情况的处理
-        console.log(props, item)
         props.onDrop(item)
     }
 }
@@ -58,7 +56,8 @@ var Dustbin = React.createClass({
         var className = classNames([
             'drag-target',
             {'active': isActive && this.props.enabledTarget},
-            {'can-drop': !isActive && ((this.props.canDrop && this.props.enabledTarget) || this.state.show)}
+            {'can-drop': !isActive && ((this.props.canDrop && this.props.enabledTarget) || this.state.show)},
+            {'absolute': this.props.absolute}
         ])
 
         return this.props.connectDropTarget(

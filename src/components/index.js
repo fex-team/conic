@@ -11,6 +11,5 @@ module.exports = {
     'ReactSwiper': require('./swiper/swiper.react').Swiper,
     'ReactSlider': require('./swiper/swiper.react').Slider,
     'ReactPagination': require('./swiper/swiper.react').Pagination,
-    'Edit': require('../phone-edit/edit'),
     'BaseText': require('./base/text')
 };

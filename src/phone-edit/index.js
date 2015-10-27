@@ -1,13 +1,13 @@
 var React = require('react')
-var DragTarget = require('./drag-target')
-var DragSource = require('../toolbar/top/component/drag-source')
 var Edit = require('./edit')
 var Container = require('../components/container')
+var DragContainer = require('./drag-container')
+var DragAround = require('./drag-around')
 require('./index.scss')
 
-var defaultJson = require('./default.json')
+var defaultJson = require('./default1.json')
 
-var Root = React.createClass({
+var PhoneEdit = React.createClass({
     getInitialState: function () {
         return {}
     },
@@ -15,13 +15,17 @@ var Root = React.createClass({
     render: function () {
         return (
             <div>
-                <Edit childs={defaultJson}
-                      dragTarget="true">
-                    <Container/>
-                </Edit>
+                <DragContainer>
+                    <DragAround>
+                        <Edit childs={defaultJson}
+                              dragTarget="true">
+                            <Container/>
+                        </Edit>
+                    </DragAround>
+                </DragContainer>
             </div>
         )
     }
 })
 
-module.exports = Root
+module.exports = PhoneEdit
