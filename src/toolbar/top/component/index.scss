@@ -1,8 +1,10 @@
+@import "../../../minxin";
+
 .container {
   height: 79px;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: nowrap;
   // 拖拽源
   .drag-source {
@@ -10,14 +12,16 @@
     flex-direction: column;
     align-items: center;
     cursor: move;
-    padding: 12px 15px;
+    padding: 13px 15px;
     transition: all .3s ease;
+    border-right: 1px solid $border-color;
     i {
       font-size: 30px;
       margin-bottom: 5px;
     }
     &:hover {
-      background: #222;
+      color: $font-active-color;
+      background-color: $bg-active-color;
     }
   }
 }

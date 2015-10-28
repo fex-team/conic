@@ -1,3 +1,5 @@
+@import "../../minxin";
+
 .nothing {
   display: flex;
   justify-content: center;
@@ -19,7 +21,7 @@
   height: 60px;
   font-weight: bold;
   font-size: 18px;
-  color: #ccc;
+  color: $font-color;
 }
 
 // 手机壳标题

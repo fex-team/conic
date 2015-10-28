@@ -51,7 +51,11 @@ const Edit = React.createClass({
     // 触发选择组件事件
     onClick: function (event) {
         event && event.stopPropagation()
+        this.onClickAction()
+    },
 
+    // 触发选择组件事件
+    onClickAction: function () {
         if (this.state.selected) {
             return
         }
