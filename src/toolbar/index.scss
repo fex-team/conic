@@ -1,3 +1,5 @@
+@import "../minxin";
+
 // 全屏自适应布局
 html {
   _height: auto;
@@ -15,19 +17,22 @@ html {
 
 .g-sd, .g-mn, .g-rd {
   top: 80px;
-  bottom: 40px;
+  bottom: 30px;
   _height: 100%;
   overflow: auto;
 }
 
 .g-sd, .g-rd, .g-ft {
-  color: #ccc;
-  background: #333;
+  color: $font-color;
+  background: $bg-color;
 }
 
 .g-rd, .g-sd {
-  border-top: 1px solid #444;
-  border-bottom: 1px solid #222;
+  box-shadow: inset 0 -1px 0 $shadow-color;
+}
+
+.g-sd {
+  overflow-x: hidden;
 }
 
 .g-rd {
@@ -39,10 +44,11 @@ html {
 .g-hd {
   top: 0;
   height: 80px;
+  border-bottom: 1px solid $border-color;
 }
 
 .g-sd {
-  width: 350px;
+  width: 300px;
   user-select: none;
 }
 
@@ -50,7 +56,7 @@ html {
   display: flex;
   justify-content: center;
   _position: relative;
-  left: 350px;
+  left: 300px;
   right: 250px;
   _top: 0;
   _left: 0;
@@ -60,8 +66,8 @@ html {
 
 .g-ft {
   bottom: 0;
-  height: 40px;
-  border-top: 1px solid #444;
+  height: 30px;
+  border-top: 1px solid $border-color;
 }
 
 .phone-dev {
@@ -69,7 +75,7 @@ html {
   height: 1200px;
   margin-top: 20px;
   overflow: hidden;
-  border: 1px solid #ccc;
+  border: 1px solid $font-color;
   background: white;
 }
 

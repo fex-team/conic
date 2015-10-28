@@ -1,19 +1,24 @@
+@import "../../../minxin";
+
 .menu-table {
   td {
     text-align: center;
-    background-color: #333;
+    background-color: $bg-color;
     height: 26px;
     width: 86px;
     padding: 0 10px;
     line-height: 26px;
-    border: 1px solid #444;
+    border: 1px solid $border-color;
     cursor: pointer;
     transition: all .3s ease;
+    color: $font-dark-color;
     &:hover {
-      background: #444;
+      color: $font-color;
+      background-color: $bg-hover-color;
     }
     &.active {
-      background: #444;
+      color: $font-active-color;
+      background-color: $bg-active-color;
     }
   }
 }

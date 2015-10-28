@@ -1,3 +1,5 @@
+@import "./minxin";
+
 html, body {
   width: 100%;
   height: 100%;
@@ -21,7 +23,7 @@ html, body {
 }
 
 body {
-  font-size: 14px;
+  font-size: 12px;
   background: #444;
 }
 
@@ -83,9 +85,10 @@ body {
 
 // input
 .ant-input {
-  border-color: #222;
-  background-color: #444;
-  color: #ccc;
+  border-color: $border-color;
+  background: linear-gradient(#343434, #393939);
+  box-shadow: 0 1px 0 $shadow-color;
+  color: $font-color;
 }
 
 .ant-input::-moz-placeholder {
@@ -119,6 +122,31 @@ body {
 
 .ant-form-item {
   margin-bottom: 15px;
+}
+
+// 整体form高度
+form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-input-group-addon {
+  height: $input-height;
+}
+
+.ant-input-number-input {
+  height: $input-height;
+  line-height: $input-height;
+  background: -webkit-linear-gradient(#343434, #393939);
+}
+
+.ant-input-number-input-wrap {
+  height: $input-height;
+}
+
+.ant-select-selection--single {
+  height: $input-height;
+}
+
+// label高度
+.ant-form-horizontal label, .ant-form-inline label {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 // 数字输入
@@ -189,8 +217,8 @@ body {
 
 // Collapse 折叠面板
 .ant-collapse {
-  background-color: #333;
-  border: 1px solid #444;
+  background-color: $bg-panel-color;
+  border: 1px solid $border-panel-color;
   margin-top: -1px;
 }
 
@@ -199,12 +227,23 @@ body {
 }
 
 .ant-collapse-content {
-  border-top: 1px solid #444;
-  background-color: #272727;
+  border-top: 1px solid $border-color;
+  background-color: $bg-color;
+}
+
+.ant-collapse {
+  border-radius: 0;
+  border-right: none;
+  border-left: none;
 }
 
 .ant-collapse > .ant-collapse-item {
-  border-color: #444;
+  border-color: $border-color;
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+  height: 28px;
+  line-height: 28px;
 }
 
 // switch 开关
@@ -214,4 +253,12 @@ body {
 
 .ant-switch-checked {
   background-color: #2db7f5;
+}
+
+// 高科技颜色字体
+.hack-color {
+  background-image: -webkit-linear-gradient(top, #769944 0%, #769944 22.916667%, #9fb84a 37.5%, #e8e361 55%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  color: #e8e361;
 }

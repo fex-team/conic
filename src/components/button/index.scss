@@ -1,3 +1,5 @@
+@import "../../minxin";
+
 .btn {
   display: inline-block;
   line-height: 229%;
@@ -60,5 +62,5 @@
 
 .btn-disabled, .btn-disabled:active {
   background: #f1f3f6;
-  color: #ccc;
+  color: $font-color;
 }

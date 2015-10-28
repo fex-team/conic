@@ -1,7 +1,6 @@
 const React = require('react')
 const Collapse = require('antd/lib/collapse')
 const Panel = Collapse.Panel
-
 const Tree = require('./tree')
 const Auxiliary = require('./auxiliary')
 
