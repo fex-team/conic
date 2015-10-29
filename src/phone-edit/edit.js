@@ -8,12 +8,21 @@ var classNames = require('classnames')
 var _ = require('lodash')
 var $ = require('jquery')
 
+// 根据edit生成树状json配置
+function getTree(edit, info) {
+    info.opts = edit.state.customOpts
+    info.childs = edit.state.childs
+    edit.childInstance.getChildsEdit && edit.childInstance.getChildsEdit().map((item, index)=> {
+        getTree(item, info.childs[index])
+    })
+}
+
 const Edit = React.createClass({
     getInitialState: function () {
         return {
             enabledTarget: true,
             // 自定义属性
-            customOpts: this.props.customOpts,
+            customOpts: this.props.opts,
             // 包含的组件属性
             childProps: this.props.children && _.cloneDeep(this.props.children.props),
             // 子元素属性数组
@@ -33,9 +42,9 @@ const Edit = React.createClass({
 
     componentWillReceiveProps: function (nextProps) {
         // 更新state中customOpts
-        if (!_.isEqual(this.state.customOpts, nextProps.customOpts) || (this.state.selected && editStore.get() !== this)) {
+        if (!_.isEqual(this.state.customOpts, nextProps.opts) || (this.state.selected && editStore.get() !== this)) {
             this.setState({
-                customOpts: nextProps.customOpts,
+                customOpts: $.extend(true, this.state.customOpts, nextProps.opts),
                 selected: false
             })
         }
@@ -51,11 +60,11 @@ const Edit = React.createClass({
     // 触发选择组件事件
     onClick: function (event) {
         event && event.stopPropagation()
-        this.onClickAction()
+        this.clickAction()
     },
 
     // 触发选择组件事件
-    onClickAction: function () {
+    clickAction: function () {
         if (this.state.selected) {
             return
         }
@@ -70,18 +79,6 @@ const Edit = React.createClass({
     UpdateChildren: function (opts) {
         this.setState({
             customOpts: $.extend(true, this.state.customOpts, opts)
-        }, function () {
-            // 更新父级childs 如果有父级的话（手机壳就没有）
-            this.props.parent && this.props.parent.UpdateChilds(this.props.index, this.state.customOpts)
-        })
-    },
-
-    // 更新自身childs
-    UpdateChilds: function (index, opts) {
-        let newChilds = this.state.childs
-        newChilds[index].opts = opts
-        this.setState({
-            childs: newChilds
         })
     },
 
@@ -114,12 +111,29 @@ const Edit = React.createClass({
             selected: item.edit ? item.edit.state.selected : false
         }
 
-        // 如果有edit，是选中状态，因为组件会先被销毁，所以更新左侧编辑信息
-
-        // 如果有edit，加上属性
+        // 如果有edit，是从模拟器中拖拽的元素，保留原有属性
         if (item.edit) {
             childInfo.opts = item.edit.state.customOpts
-            childInfo.childs = item.edit.state.childs
+            // 循环所有childs附加到当前state上（如果是布局元素）
+            if (item.edit.childInstance.state.childs) {
+                let info = {}
+                getTree(item.edit, info)
+                childInfo.childs = info.childs
+            }
+        }
+
+        // 如果这个组件是新拖拽的万能矩形，不是最外层，则宽度设定为父级宽度的一半
+        if (!item.edit && item.type === 'LayoutBox' && this.state.childProps.name !== 'Container') {
+            let customWidth = this.state.customOpts && this.state.customOpts.base && this.state.customOpts.base.value.width
+            let baseWidth = this.state.childProps.opts.base.value.width
+            let parentWidth = customWidth || baseWidth
+            childInfo.opts = $.extend(true, childInfo.opts, {
+                base: {
+                    value: {
+                        width: parentWidth / 2
+                    }
+                }
+            })
         }
 
         newChilds.push(childInfo)
@@ -179,6 +193,9 @@ const Edit = React.createClass({
         // 将自定义属性与组件原本属性merge
         newChildProps.opts = $.extend(true, newChildProps.opts, this.state.customOpts)
         newChildProps.childs = this.state.childs
+        newChildProps.ref = (ref)=> {
+            this.childInstance = ref
+        }
 
         let childComponent = (
             <div className={className}

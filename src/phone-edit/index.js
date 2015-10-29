@@ -5,7 +5,7 @@ var DragContainer = require('./drag-container')
 var DragAround = require('./drag-around')
 require('./index.scss')
 
-var defaultJson = require('./default1.json')
+var defaultJson = require('./default.json')
 
 var PhoneEdit = React.createClass({
     getInitialState: function () {
@@ -17,8 +17,7 @@ var PhoneEdit = React.createClass({
             <div>
                 <DragContainer>
                     <DragAround>
-                        <Edit childs={defaultJson}
-                              dragTarget="true">
+                        <Edit {...defaultJson} dragTarget="true">
                             <Container/>
                         </Edit>
                     </DragAround>

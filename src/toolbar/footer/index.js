@@ -43,7 +43,7 @@ module.exports = React.createClass({
     },
 
     selectComponent: function (edit) {
-        edit.onClickAction()
+        edit.clickAction()
     },
 
     render: function () {

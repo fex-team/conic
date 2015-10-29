@@ -42,7 +42,7 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
     switch (action.type) {
     case 'selectComponent':
         // 如果是同一个组件，不做处理
-        if (action.component === currentComponent){
+        if (action.component === currentComponent) {
             return
         }
 

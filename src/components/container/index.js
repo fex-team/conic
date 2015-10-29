@@ -29,7 +29,8 @@ let Container = React.createClass({
                         padding: 0,
                         fontSize: 14,
                         color: '#333',
-                        background: 'white'
+                        background: 'white',
+                        width: 500
                     },
                     edit: 'style'
                 }
@@ -72,7 +73,7 @@ let Container = React.createClass({
                 key: item.uniqueKey,
                 parent: this.props.edit || null,
                 index: index,
-                customOpts: item.opts || {},
+                opts: item.opts || {},
                 dragSource: true,
                 childs: item.childs || [],
                 selected: item.selected || false
