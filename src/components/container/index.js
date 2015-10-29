@@ -6,8 +6,11 @@ var LayoutBox = require('../../components/layout-box')
 var LayoutBoxAbsolute = require('../../components/layout-box-absolute')
 var Components = require('../../components')
 var editStore = require('../../stores/edit-store')
+const pureRenderMixin = require('../lib/pureRenderMixin')
 
 let Container = React.createClass({
+    mixins: [pureRenderMixin],
+
     getDefaultProps: function () {
         return {
             name: 'Container',
@@ -67,7 +70,9 @@ let Container = React.createClass({
     },
 
     render: function () {
-        let children = this.state.childs.map((item, index)=> {
+        console.log('container')
+
+        let children = this.props.childs.map((item, index)=> {
             let component = Components[item.name]
             let Editprops = {
                 key: item.uniqueKey,

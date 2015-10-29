@@ -23,10 +23,11 @@ module.exports = {
     },
 
     render: function () {
+
         // 存储子元素的edit引用清空
         this.childEdits = []
 
-        let children = this.state.childs.map((item, index)=> {
+        let children = this.props.childs.map((item, index)=> {
             let component = Components[item.name]
             let Editprops = {
                 key: item.uniqueKey,
@@ -45,13 +46,18 @@ module.exports = {
             if (item.name === this.props.name) {
                 component = this.getSelfComponent()
                 Editprops.dragTarget = true
+            } else if (item.name === 'LayoutBox' && this.props.name === 'LayoutBoxAbsolute') {
+                component = this.getLayoutBox()
+                Editprops.dragTarget = true
             }
             return React.createElement(Edit, Editprops, React.createElement(component))
         })
 
+        var value = _.cloneDeep(this.props.opts.flex.value)
+
         return (
             <div>
-                <div style={Object.assign(this.props.opts.flex.value,this.props.opts.base.value)}>
+                <div style={_.extend(value, this.props.opts.base.value)}>
                     {children}
                 </div>
             </div>

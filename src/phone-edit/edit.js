@@ -96,7 +96,7 @@ const Edit = React.createClass({
             return
         }
 
-        let newChilds = this.state.childs
+        let newChilds = _.cloneDeep(this.state.childs)
 
         // 分配一个唯一key
         let uniqueKey = 0
@@ -125,12 +125,22 @@ const Edit = React.createClass({
         // 如果这个组件是新拖拽的万能矩形，不是最外层，则宽度设定为父级宽度的一半
         if (!item.edit && item.type === 'LayoutBox' && this.state.childProps.name !== 'Container') {
             let customWidth = this.state.customOpts && this.state.customOpts.base && this.state.customOpts.base.value.width
+            let customHeight = this.state.customOpts && this.state.customOpts.base && this.state.customOpts.base.value.height
+
             let baseWidth = this.state.childProps.opts.base.value.width
             let parentWidth = customWidth || baseWidth
+
+            let baseHeight = this.state.childProps.opts.base.value.height
+            let parentHeight = customHeight || baseHeight
+
+            // 获取拖拽父级的布局方式
+            let parentFlexDirection = this.state.customOpts && this.state.customOpts.flex && this.state.customOpts.flex.value.flexDirection || 'row'
+
             childInfo.opts = $.extend(true, childInfo.opts, {
                 base: {
                     value: {
-                        width: parentWidth / 2
+                        width: parentFlexDirection === 'row' || parentFlexDirection === 'row-reverse' ? parentWidth / 2 : parentWidth,
+                        height: parentFlexDirection === 'column' || parentFlexDirection === 'column-reverse' ? parentHeight / 2 : parentHeight
                     }
                 }
             })
@@ -156,7 +166,7 @@ const Edit = React.createClass({
     },
 
     removeChild: function (index) {
-        let newChilds = this.state.childs
+        let newChilds = this.props.childs
         _.pullAt(newChilds, index)
 
         this.setState({
@@ -174,8 +184,6 @@ const Edit = React.createClass({
         this.setState({
             customOpts: $.extend(true, this.state.customOpts, opts)
         }, function () {
-            // 更新父级childs 如果有父级的话（手机壳就没有）
-            this.props.parent && this.props.parent.UpdateChilds(this.props.index, this.state.customOpts)
             // 同步左侧编辑器内容
             editAction.selectComponent(this)
         })
