@@ -1,8 +1,15 @@
-[
-  {
-    "name": "BaseText"
-  },
-  {
-    "name": "LayoutBoxAbsolute"
-  }
-]
+{
+  "name": "Container",
+  "opts": {},
+  "childs": [
+    {
+      "name": "BaseText"
+    },
+    {
+      "name": "LayoutBox"
+    },
+    {
+      "name": "LayoutBoxAbsolute"
+    }
+  ]
+}
