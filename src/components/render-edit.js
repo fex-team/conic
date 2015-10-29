@@ -45,7 +45,11 @@ module.exports = {
             if (item.name === this.props.name) {
                 component = this.getSelfComponent()
                 Editprops.dragTarget = true
+            } else if (item.name === 'LayoutBox' && this.props.name === 'LayoutBoxAbsolute') {
+                component = this.getLayoutBox()
+                Editprops.dragTarget = true
             }
+
             return React.createElement(Edit, Editprops, React.createElement(component))
         })
 

@@ -1,5 +1,6 @@
 var React = require('react')
 var renderEdit = require('../render-edit')
+var LayoutBox = require('../layout-box')
 
 const defaultStyle = {
     position: 'absolute'
@@ -10,6 +11,10 @@ let LayoutBoxAbsolute = React.createClass({
 
     getSelfComponent: function () {
         return LayoutBoxAbsolute
+    },
+
+    getLayoutBox: function () {
+        return LayoutBox
     },
 
     getDefaultProps: function () {
