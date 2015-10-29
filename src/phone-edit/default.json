@@ -4,6 +4,9 @@
   "childs": [
     {
       "name": "BaseText"
+    },
+    {
+      "name": "LayoutBoxAbsolute"
     }
   ]
 }
