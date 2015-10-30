@@ -96,7 +96,7 @@ const Edit = React.createClass({
             return
         }
 
-        let newChilds = this.state.childs
+        let newChilds = _.cloneDeep(this.state.childs)
 
         // 分配一个唯一key
         let uniqueKey = 0
@@ -166,7 +166,7 @@ const Edit = React.createClass({
     },
 
     removeChild: function (index) {
-        let newChilds = this.state.childs
+        let newChilds = this.props.childs
         _.pullAt(newChilds, index)
 
         this.setState({

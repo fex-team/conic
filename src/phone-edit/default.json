@@ -2,11 +2,5 @@
   "name": "Container",
   "opts": {},
   "childs": [
-    {
-      "name": "BaseText"
-    },
-    {
-      "name": "LayoutBoxAbsolute"
-    }
   ]
 }
