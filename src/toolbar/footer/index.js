@@ -1,6 +1,7 @@
 var React = require('react')
 var editStore = require('../../stores/edit-store')
 var classnames = require('classnames')
+var iconMap = require('../top/component/icon-map')
 require('./index.scss')
 
 let editLists = []
@@ -56,7 +57,10 @@ module.exports = React.createClass({
             return (
                 <div className={className}
                      key={index}
-                     onClick={this.selectComponent.bind(this,item)}>{item.state.childProps.desc}</div>
+                     onClick={this.selectComponent.bind(this,item)}>
+                    <i style={{marginRight:5}}
+                       className={'fa fa-'+iconMap[item.state.childProps.name]}></i>{item.state.childProps.desc}
+                </div>
             )
         })
 
