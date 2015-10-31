@@ -3,7 +3,7 @@
 // 全屏自适应布局
 html {
   _height: auto;
-  _padding: 80px 0 50px;
+  _padding: 110px 0 50px;
 }
 
 .g-hd, .g-sd, .g-mn, .g-ft {
@@ -16,7 +16,7 @@ html {
 }
 
 .g-sd, .g-mn, .g-rd {
-  top: 80px;
+  top: 110px;
   bottom: 30px;
   _height: 100%;
   overflow: auto;
@@ -43,7 +43,7 @@ html {
 
 .g-hd {
   top: 0;
-  height: 80px;
+  height: 110px;
   border-bottom: 1px solid $border-color;
 }
 

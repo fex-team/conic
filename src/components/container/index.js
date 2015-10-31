@@ -6,7 +6,7 @@ var LayoutBox = require('../../components/layout-box')
 var LayoutBoxAbsolute = require('../../components/layout-box-absolute')
 var Components = require('../../components')
 var editStore = require('../../stores/edit-store')
-const pureRenderMixin = require('../lib/pureRenderMixin')
+const pureRenderMixin = require('../mixins/pureRenderMixin')
 
 let Container = React.createClass({
     mixins: [pureRenderMixin],
@@ -41,12 +41,6 @@ let Container = React.createClass({
         }
     },
 
-    getInitialState: function () {
-        return {
-            childs: this.props.childs || []
-        }
-    },
-
     onSelectContainer: function () {
         // 保证上一个dispatcher已完成
         setTimeout(()=> {
@@ -62,16 +56,7 @@ let Container = React.createClass({
         editStore.removeSelectContainerListener(this.onSelectContainer)
     },
 
-    componentWillMount: function () {
-        // 为每个子组件生成uniqueKey
-        this.state.childs.map((item, index)=> {
-            item.uniqueKey = index
-        })
-    },
-
     render: function () {
-        console.log('container')
-
         let children = this.props.childs.map((item, index)=> {
             let component = Components[item.name]
             let Editprops = {
@@ -103,7 +88,7 @@ let Container = React.createClass({
 
         return (
             <div>
-                <div style={Object.assign(this.props.opts.flex.value,this.props.opts.base.value,defaultStyle)}>
+                <div style={_.assign(this.props.opts.flex.value,this.props.opts.base.value,defaultStyle)}>
                     {children}
                 </div>
             </div>

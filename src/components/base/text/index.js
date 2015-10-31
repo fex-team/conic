@@ -1,5 +1,6 @@
 const React = require('react')
-const pureRenderMixin = require('../../lib/pureRenderMixin')
+const pureRenderMixin = require('../../mixins/pureRenderMixin')
+const _ = require('lodash')
 
 const defaultStyle = {
     wordBreak: 'break-all'
@@ -23,7 +24,7 @@ const Text = React.createClass({
                         margin: 0,
                         padding: 0,
                         color: '#333',
-                        fontSize: 14,
+                        fontSize: 14
                     },
                     edit: 'style'
                 }
@@ -36,11 +37,10 @@ const Text = React.createClass({
     },
 
     render: function () {
-        console.log('text')
+        console.log('render text')
 
-        var value = _.cloneDeep(this.props.opts.style.value)
         return (
-            <div style={Object.assign(value, defaultStyle)}>
+            <div style={_.assign(this.props.opts.style.value, defaultStyle)}>
                 {this.props.opts.text.value}
             </div>
         )

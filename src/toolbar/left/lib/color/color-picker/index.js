@@ -2,6 +2,10 @@ var React = require('react')
 var ColorPicker = require('react-color')
 var colorAction = require('../action')
 
+function getRGBA(color) {
+    return `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`
+}
+
 module.exports = React.createClass({
     getInitialState: function () {
         return {
@@ -20,9 +24,14 @@ module.exports = React.createClass({
     },
 
     handleChange: function (color) {
-        let rgba = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`
+        let rgba = getRGBA(color)
         this.props.onChange(rgba)
         colorAction.changeColor(rgba)
+    },
+
+    handleChangeComplete: function (color) {
+        let rgba = getRGBA(color)
+        this.props.onChangeComplete(rgba)
     },
 
     handleClose() {
@@ -42,6 +51,7 @@ module.exports = React.createClass({
                              color={this.state.color}
                              display={this.state.showPicker}
                              onChange={this.handleChange}
+                             onChangeComplete={this.handleChangeComplete}
                              onClose={this.handleClose}
                              type="chrome"/>
             </div>
