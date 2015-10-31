@@ -4,6 +4,7 @@ var DragSourceAbsolute = require('../toolbar/top/component/drag-source-absolute'
 var DragTarget = require('./drag-target')
 var editAction = require('../actions/edit-action')
 var editStore = require('../stores/edit-store')
+var footerAction = require('../actions/footer-action')
 var classNames = require('classnames')
 var _ = require('lodash')
 var $ = require('jquery')
@@ -31,13 +32,26 @@ const Edit = React.createClass({
         }
     },
 
+    componentWillMount: function () {
+        // 为每个子组件生成uniqueKey
+        this.state.childs.map((item, index)=> {
+            item.uniqueKey = index
+        })
+    },
+
     componentDidMount: function () {
+        footerAction.increaseInstanceNumber()
+
         // 如果默认是选中状态，通知左侧组件更新
         if (this.props.selected) {
             setTimeout(()=> {
                 editAction.selectComponent(this)
             })
         }
+    },
+
+    componentWillUnmount: function () {
+        footerAction.reduceInstanceNumber()
     },
 
     componentWillReceiveProps: function (nextProps) {
@@ -114,8 +128,8 @@ const Edit = React.createClass({
         // 如果有edit，是从模拟器中拖拽的元素，保留原有属性
         if (item.edit) {
             childInfo.opts = item.edit.state.customOpts
-            // 循环所有childs附加到当前state上（如果是布局元素）
-            if (item.edit.childInstance.state.childs) {
+            // 循环所有childs附加到当前state上（如果有子元素）
+            if (item.edit.state.childs) {
                 let info = {}
                 getTree(item.edit, info)
                 childInfo.childs = info.childs
@@ -152,21 +166,16 @@ const Edit = React.createClass({
             childs: newChilds
         }, function () {
             if (item.existComponent) {
-                // 如果是已在界面上的组件且是选中状态，移除左侧编辑
-                if (item.edit && item.edit.state.selected) {
-                    editAction.selectComponent(null)
-                }
-
-                // 等左侧编辑移除完毕了，再销毁组件
-                setTimeout(function () {
-                    item.edit.removeSelf()
-                })
+                // 销毁组件
+                //setTimeout(function () {
+                item.edit.removeSelf()
+                //})
             }
         })
     },
 
     removeChild: function (index) {
-        let newChilds = this.props.childs
+        let newChilds = _.cloneDeep(this.state.childs)
         _.pullAt(newChilds, index)
 
         this.setState({
@@ -196,6 +205,7 @@ const Edit = React.createClass({
         ])
 
         let newChildProps = _.cloneDeep(this.state.childProps)
+
         // 将edit本身传给子组件
         newChildProps.edit = this
         // 将自定义属性与组件原本属性merge

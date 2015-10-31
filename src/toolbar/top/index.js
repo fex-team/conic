@@ -1,7 +1,8 @@
 var React = require('react')
-var Menu = require('./menu')
+var ComponentTable = require('./component-table')
 var Component = require('./component')
 var OperateButton = require('./operate-button')
+var Menu = require('./menu')
 require('./index.scss')
 
 module.exports = React.createClass({
@@ -21,10 +22,11 @@ module.exports = React.createClass({
     render: function () {
         return (
             <div>
+                <Menu/>
                 <div className="f-cb layout">
                     <div className="g-sd51">
                         <div className="table-response">
-                            <Menu onChangeType={this.onChangeMenuType}/>
+                            <ComponentTable onChangeType={this.onChangeMenuType}/>
                         </div>
                     </div>
                     <div className="g-mn5">

@@ -28,6 +28,12 @@ module.exports = React.createClass({
         })
     },
 
+    onChangeComplete: function (color) {
+        this.setState({
+            value: color
+        })
+    },
+
     render: function () {
         return (
             <div>
@@ -36,6 +42,7 @@ module.exports = React.createClass({
                 <ColorPicker color={this.state.value}
                              onChangeShow={this.onChangeShow}
                              onChange={this.handleChange}
+                             onChangeComplete={this.onChangeComplete}
                              show={this.state.showPicker}/>
             </div>
         )

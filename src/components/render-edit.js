@@ -2,28 +2,15 @@ var React = require('react')
 var Components = require('../components')
 var Edit = require('../phone-edit/edit')
 var LayoutBox = require('../components/layout-box')
+var _ = require('lodash')
 
 module.exports = {
-    getInitialState: function () {
-        return {
-            childs: this.props.childs
-        }
-    },
-
-    componentWillMount: function () {
-        // 为每个子组件生成uniqueKey
-        this.state.childs.map((item, index)=> {
-            item.uniqueKey = index
-        })
-    },
-
     // 获得子元素的edit引用
     getChildsEdit: function () {
         return this.childEdits
     },
 
     render: function () {
-
         // 存储子元素的edit引用清空
         this.childEdits = []
 
@@ -53,11 +40,10 @@ module.exports = {
             return React.createElement(Edit, Editprops, React.createElement(component))
         })
 
-        var value = _.cloneDeep(this.props.opts.flex.value)
-
+        console.log('layout render')
         return (
             <div>
-                <div style={_.extend(value, this.props.opts.base.value)}>
+                <div style={_.assign(this.props.opts.flex.value, this.props.opts.base.value)}>
                     {children}
                 </div>
             </div>
