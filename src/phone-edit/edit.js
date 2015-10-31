@@ -7,15 +7,7 @@ var editStore = require('../stores/edit-store')
 var classNames = require('classnames')
 var _ = require('lodash')
 var $ = require('jquery')
-
-// 根据edit生成树状json配置
-function getTree(edit, info) {
-    info.opts = edit.state.customOpts
-    info.childs = edit.state.childs
-    edit.childInstance.getChildsEdit && edit.childInstance.getChildsEdit().map((item, index)=> {
-        getTree(item, info.childs[index])
-    })
-}
+var getTree = require('./getTree')
 
 const Edit = React.createClass({
     getInitialState: function () {
