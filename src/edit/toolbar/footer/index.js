@@ -51,7 +51,7 @@ module.exports = React.createClass({
 
     componentWillUnmount: function () {
         editStore.removeChangeListener(this.onComponentChange)
-        footerStore.removeChangeListener(this.onFooterOptsChange())
+        footerStore.removeChangeListener(this.onFooterOptsChange)
     },
 
     selectComponent: function (edit) {

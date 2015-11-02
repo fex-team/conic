@@ -1,0 +1,6 @@
+@import "../minxin";
+
+.btn {
+  @extend %btn;
+  padding: 10px;
+}
