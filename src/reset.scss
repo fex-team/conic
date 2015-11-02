@@ -324,6 +324,13 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
   border-top: none;
 }
 
+// message提示
+.ant-message-notice-content {
+  border-color: $border-color;
+  color: $font-color;
+  background-color: $bg-color;
+}
+
 // 高科技颜色字体
 .hack-color {
   background-image: -webkit-linear-gradient(top, #769944 0%, #769944 22.916667%, #9fb84a 37.5%, #e8e361 55%);

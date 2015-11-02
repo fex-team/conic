@@ -3,6 +3,7 @@ const historyAction = require('../../../actions/history-action')
 const historyStore = require('../../../stores/history-store')
 const _ = require('lodash')
 const classnames = require('classnames')
+const message = require('antd/lib/message')
 require('./index.scss')
 
 const History = React.createClass({
@@ -30,9 +31,25 @@ const History = React.createClass({
 
     revertHistory: function (history, index, event) {
         if (index === this.state.current)return
-        historyAction.revertHistory(this.state.current, index)
+
+        let start = this.state.current
+        let end = index
+
+        if (Math.abs(start - end) > 20) {
+            message.error('一次最多恢复20步')
+            if (start < end) {
+                end = start + 20
+            } else {
+                end = start - 20
+            }
+        }
+
         this.setState({
-            current: index
+            current: end
+        })
+
+        setTimeout(()=> {
+            historyAction.revertHistory(start, end)
         })
     },
 

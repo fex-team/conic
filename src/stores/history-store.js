@@ -107,6 +107,7 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
                         componentEdit.addChild({
                             name: item.componentName,
                             opts: item.optsBefore,
+                            childs: item.childs,
                             uniqueKey: item.uniqueKey
                         })
                     } else {

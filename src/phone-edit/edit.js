@@ -104,24 +104,33 @@ const Edit = React.createClass({
 
     // 触发修改子元素事件(由edit-store直接调用)
     UpdateChildren: function (opts, historyInfo) {
-        let beforeOpts = _.cloneDeep(this.state.customOpts)
-        this.setState({
-            customOpts: $.extend(true, this.state.customOpts, opts)
-        }, function () {
-            // 如果是历史记录，则附加到历史中
-            if (_.isObject(historyInfo)) {
-                let positionArray = []
-                getPosition(this, positionArray)
-                setTimeout(()=> {
-                    historyAction.addHistory({
-                        position: positionArray,
-                        optsBefore: beforeOpts,
-                        optsAfter: _.cloneDeep(this.state.customOpts),
-                        type: 'update',
-                        operateName: this.state.childProps.name + ' ' + historyInfo.name
-                    })
-                })
+        let mergeOpts = $.extend(true, _.cloneDeep(this.state.customOpts), opts)
+
+        // 如果是历史记录，则附加到历史中
+        if (_.isObject(historyInfo)) {
+            let positionArray = []
+            let optsBefore = _.cloneDeep(this.state.customOpts)
+            let optsAfter = _.cloneDeep(mergeOpts)
+            getPosition(this, positionArray)
+
+            // 如果before为空，为了完全还原，需要记下原始状态信息
+            if (_.isEmpty(optsBefore)) {
+                optsBefore = _.cloneDeep(this.state.childProps.opts)
             }
+
+            setTimeout(()=> {
+                historyAction.addHistory({
+                    position: positionArray,
+                    optsBefore: optsBefore,
+                    optsAfter: optsAfter,
+                    type: 'update',
+                    operateName: this.state.childProps.name + ' ' + historyInfo.name
+                })
+            })
+        }
+
+        this.setState({
+            customOpts: mergeOpts
         })
     },
 
@@ -236,10 +245,13 @@ const Edit = React.createClass({
         if (isHistory) {
             let positionArray = []
             getPosition(this, positionArray)
+            let info = {}
+            getTree(this, info)
             setTimeout(()=> {
                 historyAction.addHistory({
                     position: positionArray,
                     optsBefore: _.cloneDeep(this.state.customOpts),
+                    childs: info.childs,
                     uniqueKey: this.props.uniqueKey,
                     componentName: this.state.childProps.name,
                     type: 'delete',
