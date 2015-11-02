@@ -1,5 +1,5 @@
 var React = require('react')
-var renderEdit = require('../render-edit')
+var renderEdit = require('../mixins/render-edit')
 var LayoutBox = require('../layout-box')
 const pureRenderMixin = require('../mixins/pureRenderMixin')
 const defaultStyle = {

@@ -37,8 +37,6 @@ const Text = React.createClass({
     },
 
     render: function () {
-        console.log('render text')
-
         return (
             <div style={_.assign(this.props.opts.style.value, defaultStyle)}>
                 {this.props.opts.text.value}

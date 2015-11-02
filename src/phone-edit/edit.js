@@ -104,6 +104,7 @@ const Edit = React.createClass({
 
     // 触发修改子元素事件(由edit-store直接调用)
     UpdateChildren: function (opts, historyInfo) {
+        let beforeOpts = _.cloneDeep(this.state.customOpts)
         this.setState({
             customOpts: $.extend(true, this.state.customOpts, opts)
         }, function () {
@@ -114,7 +115,8 @@ const Edit = React.createClass({
                 setTimeout(()=> {
                     historyAction.addHistory({
                         position: positionArray,
-                        opts: _.cloneDeep(this.state.customOpts),
+                        optsBefore: beforeOpts,
+                        optsAfter: _.cloneDeep(this.state.customOpts),
                         type: 'update',
                         operateName: this.state.childProps.name + ' ' + historyInfo.name
                     })
@@ -161,6 +163,19 @@ const Edit = React.createClass({
                 getTree(item.edit, info)
                 childInfo.childs = info.childs
             }
+        } else { // 否则为新增组件
+            let positionArray = []
+            getPosition(this, positionArray)
+            positionArray.push(childInfo.uniqueKey)
+            setTimeout(()=> {
+                historyAction.addHistory({
+                    position: positionArray,
+                    uniqueKey: childInfo.uniqueKey,
+                    componentName: childInfo.name,
+                    type: 'add',
+                    operateName: '新增组件 ' + childInfo.name
+                })
+            })
         }
 
         // 如果这个组件是新拖拽的万能矩形，不是最外层，则宽度设定为父级宽度的一半
@@ -201,7 +216,7 @@ const Edit = React.createClass({
 
     // 添加某个子元素（属性被定义好）
     addChild: function (props) {
-        let newChilds = this.state.childs
+        let newChilds = _.cloneDeep(this.state.childs)
         newChilds.push(props)
         this.setState({
             childs: newChilds
@@ -218,19 +233,21 @@ const Edit = React.createClass({
     },
 
     removeSelf: function (isHistory) {
-        this.props.parent.removeChild(this.props.index)
         if (isHistory) {
             let positionArray = []
             getPosition(this, positionArray)
             setTimeout(()=> {
                 historyAction.addHistory({
                     position: positionArray,
-                    opts: _.cloneDeep(this.state.customOpts),
+                    optsBefore: _.cloneDeep(this.state.customOpts),
+                    uniqueKey: this.props.uniqueKey,
+                    componentName: this.state.childProps.name,
                     type: 'delete',
                     operateName: '删除组件 ' + this.state.childProps.name
                 })
             })
         }
+        this.props.parent.removeChild(this.props.index)
     },
 
     // 绝对定位拖拽元素属性变化

@@ -74,29 +74,43 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
             if (index >= action.start && index <= action.end) { // 在恢复范围内
                 let componentEdit = findByPosition(item.position)
 
-                // 如果上一个操作是删除，且从上到下，则忽略本次操作
-                if (index - 1 >= 0 && newHistorys[index - 1].type === 'delete' && topToBottom)return
+                if (topToBottom) { // 撤销
+                    // 忽略最后
+                    if (index === action.end)return
+                } else { // 还原
+                    // 忽略第一个
+                    if (index === action.start)return
+                }
 
                 switch (item.type) {
                 case 'update':
-                    // 忽略第一个
-                    if (index === action.start)return
-                    componentEdit.UpdateChildren(item.opts, null)
+                    if (topToBottom) { // 撤销
+                        componentEdit.UpdateChildren(item.optsBefore, null)
+                    } else { // 还原
+                        componentEdit.UpdateChildren(item.optsAfter, null)
+                    }
                     break
-                case 'insert':
-                    break
-                case 'delete':
-                    if (!topToBottom) {
-                        // 忽略第一个
-                        if (index === action.start)return
+                case 'add':
+                    if (topToBottom) {
                         componentEdit.removeSelf()
                     } else {
                         // 在父级添加这个组件
-                        console.log(item)
                         componentEdit.addChild({
-                            opts: item.opts,
-                            uniqueKey: 1
+                            name: item.componentName,
+                            uniqueKey: item.uniqueKey
                         })
+                    }
+                    break
+                case 'delete':
+                    if (topToBottom) {
+                        // 在父级添加这个组件
+                        componentEdit.addChild({
+                            name: item.componentName,
+                            opts: item.optsBefore,
+                            uniqueKey: item.uniqueKey
+                        })
+                    } else {
+                        componentEdit.removeSelf()
                     }
                     break
                 case 'move':

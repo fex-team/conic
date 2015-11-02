@@ -1,5 +1,5 @@
 var React = require('react')
-var renderEdit = require('../render-edit')
+var renderEdit = require('../mixins/render-edit')
 const pureRenderMixin = require('../mixins/pureRenderMixin')
 
 let LayoutBox = React.createClass({
