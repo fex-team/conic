@@ -33,6 +33,7 @@ $input-height: 26px;
 
 // 模拟按钮效果
 %btn {
+  display: block;
   color: $font-color;
   box-shadow: inset 1px 1px 1px $shadow-color;
   cursor: pointer;
