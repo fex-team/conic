@@ -54,3 +54,15 @@
     padding: 0 10px;
   }
 }
+
+.instance-number {
+  &.green {
+    color: #4cae4c;
+  }
+  &.warning {
+    color: #eea236;
+  }
+  &.error {
+    color: #d43f3a;
+  }
+}

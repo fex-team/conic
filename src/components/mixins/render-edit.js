@@ -1,7 +1,7 @@
 var React = require('react')
-var Components = require('../components')
-var Edit = require('../phone-edit/edit')
-var LayoutBox = require('../components/layout-box')
+var Components = require('../../components')
+var Edit = require('../../phone-edit/edit')
+var LayoutBox = require('../../components/layout-box')
 var _ = require('lodash')
 
 module.exports = {
@@ -18,6 +18,7 @@ module.exports = {
             let component = Components[item.name]
             let Editprops = {
                 key: item.uniqueKey,
+                uniqueKey: item.uniqueKey,
                 parent: this.props.edit || null,
                 index: index,
                 opts: item.opts || {},
@@ -40,7 +41,6 @@ module.exports = {
             return React.createElement(Edit, Editprops, React.createElement(component))
         })
 
-        console.log('layout render')
         return (
             <div>
                 <div style={_.assign(this.props.opts.flex.value, this.props.opts.base.value)}>

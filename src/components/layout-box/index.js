@@ -1,5 +1,5 @@
 var React = require('react')
-var renderEdit = require('../render-edit')
+var renderEdit = require('../mixins/render-edit')
 const pureRenderMixin = require('../mixins/pureRenderMixin')
 
 let LayoutBox = React.createClass({
@@ -35,6 +35,11 @@ let LayoutBox = React.createClass({
                         background: 'white'
                     },
                     edit: 'style'
+                },
+                text: {
+                    edit: 'text',
+                    value: '123',
+                    desc: '测试字段'
                 }
             }
         }

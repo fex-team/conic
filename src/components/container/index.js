@@ -56,17 +56,30 @@ let Container = React.createClass({
         editStore.removeSelectContainerListener(this.onSelectContainer)
     },
 
+    // 获得子元素的edit引用
+    getChildsEdit: function () {
+        return this.childEdits
+    },
+
     render: function () {
+        // 存储子元素的edit引用清空
+        this.childEdits = []
+
         let children = this.props.childs.map((item, index)=> {
             let component = Components[item.name]
             let Editprops = {
                 key: item.uniqueKey,
+                uniqueKey: item.uniqueKey,
                 parent: this.props.edit || null,
                 index: index,
                 opts: item.opts || {},
                 dragSource: true,
                 childs: item.childs || [],
-                selected: item.selected || false
+                selected: item.selected || false,
+                ref: (ref)=> {
+                    if (ref === null)return
+                    this.childEdits.push(ref)
+                }
             }
             if (item.name === 'LayoutBox') {
                 component = LayoutBox

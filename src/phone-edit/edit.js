@@ -5,10 +5,19 @@ var DragTarget = require('./drag-target')
 var editAction = require('../actions/edit-action')
 var editStore = require('../stores/edit-store')
 var footerAction = require('../actions/footer-action')
+var historyAction = require('../actions/history-action')
 var classNames = require('classnames')
 var _ = require('lodash')
 var $ = require('jquery')
 var getTree = require('./getTree')
+
+// 根据edit生成位置数组
+function getPosition(edit, positionArray) {
+    if (edit.props.parent) {
+        positionArray.push(edit.props.uniqueKey)
+        getPosition(edit.props.parent, positionArray)
+    }
+}
 
 const Edit = React.createClass({
     getInitialState: function () {
@@ -32,7 +41,9 @@ const Edit = React.createClass({
     },
 
     componentDidMount: function () {
-        footerAction.increaseInstanceNumber()
+        setTimeout(function () {
+            footerAction.increaseInstanceNumber()
+        })
 
         // 如果默认是选中状态，通知左侧组件更新
         if (this.props.selected) {
@@ -43,7 +54,9 @@ const Edit = React.createClass({
     },
 
     componentWillUnmount: function () {
-        footerAction.reduceInstanceNumber()
+        setTimeout(function () {
+            footerAction.reduceInstanceNumber()
+        })
     },
 
     componentWillReceiveProps: function (nextProps) {
@@ -82,9 +95,34 @@ const Edit = React.createClass({
     },
 
     // 触发修改子元素事件(由edit-store直接调用)
-    UpdateChildren: function (opts) {
+    UpdateChildren: function (opts, historyInfo) {
+        let mergeOpts = $.extend(true, _.cloneDeep(this.state.customOpts), opts)
+
+        // 如果是历史记录，则附加到历史中
+        if (_.isObject(historyInfo)) {
+            let positionArray = []
+            let optsBefore = _.cloneDeep(this.state.customOpts)
+            let optsAfter = _.cloneDeep(mergeOpts)
+            getPosition(this, positionArray)
+
+            // 如果before为空，为了完全还原，需要记下原始状态信息
+            if (_.isEmpty(optsBefore)) {
+                optsBefore = _.cloneDeep(this.state.childProps.opts)
+            }
+
+            setTimeout(()=> {
+                historyAction.addHistory({
+                    position: positionArray,
+                    optsBefore: optsBefore,
+                    optsAfter: optsAfter,
+                    type: 'update',
+                    operateName: this.state.childProps.name + ' ' + historyInfo.name
+                })
+            })
+        }
+
         this.setState({
-            customOpts: $.extend(true, this.state.customOpts, opts)
+            customOpts: mergeOpts
         })
     },
 
@@ -126,6 +164,19 @@ const Edit = React.createClass({
                 getTree(item.edit, info)
                 childInfo.childs = info.childs
             }
+        } else { // 否则为新增组件
+            let positionArray = []
+            getPosition(this, positionArray)
+            positionArray.push(childInfo.uniqueKey)
+            setTimeout(()=> {
+                historyAction.addHistory({
+                    position: positionArray,
+                    uniqueKey: childInfo.uniqueKey,
+                    componentName: childInfo.name,
+                    type: 'add',
+                    operateName: '新增组件 ' + childInfo.name
+                })
+            })
         }
 
         // 如果这个组件是新拖拽的万能矩形，不是最外层，则宽度设定为父级宽度的一半
@@ -161,10 +212,17 @@ const Edit = React.createClass({
         }, function () {
             if (item.existComponent) {
                 // 销毁组件
-                //setTimeout(function () {
-                item.edit.removeSelf()
-                //})
+                item.edit.removeSelf(false)
             }
+        })
+    },
+
+    // 添加某个子元素（属性被定义好）
+    addChild: function (props) {
+        let newChilds = _.cloneDeep(this.state.childs)
+        newChilds.push(props)
+        this.setState({
+            childs: newChilds
         })
     },
 
@@ -177,7 +235,24 @@ const Edit = React.createClass({
         })
     },
 
-    removeSelf: function () {
+    removeSelf: function (isHistory) {
+        if (isHistory) {
+            let positionArray = []
+            getPosition(this, positionArray)
+            let info = {}
+            getTree(this, info)
+            setTimeout(()=> {
+                historyAction.addHistory({
+                    position: positionArray,
+                    optsBefore: _.cloneDeep(this.state.customOpts),
+                    childs: info.childs,
+                    uniqueKey: this.props.uniqueKey,
+                    componentName: this.state.childProps.name,
+                    type: 'delete',
+                    operateName: '删除组件 ' + this.state.childProps.name
+                })
+            })
+        }
         this.props.parent.removeChild(this.props.index)
     },
 

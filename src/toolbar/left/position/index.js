@@ -24,7 +24,9 @@ module.exports = React.createClass({
             newItem.value[key] = event
         }
 
-        this.props.onChange(this.state.item)
+        this.props.onChange(this.state.item, {
+            name: '修改位置'
+        })
     },
 
     render: function () {

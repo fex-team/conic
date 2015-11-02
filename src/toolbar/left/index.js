@@ -44,11 +44,11 @@ module.exports = React.createClass({
         editStore.removeChangeListener(this.onComponentChange)
     },
 
-    onEditChange: function (key, item) {
+    onEditChange: function (key, value, historyInfo) {
         let opts = {
-            [key]: item
+            [key]: value
         }
-        editAction.updateComponent(opts)
+        editAction.updateComponent(opts, historyInfo)
     },
 
     removeSelf: function () {
