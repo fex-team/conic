@@ -1,6 +1,6 @@
 {
   "name": "gaea",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "tieba h5 provider",
   "main": "index.js",
   "scripts": {

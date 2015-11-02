@@ -154,6 +154,8 @@ const Edit = React.createClass({
 
         newChilds.push(childInfo)
 
+        console.log(newChilds)
+
         this.setState({
             childs: newChilds
         }, function () {
@@ -245,6 +247,8 @@ const Edit = React.createClass({
                 </DragSourceAbsolute>
             )
         }
+
+        //console.log('childComponent', childComponent)
 
         return (
             <div>

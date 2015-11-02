@@ -40,7 +40,7 @@ const Text = React.createClass({
         console.log('render text')
 
         return (
-            <div style={_.assign(this.props.opts.style.value, defaultStyle)}>
+            <div style={_.assign(_.cloneDeep(this.props.opts.style.value), defaultStyle)}>
                 {this.props.opts.text.value}
             </div>
         )

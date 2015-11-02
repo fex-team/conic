@@ -14,7 +14,7 @@ const Right = React.createClass({
                 <Collapse defaultActiveKey={["1"]}>
                     <Panel header={`树状视图`}
                            key="1">
-                        <Tree/>
+                        <Tree />
                     </Panel>
                     <Panel header={`辅助工具`}
                            key="2">
