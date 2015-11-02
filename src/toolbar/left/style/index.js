@@ -23,7 +23,7 @@ module.exports = React.createClass({
 
     onChange: function (key, value, historyInfo) {
         let newItem = this.state.item
-        newItem.value[key] = event
+        newItem.value[key] = value
         this.props.onChange(newItem, historyInfo)
     },
 

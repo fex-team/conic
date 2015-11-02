@@ -13,5 +13,7 @@ var ReactDOM = require('react-dom')
 var reactRouter = require('react-router')
 var Router = reactRouter.Router
 var routes = require('./router')
+var $ = require('jquery')
 
+// 执行loading
 ReactDOM.render(routes, document.getElementById('react-dom'))

@@ -75,6 +75,13 @@ module.exports = React.createClass({
             )
         })
 
+        let instanceNumberClass = classnames({
+            'instance-number': true,
+            green: this.state.opts.instanceNumber < 100,
+            warning: this.state.opts.instanceNumber >= 100 && this.state.opts.instanceNumber < 500,
+            error: this.state.opts.instanceNumber > 500
+        })
+
         return (
             <div>
                 <div className="layout">
@@ -84,7 +91,7 @@ module.exports = React.createClass({
                     <div className="right">
                         <div className="info">
                             <Tooltip title="当前页面组件实例总数，每个页面保持在500以内，可以保证流畅编辑状态">
-                                <span>
+                                <span className={instanceNumberClass}>
                                     <i style={{marginRight:5}}
                                        className="fa fa-cube"></i>
                                     {this.state.opts.instanceNumber}

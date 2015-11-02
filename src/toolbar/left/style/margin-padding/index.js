@@ -80,9 +80,9 @@ module.exports = React.createClass({
             })
 
             // 通知父级
-            this.props.onChange('no', 123, {
-                name: '随便通知一下'
-            })
+            //this.props.onChange('no', 123, {
+            //    name: '随便通知一下'
+            //})
         })
 
         $(document).bind('mousemove', (e)=> {
