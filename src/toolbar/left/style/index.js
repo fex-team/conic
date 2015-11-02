@@ -21,15 +21,58 @@ module.exports = React.createClass({
         }
     },
 
-    onChange: function (key, event) {
+    onChange: function (key, value, historyInfo) {
         let newItem = this.state.item
-        if (typeof event === 'object') {
-            newItem.value[key] = event.target.value
-        } else {
-            newItem.value[key] = event
-        }
+        newItem.value[key] = event
+        this.props.onChange(newItem, historyInfo)
+    },
 
-        this.props.onChange(this.state.item)
+    onWidthChange: function (key, value) {
+        let newItem = this.state.item
+        newItem.value[key] = value
+        this.props.onChange(newItem, {
+            name: `宽度改为 ${value}`
+        })
+    },
+
+    onHeightChange: function (key, value) {
+        let newItem = this.state.item
+        newItem.value[key] = value
+        this.props.onChange(newItem, {
+            name: `高度改为 ${value}`
+        })
+    },
+
+    onFontSizeChange: function (key, value) {
+        let newItem = this.state.item
+        newItem.value[key] = value
+        this.props.onChange(newItem, {
+            name: `字体大小改为 ${value}`
+        })
+    },
+
+    onFontColorChange: function (key, value, finish) {
+        let newItem = this.state.item
+        newItem.value[key] = value
+        if (!finish) {
+            this.props.onChange(newItem, null)
+        } else {
+            this.props.onChange(newItem, {
+                name: `字体颜色改为 ${value}`
+            })
+        }
+    },
+
+    onBgColorChange: function (key, value, finish) {
+        let newItem = this.state.item
+        newItem.value[key] = value
+        if (!finish) {
+            this.props.onChange(newItem, null)
+        } else {
+            this.props.onChange(newItem, {
+                name: `背景颜色改为 ${value}`
+            })
+        }
     },
 
     render: function () {
@@ -49,7 +92,7 @@ module.exports = React.createClass({
                                 type="text"
                                 value={value}
                                 style={{width:200}}
-                                onChange={this.onChange.bind(this,key)}
+                                onChange={this.onWidthChange.bind(this,key)}
                                 className="ant-input"
                                 id="control-input"/>
                         </div>
@@ -66,7 +109,7 @@ module.exports = React.createClass({
                             <InputNumber type="text"
                                          value={value}
                                          style={{width:200}}
-                                         onChange={this.onChange.bind(this,key)}
+                                         onChange={this.onHeightChange.bind(this,key)}
                                          className="ant-input"
                                          id="control-input"/>
                         </div>
@@ -83,7 +126,7 @@ module.exports = React.createClass({
                             <InputNumber type="text"
                                          value={value}
                                          style={{width:200}}
-                                         onChange={this.onChange.bind(this,key)}
+                                         onChange={this.onFontSizeChange.bind(this,key)}
                                          className="ant-input"
                                          id="control-input"/>
                         </div>
@@ -94,7 +137,7 @@ module.exports = React.createClass({
                     <Background key={key}
                                 propKey={key}
                                 value={value}
-                                onChange={this.onChange.bind(this,key)}/>
+                                onChange={this.onBgColorChange.bind(this,key)}/>
                 )
             case 'color':
                 return (
@@ -105,7 +148,7 @@ module.exports = React.createClass({
 
                         <div className="col-14">
                             <Color value={value}
-                                   onChange={this.onChange.bind(this,key)}/>
+                                   onChange={this.onFontColorChange.bind(this,key)}/>
                         </div>
                     </div>
                 )

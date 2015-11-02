@@ -57,10 +57,10 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
         EditStore.emitChange()
         break
     case 'updateComponent':
-        currentComponent.UpdateChildren(action.opts)
+        currentComponent.UpdateChildren(action.opts, action.historyInfo)
         break
     case 'removeCurrent':
-        currentComponent.removeSelf()
+        currentComponent.removeSelf(true)
         previousComponent = currentComponent = null
         break
     case 'selectContainer':

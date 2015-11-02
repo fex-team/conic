@@ -18,6 +18,7 @@ module.exports = {
             let component = Components[item.name]
             let Editprops = {
                 key: item.uniqueKey,
+                uniqueKey: item.uniqueKey,
                 parent: this.props.edit || null,
                 index: index,
                 opts: item.opts || {},

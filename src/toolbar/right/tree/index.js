@@ -2,7 +2,7 @@ var React = require('react');
 var EnterAnimation = require('antd/lib/enter-animation');
 var Tree = require('antd/lib/tree');
 var TreeNode = Tree.TreeNode;
-var Analyse = require('../../../util/analyse');
+//var Analyse = require('../../../util/analyse');
 var _ = require('lodash');
 
 function hasChildren (element) {
@@ -15,7 +15,7 @@ var root = require('../../../phone-edit/index');
 
 var componentBlackList = ['Edit'];
 
-var treeState = removeBlackList(Analyse(root), componentBlackList);
+//var treeState = removeBlackList(Analyse(root), componentBlackList);
 
 var treeData = {};
 

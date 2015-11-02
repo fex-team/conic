@@ -83,10 +83,13 @@ module.exports = React.createClass({
                     </div>
                     <div className="right">
                         <div className="info">
-                            <Tooltip title="每个页面保持在500以内，可以保证流畅编辑状态">
-                                <span><i style={{marginRight:5}}
-                                         className="fa fa-question-circle"></i>组件实例总数</span>
-                            </Tooltip>：{this.state.opts.instanceNumber}
+                            <Tooltip title="当前页面组件实例总数，每个页面保持在500以内，可以保证流畅编辑状态">
+                                <span>
+                                    <i style={{marginRight:5}}
+                                       className="fa fa-cube"></i>
+                                    {this.state.opts.instanceNumber}
+                                </span>
+                            </Tooltip>
                         </div>
                     </div>
                 </div>

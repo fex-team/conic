@@ -8,10 +8,11 @@ module.exports = {
         })
     },
 
-    updateComponent: function (opts) {
+    updateComponent: function (opts, historyInfo) {
         dispatcher.dispatch({
             type: 'updateComponent',
-            opts: opts
+            opts: opts,
+            historyInfo: historyInfo
         })
     },
 

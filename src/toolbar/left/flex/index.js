@@ -24,7 +24,9 @@ module.exports = React.createClass({
         this.setState({
             item: newItem
         }, function () {
-            this.props.onChange(this.state.item)
+            this.props.onChange(this.state.item, {
+                name: '修改子元素布局方式'
+            })
         })
     },
 

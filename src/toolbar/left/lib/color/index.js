@@ -32,6 +32,7 @@ module.exports = React.createClass({
         this.setState({
             value: color
         })
+        this.props.onChange(color, true)
     },
 
     render: function () {

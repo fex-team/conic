@@ -5,6 +5,7 @@ var DragTarget = require('./drag-target')
 var editAction = require('../actions/edit-action')
 var editStore = require('../stores/edit-store')
 var footerAction = require('../actions/footer-action')
+var historyAction = require('../actions/history-action')
 var classNames = require('classnames')
 var _ = require('lodash')
 var $ = require('jquery')
@@ -16,6 +17,14 @@ function getTree(edit, info) {
     edit.childInstance.getChildsEdit && edit.childInstance.getChildsEdit().map((item, index)=> {
         getTree(item, info.childs[index])
     })
+}
+
+// 根据edit生成位置数组
+function getPosition(edit, positionArray) {
+    if (edit.props.parent) {
+        positionArray.push(edit.props.uniqueKey)
+        getPosition(edit.props.parent, positionArray)
+    }
 }
 
 const Edit = React.createClass({
@@ -40,7 +49,9 @@ const Edit = React.createClass({
     },
 
     componentDidMount: function () {
-        footerAction.increaseInstanceNumber()
+        setTimeout(function () {
+            footerAction.increaseInstanceNumber()
+        })
 
         // 如果默认是选中状态，通知左侧组件更新
         if (this.props.selected) {
@@ -51,7 +62,9 @@ const Edit = React.createClass({
     },
 
     componentWillUnmount: function () {
-        footerAction.reduceInstanceNumber()
+        setTimeout(function () {
+            footerAction.reduceInstanceNumber()
+        })
     },
 
     componentWillReceiveProps: function (nextProps) {
@@ -90,9 +103,23 @@ const Edit = React.createClass({
     },
 
     // 触发修改子元素事件(由edit-store直接调用)
-    UpdateChildren: function (opts) {
+    UpdateChildren: function (opts, historyInfo) {
         this.setState({
             customOpts: $.extend(true, this.state.customOpts, opts)
+        }, function () {
+            // 如果是历史记录，则附加到历史中
+            if (_.isObject(historyInfo)) {
+                let positionArray = []
+                getPosition(this, positionArray)
+                setTimeout(()=> {
+                    historyAction.addHistory({
+                        position: positionArray,
+                        opts: _.cloneDeep(this.state.customOpts),
+                        type: 'update',
+                        operateName: this.state.childProps.name + ' ' + historyInfo.name
+                    })
+                })
+            }
         })
     },
 
@@ -167,10 +194,17 @@ const Edit = React.createClass({
         }, function () {
             if (item.existComponent) {
                 // 销毁组件
-                //setTimeout(function () {
-                item.edit.removeSelf()
-                //})
+                item.edit.removeSelf(false)
             }
+        })
+    },
+
+    // 添加某个子元素（属性被定义好）
+    addChild: function (props) {
+        let newChilds = this.state.childs
+        newChilds.push(props)
+        this.setState({
+            childs: newChilds
         })
     },
 
@@ -183,8 +217,20 @@ const Edit = React.createClass({
         })
     },
 
-    removeSelf: function () {
+    removeSelf: function (isHistory) {
         this.props.parent.removeChild(this.props.index)
+        if (isHistory) {
+            let positionArray = []
+            getPosition(this, positionArray)
+            setTimeout(()=> {
+                historyAction.addHistory({
+                    position: positionArray,
+                    opts: _.cloneDeep(this.state.customOpts),
+                    type: 'delete',
+                    operateName: '删除组件 ' + this.state.childProps.name
+                })
+            })
+        }
     },
 
     // 绝对定位拖拽元素属性变化

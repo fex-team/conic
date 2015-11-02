@@ -2,6 +2,8 @@ var React = require('react')
 var Color = require('../../lib/color')
 var Upload = require('../../lib/upload')
 var Select = require('antd/lib/select')
+var historyAction = require('../../../../actions/history-action')
+var editStore = require('../../../../stores/edit-store')
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -31,7 +33,11 @@ module.exports = React.createClass({
     },
 
     onChange: function (key, value) {
-        this.props.onChange(key, value)
+        this.props.onChange(key, value, null)
+    },
+
+    onChangeComplete: function (key, value) {
+        this.props.onChange(key, value, {name: '修改背景颜色'})
     },
 
     render: function () {
@@ -40,6 +46,7 @@ module.exports = React.createClass({
         case 'color':
             bgComponent = (
                 <Color value={this.props.value}
+                       onChangeComplete={this.onChangeComplete}
                        onChange={this.onChange}/>
             )
             break

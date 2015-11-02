@@ -229,6 +229,7 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
 .ant-collapse-content {
   border-top: 1px solid $border-color;
   background-color: $bg-color;
+  padding: 0;
 }
 
 .ant-collapse {
@@ -239,6 +240,10 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
 
 .ant-collapse > .ant-collapse-item {
   border-color: $border-color;
+}
+
+.ant-collapse-content > .ant-collapse-content-box {
+  padding: 0;
 }
 
 .ant-collapse > .ant-collapse-item > .ant-collapse-header {
@@ -253,6 +258,70 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
 
 .ant-switch-checked {
   background-color: #2db7f5;
+}
+
+// 菜单
+.ant-menu-horizontal {
+  background-color: $bg-color;
+  color: $font-color;
+  border-bottom: 1px solid $border-color;
+}
+
+.ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu > .ant-menu-submenu-title {
+  line-height: 28px;
+  margin: 0;
+  top: 0;
+}
+
+.ant-menu-horizontal > .ant-menu-submenu-active,
+.ant-menu-horizontal > .ant-menu-item-active,
+.ant-menu-horizontal > .ant-menu-submenu-selected,
+.ant-menu-horizontal > .ant-menu-item-selected {
+  background-color: $bg-active-color;
+  color: $font-active-color;
+  border: none;
+}
+
+.ant-menu-vertical .ant-menu-submenu .ant-menu-item:first-child,
+.ant-menu-horizontal .ant-menu-submenu .ant-menu-item:first-child, .ant-menu-vertical .ant-menu-submenu .ant-menu-item:last-child,
+.ant-menu-horizontal .ant-menu-submenu .ant-menu-item:last-child, .ant-menu-vertical .ant-menu-submenu:first-child,
+.ant-menu-horizontal .ant-menu-submenu:first-child, .ant-menu-vertical .ant-menu-submenu:last-child,
+.ant-menu-horizontal .ant-menu-submenu:last-child {
+  border-radius: 0;
+}
+
+.ant-menu-item-group-title {
+  border: none;
+}
+
+.ant-menu-horizontal > .ant-menu-submenu,
+.ant-menu-horizontal > .ant-menu-item {
+  border-bottom: none;
+}
+
+.ant-menu-submenu-horizontal > .ant-menu {
+  margin-top: 0;
+}
+
+.ant-menu-vertical > .ant-menu-item, .ant-menu-inline > .ant-menu-item, .ant-menu-vertical > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+  padding: 0 20px;
+  line-height: 30px;
+  height: 30px;
+}
+
+.ant-menu-horizontal > .ant-menu-submenu, .ant-menu-horizontal > .ant-menu-item {
+  margin: 0;
+}
+
+.ant-menu-submenu > .ant-menu {
+  background-color: $bg-color;
+}
+
+.ant-menu {
+  border-color: $border-color;
+  color: $font-color;
+  border-radius: 0;
+  border-top: none;
 }
 
 // 高科技颜色字体

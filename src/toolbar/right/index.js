@@ -3,6 +3,7 @@ const Collapse = require('antd/lib/collapse')
 const Panel = Collapse.Panel
 const Tree = require('./tree')
 const Auxiliary = require('./auxiliary')
+const History = require('./history')
 
 const Right = React.createClass({
     getInitialState: function () {
@@ -19,6 +20,10 @@ const Right = React.createClass({
                     <Panel header={`辅助工具`}
                            key="2">
                         <Auxiliary/>
+                    </Panel>
+                    <Panel header={`修改历史`}
+                           key="3">
+                        <History/>
                     </Panel>
                 </Collapse>
             </div>

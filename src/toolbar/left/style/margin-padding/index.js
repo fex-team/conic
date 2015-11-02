@@ -3,6 +3,7 @@ var $ = require('jquery')
 var classnames = require('classnames')
 require('./index.scss')
 
+
 // margin or padding 转换成4纬数字
 function distanceToFourLatitude(str) {
     let top, right, bottom, left
@@ -77,6 +78,11 @@ module.exports = React.createClass({
             this.setState({
                 currentType: null
             })
+
+            // 通知父级
+            this.props.onChange('no', 123, {
+                name: '随便通知一下'
+            })
         })
 
         $(document).bind('mousemove', (e)=> {
@@ -112,9 +118,9 @@ module.exports = React.createClass({
 
             // 通知父级更新
             if (this.state.currentType === 'margin') {
-                this.props.onChange('margin', fourLatitudeToDistance(this.state['margin']))
+                this.props.onChange('margin', fourLatitudeToDistance(this.state['margin']), null)
             } else {
-                this.props.onChange('padding', fourLatitudeToDistance(this.state['padding']))
+                this.props.onChange('padding', fourLatitudeToDistance(this.state['padding']), null)
             }
         })
     },
