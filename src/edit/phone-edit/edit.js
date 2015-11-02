@@ -9,7 +9,7 @@ var historyAction = require('../actions/history-action')
 var classNames = require('classnames')
 var _ = require('lodash')
 var $ = require('jquery')
-var getTree = require('./getTree')
+var getTree = require('./get-tree')
 
 // 根据edit生成位置数组
 function getPosition(edit, positionArray) {
