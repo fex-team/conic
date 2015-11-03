@@ -1,6 +1,8 @@
 const React = require('react')
-const Collapse = require('antd/lib/collapse')
-const Panel = Collapse.Panel
+const Tabs = require('antd/lib/tabs')
+const TabPane = Tabs.TabPane
+const Tooltip = require('antd/lib/tooltip')
+
 const Tree = require('./tree')
 const Auxiliary = require('./auxiliary')
 const History = require('./history')
@@ -11,21 +13,21 @@ const Right = React.createClass({
     },
     render: function () {
         return (
-            <div>
-                <Collapse defaultActiveKey={["1"]}>
-                    <Panel header={`树状视图`}
-                           key="1">
+            <div style={{height:'100%'}}>
+                <Tabs defaultActiveKey="1">
+                    <TabPane tab={<Tooltip title="项目树状结构"><i className="fa fa-tree"></i></Tooltip>}
+                             key="1">
                         <Tree />
-                    </Panel>
-                    <Panel header={`辅助工具`}
-                           key="2">
+                    </TabPane>
+                    <TabPane tab={<Tooltip title="设置"><i className="fa fa-gear"></i></Tooltip>}
+                             key="2">
                         <Auxiliary/>
-                    </Panel>
-                    <Panel header={`修改历史`}
-                           key="3">
+                    </TabPane>
+                    <TabPane tab={<Tooltip title="历史纪录"><i className="fa fa-history"></i></Tooltip>}
+                             key="3">
                         <History/>
-                    </Panel>
-                </Collapse>
+                    </TabPane>
+                </Tabs>
             </div>
         )
     }

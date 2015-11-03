@@ -8,6 +8,13 @@ module.exports = {
         })
     },
 
+    freshComponent: function (component) {
+        dispatcher.dispatch({
+            type: 'freshComponent',
+            component: component
+        })
+    },
+
     updateComponent: function (opts, historyInfo) {
         dispatcher.dispatch({
             type: 'updateComponent',

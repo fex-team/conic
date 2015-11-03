@@ -22,6 +22,7 @@ var cooked
 let ComponentTree = React.createClass({
     getInitialState: function () {
         return {
+            cooked: cooked
         }
     },
 
@@ -39,7 +40,10 @@ let ComponentTree = React.createClass({
         let treeProps = {
             title: editChildrenProps.name,
             component: component,
-            key: Math.random() * 10000
+            key: Math.random() * 10000,
+            ref: (ref) => {
+
+            }
         }
 
         if (!cooked && component.props.childs.length === 0) {

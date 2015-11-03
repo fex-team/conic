@@ -1,7 +1,7 @@
 var React = require('react')
 var editStore = require('../../stores/edit-store')
 var classnames = require('classnames')
-var iconMap = require('../top/component/icon-map')
+var iconMap = require('../left/component/components/icon-map')
 var footerStore = require('../../stores/footer-store')
 var Tooltip = require('antd/lib/tooltip')
 require('./index.scss')

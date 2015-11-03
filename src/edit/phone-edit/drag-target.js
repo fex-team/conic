@@ -1,5 +1,5 @@
 var React = require('react')
-var ItemTypes = require('../toolbar/top/component/drag-type')
+var ItemTypes = require('../toolbar/left/component/components/drag-type')
 var ReactDnD = require('react-dnd')
 var classNames = require('classnames')
 var auxiliartStore = require('../stores/auxiliary-store')

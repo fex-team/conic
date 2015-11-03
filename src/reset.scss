@@ -331,6 +331,51 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
   background-color: $bg-color;
 }
 
+// tabs
+.ant-tabs-nav .ant-tabs-tab {
+  margin: 0;
+}
+
+.ant-tabs-nav-container {
+  border-color: $border-color;
+  box-shadow: 0 1px 0 $shadow-color;
+  margin: 0;
+}
+
+.ant-tabs-tab-active {
+  background-color: $bg-active-color;
+  color: $font-active-color;
+}
+
+.ant-tabs-nav .ant-tabs-tab > a {
+  padding: 5px 14px;
+  font-size: 16px;
+  color: $font-color;
+  border-right: 1px solid $border-color;
+}
+
+.ant-tabs-nav .ant-tabs-tab > a:hover {
+  color: $font-active-color;
+}
+
+.ant-tabs-ink-bar {
+  background-color: $font-active-color;
+  margin-right: 1px;
+}
+
+.ant-tabs-nav div.ant-tabs-tab-active > a, .ant-tabs-nav div.ant-tabs-tab-active > a:hover, .ant-tabs-nav div.ant-tabs-tab-active > a:focus {
+  color: $font-active-color;
+}
+
+.ant-tabs {
+  height: 100%;
+}
+
+.ant-tabs-content {
+  height: calc(100% - 34px);
+  overflow-y: auto;
+}
+
 // 高科技颜色字体
 .hack-color {
   background-image: -webkit-linear-gradient(top, #769944 0%, #769944 22.916667%, #9fb84a 37.5%, #e8e361 55%);

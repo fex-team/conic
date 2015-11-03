@@ -13,6 +13,10 @@ module.exports = React.createClass({
             this.setState({
                 item: nextProps.item
             })
+
+            this.props.onChange(nextProps.item, {
+                name: '修改位置'
+            })
         }
     },
 

@@ -1,4 +1,4 @@
-let dispatcher = require('../../../../dispatcher')
+let dispatcher = require('../../../../../dispatcher')
 let EventEmitter = require('events').EventEmitter
 let assign = require('object-assign')
 

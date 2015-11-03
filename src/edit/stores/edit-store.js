@@ -56,6 +56,10 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
 
         EditStore.emitChange()
         break
+    case 'freshComponent':
+        currentComponent = action.component
+        EditStore.emitChange()
+        break
     case 'updateComponent':
         currentComponent.UpdateChildren(action.opts, action.historyInfo)
         break
