@@ -1,10 +1,10 @@
 var React = require('react')
 var Layout = require('./layout')
 var Base = require('./base')
-var dragDropManager = require('../../../drag-drop-manager')
+var dragDropManager = require('../../../../drag-drop-manager')
 require('./index.scss')
 
-const ToolBarTopComponent = React.createClass({
+const ToolBarTopComponents = React.createClass({
     getInitialState: function () {
         return {}
     },
@@ -32,4 +32,4 @@ const ToolBarTopComponent = React.createClass({
     }
 })
 
-module.exports = dragDropManager.getDefaultManager()(ToolBarTopComponent)
+module.exports = dragDropManager.getDefaultManager()(ToolBarTopComponents)

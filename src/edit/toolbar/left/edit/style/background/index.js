@@ -2,8 +2,6 @@ var React = require('react')
 var Color = require('../../lib/color')
 var Upload = require('../../lib/upload')
 var Select = require('antd/lib/select')
-var historyAction = require('../../../../actions/history-action')
-var editStore = require('../../../../stores/edit-store')
 
 module.exports = React.createClass({
     getInitialState: function () {

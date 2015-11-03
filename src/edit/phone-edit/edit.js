@@ -1,6 +1,6 @@
 var React = require('react')
-var DragSource = require('../toolbar/top/component/drag-source')
-var DragSourceAbsolute = require('../toolbar/top/component/drag-source-absolute')
+var DragSource = require('../toolbar/left/component/components/drag-source')
+var DragSourceAbsolute = require('../toolbar/left/component/components/drag-source-absolute')
 var DragTarget = require('./drag-target')
 var editAction = require('../actions/edit-action')
 var editStore = require('../stores/edit-store')
@@ -263,7 +263,7 @@ const Edit = React.createClass({
             customOpts: $.extend(true, this.state.customOpts, opts)
         }, function () {
             // 同步左侧编辑器内容
-            editAction.selectComponent(this)
+            editAction.freshComponent(this)
         })
     },
 
@@ -272,6 +272,9 @@ const Edit = React.createClass({
             {'selected': this.state.selected},
             {'absolute': this.props.dragSourceAbsolute}
         ])
+
+        // 放在edit上的style
+        let editStyle = {}
 
         let newChildProps = _.cloneDeep(this.state.childProps)
 
@@ -312,6 +315,9 @@ const Edit = React.createClass({
 
         // 绝对定位要包在最外层，所以判断逻辑放最后
         if (this.props.dragSourceAbsolute) {
+            editStyle.position = 'absolute'
+            editStyle.left = newChildProps.opts.position.value.left
+            editStyle.top = newChildProps.opts.position.value.top
             childComponent = (
                 <DragSourceAbsolute type={newChildProps.name}
                                     left={newChildProps.opts.position.value.left}
@@ -326,7 +332,7 @@ const Edit = React.createClass({
         //console.log('childComponent', childComponent)
 
         return (
-            <div>
+            <div style={editStyle}>
                 {childComponent}
             </div>
         )

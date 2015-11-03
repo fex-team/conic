@@ -2,12 +2,6 @@ var React = require('react')
 var ReactDnd = require('react-dnd')
 var dragItem = require('./drag-type')
 
-// 拖拽层承担了absolute left top属性
-// 在预览状态这些属性会由子组件回收
-const defaultStyle = {
-    position: 'absolute'
-}
-
 const source = {
     beginDrag: function (props) {
         return {}
@@ -36,7 +30,7 @@ const DragSourceAbsolute = React.createClass({
     render: function () {
         return (
             this.props.connectDragSource(
-                <div style={{ ...defaultStyle, left:this.props.left, top:this.props.top }}>
+                <div>
                     {this.props.children}
                 </div>
             )

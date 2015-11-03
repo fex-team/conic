@@ -6,7 +6,7 @@ var TreeNode = Tree.TreeNode
 var editStore = require('../../../stores/edit-store')
 var treeStore = require('../../../stores/tree-store')
 var _ = require('lodash');
-var getTree = require('../../../phone-edit/getTree')
+var getTree = require('../../../phone-edit/get-tree')
 var defaultJson = require('../../../phone-edit/default.json')
 require('./index.scss');
 

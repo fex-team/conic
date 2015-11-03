@@ -1,7 +1,7 @@
 var React = require('react')
 var ReactDnd = require('react-dnd')
 var dragItem = require('./drag-type')
-var editAction = require('../../../actions/edit-action')
+var editAction = require('../../../../actions/edit-action')
 
 const source = {
     canDrag: function () {

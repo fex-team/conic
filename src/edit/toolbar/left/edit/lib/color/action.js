@@ -1,4 +1,4 @@
-var dispatcher = require('../../../../dispatcher')
+var dispatcher = require('../../../../../dispatcher')
 
 module.exports = {
     changeColor: function (color) {
