@@ -33,5 +33,13 @@ module.exports = {
         dispatcher.dispatch({
             type: 'selectContainer'
         })
+    },
+
+    // 修改组件位置
+    changePosition: function (position) {
+        dispatcher.dispatch({
+            type: 'changePosition',
+            position: position
+        })
     }
 }

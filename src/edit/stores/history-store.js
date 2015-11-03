@@ -9,6 +9,9 @@ const CHANGE_EVENT = 'change'
 let containerEdit
 let historys = []
 
+// 当前操作位置（是倒序的，从上到下，0表示最后一次操作）
+let currentIndex = 0
+
 // 根据位置查找edit（如果找不到，则找到尽可能接近的父级元素）
 function findByPosition(position) {
     let componentEdit = containerEdit
@@ -39,6 +42,16 @@ var HistoryStore = assign({}, EventEmitter.prototype, {
 
     get: function () {
         return historys
+    },
+
+    getCurrentIndex: function () {
+        return currentIndex
+    },
+
+    removeAfterCurrent: function () {
+        // 删除当前位置之后的所有历史纪录
+        historys = historys.slice(0, historys.length - currentIndex)
+        currentIndex = 0
     }
 })
 
@@ -52,6 +65,8 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
         containerEdit = action.edit
         break
     case 'revertHistory':
+        currentIndex = action.end
+
         // 取消选中组件
         setTimeout(function () {
             editAction.selectComponent(null)
@@ -72,7 +87,8 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
 
         newHistorys.map((item, index)=> {
             if (index >= action.start && index <= action.end) { // 在恢复范围内
-                let componentEdit = findByPosition(item.position)
+                let itemPosition = _.cloneDeep(item.position).reverse()
+                let componentEdit = findByPosition(itemPosition)
 
                 if (topToBottom) { // 撤销
                     // 忽略最后
@@ -92,6 +108,7 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
                     break
                 case 'add':
                     if (topToBottom) {
+                        console.log('删除', itemPosition, componentEdit)
                         componentEdit.removeSelf()
                     } else {
                         // 在父级添加这个组件

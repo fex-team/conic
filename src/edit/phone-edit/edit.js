@@ -170,7 +170,7 @@ const Edit = React.createClass({
         } else { // 否则为新增组件
             let positionArray = []
             getPosition(this, positionArray)
-            positionArray.push(childInfo.uniqueKey)
+            positionArray.unshift(childInfo.uniqueKey)
             setTimeout(()=> {
                 historyAction.addHistory({
                     position: positionArray,
