@@ -9,7 +9,7 @@ require('./index.scss')
 const History = React.createClass({
     getInitialState: function () {
         return {
-            historys: [],
+            historys: historyStore.get(),
             current: 0
         }
     },

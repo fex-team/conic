@@ -1,11 +1,13 @@
 let dispatcher = require('../dispatcher')
 let EventEmitter = require('events').EventEmitter
 let assign = require('object-assign')
+let historyStore = require('./history-store')
 
 let CHANGE_EVENT = 'changeComponent'
 let CHANGE_SELECT_CONTAINER_EVENT = 'changeSelectContainer'
 let currentComponent = null
 let previousComponent = null
+let position
 
 var EditStore = assign({}, EventEmitter.prototype, {
     emitChange: function () {
@@ -20,6 +22,10 @@ var EditStore = assign({}, EventEmitter.prototype, {
         this.removeListener(CHANGE_EVENT, callback)
     },
 
+    get: function () {
+        return currentComponent
+    },
+
     emitSelectContainer: function () {
         this.emit(CHANGE_SELECT_CONTAINER_EVENT)
     },
@@ -30,10 +36,6 @@ var EditStore = assign({}, EventEmitter.prototype, {
 
     removeSelectContainerListener: function (callback) {
         this.removeListener(CHANGE_SELECT_CONTAINER_EVENT, callback)
-    },
-
-    get: function () {
-        return currentComponent
     }
 })
 
@@ -61,6 +63,11 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
         EditStore.emitChange()
         break
     case 'updateComponent':
+        if (historyStore.getCurrentIndex() !== 0) {
+            // 如果当前历史不是最新，则删除之后的历史
+            historyStore.removeAfterCurrent()
+        }
+
         currentComponent.UpdateChildren(action.opts, action.historyInfo)
         break
     case 'removeCurrent':
