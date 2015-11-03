@@ -8,10 +8,23 @@ let EventEmitter = require('events').EventEmitter
 let _ = require('lodash')
 
 let CHANGE_EVENT = 'change'
+let EDIT_MOUNT_EVENT = 'mount'
 
 let TreeStore = _.extend({}, EventEmitter.prototype, {
     emitChange: function () {
         this.emit(CHANGE_EVENT)
+    },
+
+    emitMount: function (component) {
+        this.emit(EDIT_MOUNT_EVENT, component)
+    },
+
+    addMountListener: function (callback) {
+        this.on(EDIT_MOUNT_EVENT, callback)
+    },
+
+    removeMountListener: function (callback) {
+        this.removeListener(EDIT_MOUNT_EVENT, callback)
     },
 
     addChangeListener: function (callback) {
@@ -20,12 +33,19 @@ let TreeStore = _.extend({}, EventEmitter.prototype, {
 
     removeChangeListener: function (callback) {
         this.removeListener(CHANGE_EVENT, callback)
+    },
+
+    get: function () {
+
     }
 })
 
 TreeStore.dispatchToken = dispatcher.register(function (action) {
     switch (action.type) {
-
+        case 'editComponentMounted':
+            let component = action.component
+            TreeStore.emitMount(component)
+            break;
     }
 })
 

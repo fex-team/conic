@@ -11,6 +11,13 @@ module.exports = {
             type: 'selectItem',
             component: component
         })
+    },
+
+    editComponentMounted: function (component) {
+        dispatcher.dispatch({
+            type: 'editComponentMounted',
+            component: component
+        })
     }
 }
 

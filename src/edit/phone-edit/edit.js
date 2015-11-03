@@ -6,10 +6,11 @@ var editAction = require('../actions/edit-action')
 var editStore = require('../stores/edit-store')
 var footerAction = require('../actions/footer-action')
 var historyAction = require('../actions/history-action')
+var treeAction = require('../actions/tree-action')
 var classNames = require('classnames')
 var _ = require('lodash')
 var $ = require('jquery')
-var getTree = require('./get-tree')
+var getTree = require('./')
 
 // 根据edit生成位置数组
 function getPosition(edit, positionArray) {
@@ -41,9 +42,11 @@ const Edit = React.createClass({
     },
 
     componentDidMount: function () {
-        setTimeout(function () {
+        setTimeout(() => {
             footerAction.increaseInstanceNumber()
         })
+
+        treeAction.editComponentMounted(this)
 
         // 如果默认是选中状态，通知左侧组件更新
         if (this.props.selected) {
