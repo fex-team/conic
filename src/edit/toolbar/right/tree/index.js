@@ -15,57 +15,82 @@ const animation = {
     }
 };
 
-var treeNodes = []
+var treeNodes = {}
 var branches = {}
 var cooked
 
 let ComponentTree = React.createClass({
     getInitialState: function () {
         return {
-            cooked: cooked
+            rootNode: <TreeNode></TreeNode>,
+            treeNodes: {}
         }
     },
 
     onSelect: function (e) {
-        console.log(e);
+        var node = e.node
+        var component = node.props.component
+        component.clickAction()
     },
 
     onComponentChange: function () {
-        console.log(editStore.get())
+        var component = editStore.get()
+        var uniqueKey = component.props.uniqueKey
+        var treeNode = treeNodes[uniqueKey]
+        console.log(treeNode)
     },
 
     onEditMounted: function (component) {
-        let editChildrenProps = component.childInstance.props;
-
-        let treeProps = {
-            title: editChildrenProps.name,
-            component: component,
-            key: Math.random() * 10000,
-            ref: (ref) => {
-
-            }
+        if (component.props.name === 'Container') {
+            var info = {}
+            getTree(component, info)
+            info['name'] = 'Container'
+            var treeNodes = this.state.treeNodes
+            var rootNode = this.getChild(info, treeNodes)
+            this.setState({
+                rootNode: rootNode
+            })
         }
 
-        if (!cooked && component.props.childs.length === 0) {
-            // 叶子
-            cooked = <TreeNode {...treeProps}></TreeNode>
-        } else if (cooked && component.props.childs.length === 0) {
-            // 另外一个分支
-            let cookedParent = cooked.props.component.parent;
-            if (!branches[cookedParent]) {
-                branches[cookedParent] = [cooked]
-            } else {
-                branches[cookedParent].push(cooked)
-            }
-            cooked = <TreeNode {...treeProps}></TreeNode>
-        } else if (component.props.childs.length === 1 && component === cooked.props.component.parent){
-            // 单子节点节点结构
-            cooked = <TreeNode {...treeProps}>{cooked}</TreeNode>
-        } else if (component.props.childs.length > 1 && component in branches) {
-            // 多子节点节点结构
-            cooked = <TreeNode {...treeProps}>{branches[component]}</TreeNode>
-        }
-        console.log(cooked)
+        //if (component.props.childs.length === 0) {
+        //
+        //    // 叶子
+        //    cooked = <TreeNode {...treeProps}></TreeNode>
+        //}
+        //else if (component.props.childs.length === 1
+        //    && component.props.parent.childs.length === 1
+        //    && component === cooked.props.component.props.parent){
+        //
+        //    // 单子节点节点结构
+        //    cooked = <TreeNode {...treeProps}>{cooked}</TreeNode>
+        //}
+        //else if (component.props.childs.length === 1
+        //    && component.props.parent.childs.length > 1
+        //    && component === cooked.props.component.props.parent) {
+        //
+        //    // 一个树的 root
+        //    let branch = <TreeNode {...treeProps}>{cooked}</TreeNode>
+        //    if (!branches[component.props.parent]) {
+        //        branches[component.props.parent] = [branch]
+        //    }
+        //    else {
+        //        branches[component.props.parent].push(branch)
+        //    }
+        //
+        //    cooked = branch
+        //}
+        //else if (component.props.childs.length > 1 && component in branches) {
+        //
+        //    // 多子节点节点结构
+        //    var args = [TreeNode, treeProps].concat(branches[component])
+        //
+        //    console.log(args)
+        //    cooked = React.createElement.apply(this, args)
+        //}
+        //
+        //if (component.props.name === 'Container') {
+        //    console.log(cooked)
+        //}
     },
 
     componentDidMount: function () {
@@ -73,39 +98,40 @@ let ComponentTree = React.createClass({
         treeStore.addMountListener(this.onEditMounted)
     },
 
-    getChild: function (root, index) {
+    getChild: function (root) {
         var name = root.name
-        var index = index || 0
         var _this = this
         var newNodeProps = {
             title: name,
-            key: Math.random() * 10000
+            component: root.component
         }
         var children
+        var treeNode
 
         if (root.childs && root.childs.length > 0) {
             children = root.childs.map((item, index) => {
-                return _this.getChild(item, index)
+                return _this.getChild(item)
             })
-            return <TreeNode {...newNodeProps}>{children}</TreeNode>
+            treeNode = <TreeNode {...newNodeProps}>{children}</TreeNode>
         }
         else {
-            return <TreeNode {...newNodeProps}></TreeNode>
+            treeNode = <TreeNode {...newNodeProps}></TreeNode>
         }
 
+        //treeNodes[root.component] = treeNode
+
+        return treeNode
     },
 
     render: function () {
         let tree;
 
-        var treeNodes = this.getChild(defaultJson)
-
-        console.log(cooked)
+        var rootNode = this.state.rootNode;
 
         tree = (
             <div key="tree" className="layout">
                 <Tree defaultExpandAll={true} checkable={false} onSelect={this.onSelect} multiple={false}>
-                    {treeNodes}
+                    {rootNode}
                 </Tree>
             </div>
         );
