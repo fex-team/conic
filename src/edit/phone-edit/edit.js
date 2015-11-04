@@ -35,7 +35,7 @@ const Edit = React.createClass({
 
     componentWillMount: function () {
         // 为每个子组件生成uniqueKey
-        this.state.childs.map((item, index)=> {
+        this.state.childs && this.state.childs.map((item, index)=> {
             item.uniqueKey = index
         })
     },
@@ -155,30 +155,6 @@ const Edit = React.createClass({
             selected: item.edit ? item.edit.state.selected : false
         }
 
-        // 如果有edit，是从模拟器中拖拽的元素，保留原有属性
-        if (item.edit) {
-            childInfo.opts = item.edit.state.customOpts
-            // 循环所有childs附加到当前state上（如果有子元素）
-            if (item.edit.state.childs) {
-                let info = {}
-                getTree(item.edit, info)
-                childInfo.childs = info.childs
-            }
-        } else { // 否则为新增组件
-            let positionArray = []
-            getPosition(this, positionArray)
-            positionArray.unshift(childInfo.uniqueKey)
-            setTimeout(()=> {
-                historyAction.addHistory({
-                    position: positionArray,
-                    uniqueKey: childInfo.uniqueKey,
-                    componentName: childInfo.name,
-                    type: 'add',
-                    operateName: '新增组件 ' + childInfo.name
-                })
-            })
-        }
-
         // 如果这个组件是新拖拽的万能矩形，不是最外层，则宽度设定为父级宽度的一半
         if (!item.edit && item.type === 'LayoutBox' && this.state.childProps.name !== 'Container') {
             let customWidth = this.state.customOpts && this.state.customOpts.base && this.state.customOpts.base.value.width
@@ -203,9 +179,54 @@ const Edit = React.createClass({
             })
         }
 
-        newChilds.push(childInfo)
+        // 如果有edit，是从模拟器中拖拽的元素，保留原有属性
+        if (item.edit) {
+            childInfo.opts = item.edit.state.customOpts
+            // 循环所有childs附加到当前state上（如果有子元素）
+            if (item.edit.state.childs) {
+                let info = {}
+                getTree(item.edit, info)
+                childInfo.childs = info.childs
+            }
 
-        console.log(newChilds)
+            // 记录拖拽
+            let positionArray = []
+            getPosition(item.edit, positionArray)
+            let afterPositionArray = []
+            getPosition(this, afterPositionArray)
+            afterPositionArray.unshift(childInfo.uniqueKey)
+            let info = {}
+            getTree(item.edit, info)
+            setTimeout(()=> {
+                historyAction.addHistory({
+                    position: positionArray,
+                    afterPosition: afterPositionArray,
+                    beforeUniqueKey: item.edit.props.uniqueKey,
+                    uniqueKey: childInfo.uniqueKey,
+                    componentName: childInfo.name,
+                    childs: info.childs,
+                    opts: _.cloneDeep(item.edit.state.customOpts),
+                    type: 'move',
+                    operateName: '移动组件 ' + childInfo.name
+                })
+            })
+        } else { // 否则为新增组件
+            let positionArray = []
+            getPosition(this, positionArray)
+            positionArray.unshift(childInfo.uniqueKey)
+            setTimeout(()=> {
+                historyAction.addHistory({
+                    position: positionArray,
+                    uniqueKey: childInfo.uniqueKey,
+                    componentName: childInfo.name,
+                    opts: _.cloneDeep(item.edit.state.customOpts),
+                    type: 'add',
+                    operateName: '新增组件 ' + childInfo.name
+                })
+            })
+        }
+
+        newChilds.push(childInfo)
 
         this.setState({
             childs: newChilds
@@ -214,6 +235,46 @@ const Edit = React.createClass({
                 // 销毁组件
                 item.edit.removeSelf(false)
             }
+        })
+    },
+
+    // 拖拽绝对定位组件进来，由布局->自由矩形直接调用
+    dropAbsolute: function (item) {
+        let newChilds = _.cloneDeep(this.state.childs)
+
+        // 分配一个唯一key
+        let uniqueKey = 0
+        if (newChilds.length > 0) {
+            uniqueKey = newChilds[newChilds.length - 1].uniqueKey + 1
+        }
+
+        // 添加子元素的属性
+        let childInfo = {
+            name: item.type,
+            uniqueKey: uniqueKey,
+            selected: false,
+            opts: item.opts
+        }
+
+        // 加入历史纪录
+        let positionArray = []
+        getPosition(this, positionArray)
+        positionArray.unshift(childInfo.uniqueKey)
+        setTimeout(()=> {
+            historyAction.addHistory({
+                position: positionArray,
+                uniqueKey: childInfo.uniqueKey,
+                componentName: childInfo.name,
+                opts: _.cloneDeep(childInfo.opts),
+                type: 'add',
+                operateName: '新增组件 ' + childInfo.name
+            })
+        })
+
+        newChilds.push(childInfo)
+
+        this.setState({
+            childs: newChilds
         })
     },
 
@@ -328,8 +389,6 @@ const Edit = React.createClass({
                 </DragSourceAbsolute>
             )
         }
-
-        //console.log('childComponent', childComponent)
 
         return (
             <div style={editStyle}>

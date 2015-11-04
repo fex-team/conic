@@ -1,6 +1,6 @@
-var React = require('react')
-var ReactDnd = require('react-dnd')
-var dragItem = require('./drag-type')
+const React = require('react')
+const ReactDnd = require('react-dnd')
+const dragItem = require('./drag-type')
 
 const source = {
     beginDrag: function (props) {

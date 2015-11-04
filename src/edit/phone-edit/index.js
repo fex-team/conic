@@ -10,7 +10,15 @@ var defaultJson = require('./default.json')
 
 var PhoneEdit = React.createClass({
     getInitialState: function () {
-        return {}
+        return {
+            defaultTree: {}
+        }
+    },
+
+    componentWillMount: function () {
+        this.setState({
+            defaultTree: defaultJson
+        })
     },
 
     ref: function (ref) {
@@ -22,8 +30,8 @@ var PhoneEdit = React.createClass({
             <div>
                 <DragContainer>
                     <DragAround>
-                        <Edit {...defaultJson} dragTarget="true"
-                                               ref={this.ref}>
+                        <Edit {...this.state.defaultTree} dragTarget="true"
+                                                          ref={this.ref}>
                             <Container/>
                         </Edit>
                     </DragAround>
