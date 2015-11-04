@@ -52,6 +52,10 @@ var HistoryStore = assign({}, EventEmitter.prototype, {
         // 删除当前位置之后的所有历史纪录
         historys = historys.slice(0, historys.length - currentIndex)
         currentIndex = 0
+    },
+
+    getContainerEdit: function () {
+        return containerEdit
     }
 })
 
@@ -87,9 +91,6 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
 
         newHistorys.map((item, index)=> {
             if (index >= action.start && index <= action.end) { // 在恢复范围内
-                let itemPosition = _.cloneDeep(item.position).reverse()
-                let componentEdit = findByPosition(itemPosition)
-
                 if (topToBottom) { // 撤销
                     // 忽略最后
                     if (index === action.end)return
@@ -97,6 +98,9 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
                     // 忽略第一个
                     if (index === action.start)return
                 }
+
+                let itemPosition = _.cloneDeep(item.position).reverse()
+                let componentEdit = findByPosition(itemPosition)
 
                 switch (item.type) {
                 case 'update':
@@ -108,20 +112,28 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
                     break
                 case 'add':
                     if (topToBottom) {
-                        console.log('删除', itemPosition, componentEdit)
                         componentEdit.removeSelf()
                     } else {
                         // 在父级添加这个组件
-                        componentEdit.addChild({
+                        let positionPrev = _.cloneDeep(item.position).reverse()
+                        positionPrev.pop()
+                        let componentEditContainer = findByPosition(positionPrev)
+
+                        componentEditContainer.addChild({
                             name: item.componentName,
-                            uniqueKey: item.uniqueKey
+                            uniqueKey: item.uniqueKey,
+                            opts: item.opts
                         })
                     }
                     break
                 case 'delete':
                     if (topToBottom) {
                         // 在父级添加这个组件
-                        componentEdit.addChild({
+                        let positionPrev = _.cloneDeep(item.position).reverse()
+                        positionPrev.pop()
+                        let componentEditContainer = findByPosition(positionPrev)
+
+                        componentEditContainer.addChild({
                             name: item.componentName,
                             opts: item.optsBefore,
                             childs: item.childs,
@@ -132,6 +144,34 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
                     }
                     break
                 case 'move':
+                    let afterPosition = _.cloneDeep(item.afterPosition).reverse()
+                    let afterComponentEdit = findByPosition(afterPosition)
+
+                    let positionPrev = _.cloneDeep(item.position).reverse()
+                    positionPrev.pop()
+                    let componentEditContainer = findByPosition(positionPrev)
+
+                    if (topToBottom) { // 撤销
+                        // 删除移动后的
+                        afterComponentEdit.removeSelf()
+                        // 新建移动前的
+                        componentEditContainer.addChild({
+                            name: item.componentName,
+                            opts: item.opts,
+                            childs: item.childs,
+                            uniqueKey: item.beforeUniqueKey
+                        })
+                    } else { // 还原
+                        // 删除移动前的
+                        componentEdit.removeSelf()
+                        // 新建移动后的
+                        afterComponentEdit.addChild({
+                            name: item.componentName,
+                            opts: item.opts,
+                            childs: item.childs,
+                            uniqueKey: item.uniqueKey
+                        })
+                    }
                     break
                 }
             }

@@ -14,10 +14,16 @@ const Text = React.createClass({
             name: 'BaseText',
             desc: '文字',
             opts: {
-                text: {
-                    value: 'Default Text',
-                    edit: 'text',
-                    desc: '文字内容'
+                base: {
+                    value: {
+                        text: {
+                            value: 'default text',
+                            edit: 'text',
+                            desc: '文字内容'
+                        }
+                    },
+                    title: '基本',
+                    edit: 'custom'
                 },
                 style: {
                     value: {
@@ -39,7 +45,7 @@ const Text = React.createClass({
     render: function () {
         return (
             <div style={_.assign(_.cloneDeep(this.props.opts.style.value), defaultStyle)}>
-                {this.props.opts.text.value}
+                {this.props.opts.base.value.text.value}
             </div>
         )
     }

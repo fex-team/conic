@@ -1,21 +1,22 @@
-var React = require('react')
-var Select = require('antd/lib/select')
-var Option = Select.Option
-var Checkbox = require('antd/lib/checkbox')
-var Radio = require('antd/lib/radio')
-var RadioGroup = require('antd/lib/radio/group')
-var EnterAnimation = require('antd/lib/enter-animation')
-var $ = require('jquery')
-var _ = require('lodash')
-var editStore = require('../../../stores/edit-store')
-var editAction = require('../../../actions/edit-action')
+const React = require('react')
+const Select = require('antd/lib/select')
+const Option = Select.Option
+const Checkbox = require('antd/lib/checkbox')
+const Radio = require('antd/lib/radio')
+const RadioGroup = require('antd/lib/radio/group')
+const EnterAnimation = require('antd/lib/enter-animation')
+const $ = require('jquery')
+const _ = require('lodash')
+const editStore = require('../../../stores/edit-store')
+const editAction = require('../../../actions/edit-action')
+const Collapse = require('antd/lib/collapse')
+const Panel = Collapse.Panel
 require('./index.scss')
 
-var Text = require('./text')
-var Number = require('./number')
-var Flex = require('./flex')
-var Style = require('./style')
-var Position = require('./position')
+const Custom = require('./custom')
+const Flex = require('./flex')
+const Style = require('./style')
+const Position = require('./position')
 
 let currentComponentOpts = null
 let currentComponentDesc = null
@@ -65,66 +66,74 @@ module.exports = React.createClass({
         }
 
         let editForm
+        let collapseDefaultActiveKeys = []
         if (currentComponentOpts !== null) {
             // 解析编辑项目
-            editForm = Object.keys(currentComponentOpts).map((key)=> {
+            editForm = Object.keys(currentComponentOpts).map((key, index)=> {
+                collapseDefaultActiveKeys.push(index.toString())
+
                 let item = currentComponentOpts[key]
                 switch (item.edit) {
-                case 'text':
+                case 'custom':
                     return (
-                        <Text key={key}
-                              item={item}
-                              onChange={this.onEditChange.bind(this,key)}/>
+                        <Panel header={item.title}
+                               key={index}>
+                            <Custom item={item.value}
+                                    onChange={this.onEditChange.bind(this,key)}/>
+                        </Panel>
                     )
-
-                case 'number':
-                    return (
-                        <Number key={key}
-                                item={item}
-                                onChange={this.onEditChange.bind(this,key)}/>
-                    )
+                    break
 
                 case 'flex':
                     return (
-                        <Flex key={key}
-                              item={item}
-                              onChange={this.onEditChange.bind(this,key)}/>
+                        <Panel header={`子元素布局`}
+                               key={index}>
+                            <Flex item={item}
+                                  onChange={this.onEditChange.bind(this,key)}/>
+                        </Panel>
                     )
 
                 case 'style':
                     return (
-                        <Style key={key}
-                               item={item}
-                               onChange={this.onEditChange.bind(this,key)}/>
+                        <Panel header={`样式`}
+                               key={index}>
+                            <Style item={item}
+                                   onChange={this.onEditChange.bind(this,key)}/>
+                        </Panel>
                     )
                 case 'position':
                     return (
-                        <Position key={key}
-                                  item={item}
-                                  onChange={this.onEditChange.bind(this,key)}/>
+                        <Panel header={`位置`}
+                               key={index}>
+                            <Position item={item}
+                                      onChange={this.onEditChange.bind(this,key)}/>
+                        </Panel>
                     )
                 }
             })
 
             // 包装动画
             editForm = (
-                <EnterAnimation component="form"
-                                className="ant-form-horizontal"
-                                enter={animation.enter}>
-                    <div key="edit-form">
-                        <div className="component-name">
-                            {currentComponentDesc === '手机壳' ? <div className="out-bg">手机壳</div> :
-                                <div onClick={this.removeSelf}
-                                     className="ant-btn ant-btn-danger title-button">
-                                    <i className="fa fa-remove"
-                                       style={{marginRight: 5}}></i>
-                                    {currentComponentDesc}
-                                </div>
-                            }
-                        </div>
-                        {editForm}
+                <div key="edit-form">
+                    <div className="component-name">
+                        {currentComponentDesc === '手机壳' ?
+                            <div className="out-bg"><i className="fa fa-cube"
+                                                       style={{marginRight:5}}></i>手机壳
+                            </div> :
+                            <div onClick={this.removeSelf}
+                                 className="delete-btn">
+                                <i className="fa fa-cube"
+                                   style={{marginRight:5}}></i>
+                                {currentComponentDesc}
+                                <i className="fa fa-remove"
+                                   style={{marginLeft: 5}}></i>
+                            </div>
+                        }
                     </div>
-                </EnterAnimation>
+                    <Collapse defaultActiveKey={collapseDefaultActiveKeys}>
+                        {editForm}
+                    </Collapse>
+                </div>
             )
         } else {
             editForm = (

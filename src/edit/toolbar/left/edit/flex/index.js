@@ -2,6 +2,8 @@ var React = require('react')
 var Select = require('antd/lib/select')
 var Option = Select.Option
 
+const selectWidth = 180
+
 module.exports = React.createClass({
     getInitialState: function () {
         return {
@@ -32,16 +34,14 @@ module.exports = React.createClass({
 
     render: function () {
         return (
-            <div>
-                <h4>子元素布局</h4>
-
+            <div className="ant-form-horizontal">
                 <div className="ant-form-item">
                     <label htmlFor="control-input"
                            className="col-8">排列顺序</label>
 
                     <div className="col-14">
                         <Select value={this.state.item.value.flexDirection}
-                                style={{width:'200px'}}
+                                style={{width:selectWidth}}
                                 onChange={this.onChange.bind(this,'flexDirection')}>
                             <Option value="row">从左到右</Option>
                             <Option value="row-reverse">从右到左</Option>
@@ -56,7 +56,7 @@ module.exports = React.createClass({
 
                     <div className="col-14">
                         <Select value={this.state.item.value.flexWrap}
-                                style={{width:'200px'}}
+                                style={{width:selectWidth}}
                                 onChange={this.onChange.bind(this,'flexWrap')}>
                             <Option value="nowrap">不换行</Option>
                             <Option value="wrap">换行（换到下方）</Option>
@@ -71,7 +71,7 @@ module.exports = React.createClass({
 
                     <div className="col-14">
                         <Select value={this.state.item.value.justifyContent}
-                                style={{width:'200px'}}
+                                style={{width:selectWidth}}
                                 onChange={this.onChange.bind(this,'justifyContent')}>
                             <Option value="flex-start">左对齐</Option>
                             <Option value="flex-end">右对齐</Option>
@@ -88,7 +88,7 @@ module.exports = React.createClass({
 
                     <div className="col-14">
                         <Select value={this.state.item.value.alignItems}
-                                style={{width:'200px'}}
+                                style={{width:selectWidth}}
                                 onChange={this.onChange.bind(this,'alignItems')}>
                             <Option value="flex-start">左对齐</Option>
                             <Option value="flex-end">右对齐</Option>

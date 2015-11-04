@@ -35,11 +35,6 @@ let LayoutBox = React.createClass({
                         background: 'white'
                     },
                     edit: 'style'
-                },
-                text: {
-                    edit: 'text',
-                    value: '123',
-                    desc: '测试字段'
                 }
             }
         }

@@ -58,17 +58,11 @@ module.exports = React.createClass({
         return (
             <div>
                 <div className="ant-form-item">
-                    <label className="col-8"
-                           style={{padding:'0 6px 0 0'}}>
-                        <Select value={this.state.bgType}
-                                style={{width:100}}
-                                onChange={this.onChangeType}>
-                            <Option value="color">背景颜色</Option>
-                            <Option value="image">背景图片</Option>
-                        </Select>
+                    <label className="col-8">
+                        背景
                     </label>
 
-                    <div className="col-14">
+                    <div className="col-16">
                         {bgComponent}
                     </div>
                 </div>

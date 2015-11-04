@@ -65,7 +65,8 @@ let Container = React.createClass({
         // 存储子元素的edit引用清空
         this.childEdits = []
 
-        let children = this.props.childs.map((item, index)=> {
+        let childs = this.props.childs || []
+        let children = childs.map((item, index)=> {
             let component = Components[item.name]
             let Editprops = {
                 key: item.uniqueKey,

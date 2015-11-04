@@ -1,5 +1,4 @@
 var React = require('react')
-var InputNumber = require('antd/lib/input-number')
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -16,9 +15,9 @@ module.exports = React.createClass({
         }
     },
 
-    onChange: function (value) {
+    onChange: function (event) {
         let newItem = this.state.item
-        newItem.value = value
+        newItem.value = event.target.value
 
         this.setState({
             item: newItem
@@ -35,13 +34,12 @@ module.exports = React.createClass({
                 <label htmlFor="control-input"
                        className="col-8">{this.state.item.desc}</label>
 
-                <div className="col-14">
-                    <InputNumber type="text"
-                                 value={this.state.item.value}
-                                 style={{width:200}}
-                                 onChange={this.onChange}
-                                 className="ant-input"
-                                 id="control-input"/>
+                <div className="col-16">
+                    <input type="text"
+                           value={this.state.item.value}
+                           onChange={this.onChange}
+                           className="ant-input"
+                           id="control-input"/>
                 </div>
             </div>
         )
