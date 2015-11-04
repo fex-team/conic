@@ -60,18 +60,18 @@ const Edit = React.createClass({
     },
 
     /* 暂时没有用 还会触发绝对定位组件top left位置的bug
-    componentWillReceiveProps: function (nextProps) {
-        // 更新state中customOpts
-        if (_.isEqual(this.state.customOpts, nextProps.opts) && (!this.state.selected || editStore.get() === this)) {
-            return
-        }
+     componentWillReceiveProps: function (nextProps) {
+     // 更新state中customOpts
+     if (_.isEqual(this.state.customOpts, nextProps.opts) && (!this.state.selected || editStore.get() === this)) {
+     return
+     }
 
-        this.setState({
-            customOpts: $.extend(true, this.state.customOpts, nextProps.opts),
-            selected: false
-        })
-    },
-    */
+     this.setState({
+     customOpts: $.extend(true, this.state.customOpts, nextProps.opts),
+     selected: false
+     })
+     },
+     */
 
     // 取消选择状态
     unSelected: function () {
@@ -210,7 +210,7 @@ const Edit = React.createClass({
                     uniqueKey: childInfo.uniqueKey,
                     componentName: childInfo.name,
                     childs: info.childs,
-                    opts: _.cloneDeep(item.edit.state.customOpts),
+                    opts: _.cloneDeep($.extend(true, item.edit.state.customOpts, childInfo.opts)),
                     type: 'move',
                     operateName: '移动组件 ' + childInfo.name
                 })
@@ -224,7 +224,7 @@ const Edit = React.createClass({
                     position: positionArray,
                     uniqueKey: childInfo.uniqueKey,
                     componentName: childInfo.name,
-                    opts: _.cloneDeep(item.edit.state.customOpts),
+                    opts: _.cloneDeep(childInfo.opts),
                     type: 'add',
                     operateName: '新增组件 ' + childInfo.name
                 })

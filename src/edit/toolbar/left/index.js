@@ -23,18 +23,15 @@ const Right = React.createClass({
     },
 
     onLeftTabChange: function () {
-        // TODO: tab组件暂时没有办法手动修改activekey
-        /*
-         this.setState({
-         activeTab: editStore.getTabName()
-         })
-         */
+        this.setState({
+            activeTab: editStore.getTabName()
+        })
     },
 
     render: function () {
         return (
             <div style={{height:'100%'}}>
-                <Tabs defaultActiveKey={this.state.activeTab}>
+                <Tabs activeKey={this.state.activeTab}>
                     <TabPane tab={<Tooltip title="编辑组件"><i className="fa fa-edit"></i></Tooltip>}
                              key="edit">
                         <Edit/>

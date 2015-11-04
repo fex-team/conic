@@ -1,10 +1,12 @@
-var React = require('react')
-var Select = require('antd/lib/select')
-var InputNumber = require('antd/lib/input-number')
-var Color = require('../lib/color')
-var Option = Select.Option
-var Background = require('./background')
-var MarginPadding = require('./margin-padding')
+const React = require('react')
+const Select = require('antd/lib/select')
+const InputNumber = require('antd/lib/input-number')
+const Color = require('../lib/color')
+const Option = Select.Option
+const Background = require('./background')
+const MarginPadding = require('./margin-padding')
+
+const normalWidth = 180
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -87,11 +89,11 @@ module.exports = React.createClass({
                         <label htmlFor="control-input"
                                className="col-8">宽度</label>
 
-                        <div className="col-14">
+                        <div className="col-16">
                             <InputNumber
                                 type="text"
                                 value={value}
-                                style={{width:200}}
+                                style={{width:normalWidth}}
                                 onChange={this.onWidthChange.bind(this,key)}
                                 className="ant-input"
                                 id="control-input"/>
@@ -105,10 +107,10 @@ module.exports = React.createClass({
                         <label htmlFor="control-input"
                                className="col-8">高度</label>
 
-                        <div className="col-14">
+                        <div className="col-16">
                             <InputNumber type="text"
                                          value={value}
-                                         style={{width:200}}
+                                         style={{width:normalWidth}}
                                          onChange={this.onHeightChange.bind(this,key)}
                                          className="ant-input"
                                          id="control-input"/>
@@ -122,10 +124,10 @@ module.exports = React.createClass({
                         <label htmlFor="control-input"
                                className="col-8">字体大小</label>
 
-                        <div className="col-14">
+                        <div className="col-16">
                             <InputNumber type="text"
                                          value={value}
-                                         style={{width:200}}
+                                         style={{width:normalWidth}}
                                          onChange={this.onFontSizeChange.bind(this,key)}
                                          className="ant-input"
                                          id="control-input"/>
@@ -146,7 +148,7 @@ module.exports = React.createClass({
                         <label htmlFor="control-input"
                                className="col-8">字体颜色</label>
 
-                        <div className="col-14">
+                        <div className="col-16">
                             <Color value={value}
                                    onChange={this.onFontColorChange.bind(this,key)}/>
                         </div>
@@ -162,8 +164,7 @@ module.exports = React.createClass({
             }
         })
         return (
-            <div>
-                <h4>样式</h4>
+            <div className="ant-form-horizontal">
                 {forms}
             </div>
         )

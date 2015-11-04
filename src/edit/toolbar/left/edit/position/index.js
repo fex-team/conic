@@ -1,6 +1,8 @@
 const React = require('react')
 const InputNumber = require('antd/lib/input-number')
 
+const normalWidth = 180
+
 module.exports = React.createClass({
     getInitialState: function () {
         return {
@@ -42,13 +44,13 @@ module.exports = React.createClass({
                     <div key={key}
                          className="ant-form-item">
                         <label htmlFor="control-input"
-                               className="col-8">x</label>
+                               className="col-8">x（距左侧）</label>
 
-                        <div className="col-14">
+                        <div className="col-16">
                             <InputNumber
                                 type="text"
                                 value={value}
-                                style={{width:200}}
+                                style={{width:normalWidth}}
                                 onChange={this.onChange.bind(this,key)}
                                 className="ant-input"
                                 id="control-input"/>
@@ -60,13 +62,13 @@ module.exports = React.createClass({
                     <div key={key}
                          className="ant-form-item">
                         <label htmlFor="control-input"
-                               className="col-8">y</label>
+                               className="col-8">y（距顶部）</label>
 
-                        <div className="col-14">
+                        <div className="col-16">
                             <InputNumber
                                 type="text"
                                 value={value}
-                                style={{width:200}}
+                                style={{width:normalWidth}}
                                 onChange={this.onChange.bind(this,key)}
                                 className="ant-input"
                                 id="control-input"/>
@@ -76,8 +78,7 @@ module.exports = React.createClass({
             }
         })
         return (
-            <div>
-                <h4>位置</h4>
+            <div className="ant-form-horizontal">
                 {forms}
             </div>
         )

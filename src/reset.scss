@@ -29,6 +29,7 @@ body {
 
 // 覆盖antd样式
 .ant-form-item, .ant-form-item > label {
+  text-align: left;
   color: #ccc;
 }
 
@@ -105,7 +106,7 @@ body {
 }
 
 .ant-input:hover, .ant-select-selection:hover {
-  border-color: #005882;
+  border-color: $bg-active-color;
 }
 
 .ant-input:focus, .ant-select-selection:focus {
@@ -229,7 +230,7 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
 .ant-collapse-content {
   border-top: 1px solid $border-color;
   background-color: $bg-color;
-  padding: 0;
+  padding: 10px;
 }
 
 .ant-collapse {
@@ -374,6 +375,16 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
 .ant-tabs-content {
   height: calc(100% - 34px);
   overflow-y: auto;
+}
+
+// 徽标数
+.ant-badge-count {
+  height: 15px;
+  line-height: 15px;
+  min-width: 15px;
+  padding: 0 5px;
+  top: -8px;
+  box-shadow: 0 0 0 1px $border-color;
 }
 
 // 高科技颜色字体
