@@ -10,7 +10,7 @@ var treeAction = require('../actions/tree-action')
 var classNames = require('classnames')
 var _ = require('lodash')
 var $ = require('jquery')
-var getTree = require('./')
+var getTree = require('./get-tree')
 
 // 根据edit生成位置数组
 function getPosition(edit, positionArray) {
@@ -37,16 +37,15 @@ const Edit = React.createClass({
     componentWillMount: function () {
         // 为每个子组件生成uniqueKey
         this.state.childs.map((item, index)=> {
-            item.uniqueKey = index
+            item.uniqueKey = '_' + Math.random().toString(36).substr(2, 9);
         })
     },
 
     componentDidMount: function () {
         setTimeout(() => {
             footerAction.increaseInstanceNumber()
+            treeAction.editComponentMounted(this)
         })
-
-        treeAction.editComponentMounted(this)
 
         // 如果默认是选中状态，通知左侧组件更新
         if (this.props.selected) {
@@ -207,8 +206,6 @@ const Edit = React.createClass({
         }
 
         newChilds.push(childInfo)
-
-        console.log(newChilds)
 
         this.setState({
             childs: newChilds
