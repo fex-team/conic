@@ -24,7 +24,7 @@ const Edit = React.createClass({
         return {
             enabledTarget: true,
             // 自定义属性
-            customOpts: this.props.opts,
+            customOpts: _.cloneDeep(this.props.opts),
             // 包含的组件属性
             childProps: this.props.children && _.cloneDeep(this.props.children.props),
             // 子元素属性数组
@@ -59,18 +59,23 @@ const Edit = React.createClass({
         })
     },
 
+    /* 暂时没有用 还会触发绝对定位组件top left位置的bug
     componentWillReceiveProps: function (nextProps) {
         // 更新state中customOpts
-        if (!_.isEqual(this.state.customOpts, nextProps.opts) || (this.state.selected && editStore.get() !== this)) {
-            this.setState({
-                customOpts: $.extend(true, this.state.customOpts, nextProps.opts),
-                selected: false
-            })
+        if (_.isEqual(this.state.customOpts, nextProps.opts) && (!this.state.selected || editStore.get() === this)) {
+            return
         }
+
+        this.setState({
+            customOpts: $.extend(true, this.state.customOpts, nextProps.opts),
+            selected: false
+        })
     },
+    */
 
     // 取消选择状态
     unSelected: function () {
+        // 取消选中状态
         this.setState({
             selected: false
         })
@@ -323,8 +328,11 @@ const Edit = React.createClass({
         this.setState({
             customOpts: $.extend(true, this.state.customOpts, opts)
         }, function () {
-            // 同步左侧编辑器内容
-            editAction.freshComponent(this)
+            console.log('absolute拖拽后customOpts', _.cloneDeep(this.state.customOpts))
+            // 同步左侧编辑器内容，如果选中了
+            if (this.state.selected) {
+                editAction.freshComponent(this)
+            }
         })
     },
 
@@ -338,6 +346,9 @@ const Edit = React.createClass({
         let editStyle = {}
 
         let newChildProps = _.cloneDeep(this.state.childProps)
+        if (this.state.childProps.opts.position) {
+            console.log('absolute渲染customOpts', _.cloneDeep(this.state.customOpts), this.props.opts)
+        }
 
         // 将edit本身传给子组件
         newChildProps.edit = this
