@@ -26,7 +26,7 @@ let ComponentTree = React.createClass({
     },
 
     onComponentChange: function () {
-        console.log(editStore.get())
+        //console.log(editStore.get())
     },
 
     componentDidMount: function () {
