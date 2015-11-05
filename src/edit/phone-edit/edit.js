@@ -62,20 +62,6 @@ const Edit = React.createClass({
         })
     },
 
-    /* 暂时没有用 还会触发绝对定位组件top left位置的bug
-     componentWillReceiveProps: function (nextProps) {
-     // 更新state中customOpts
-     if (_.isEqual(this.state.customOpts, nextProps.opts) && (!this.state.selected || editStore.get() === this)) {
-     return
-     }
-
-     this.setState({
-     customOpts: $.extend(true, this.state.customOpts, nextProps.opts),
-     selected: false
-     })
-     },
-     */
-
     // 取消选择状态
     unSelected: function () {
         // 取消选中状态
@@ -140,6 +126,9 @@ const Edit = React.createClass({
 
     // 修改是否可以作为拖拽目标（当父级dragsource被拖动时，禁止子dragtarget生效）
     onChangeEnableTarget: function (isOk) {
+        // 如果组件被效果，取消更新
+        if (!this.isMounted())return
+
         this.setState({
             enabledTarget: isOk
         })
@@ -326,6 +315,7 @@ const Edit = React.createClass({
                 })
             })
         }
+
         this.props.parent.removeChild(this.props.index)
     },
 
@@ -335,7 +325,6 @@ const Edit = React.createClass({
         this.setState({
             customOpts: $.extend(true, this.state.customOpts, opts)
         }, function () {
-            console.log('absolute拖拽后customOpts', _.cloneDeep(this.state.customOpts))
             // 同步左侧编辑器内容，如果选中了
             if (this.state.selected) {
                 editAction.freshComponent(this)
@@ -344,6 +333,9 @@ const Edit = React.createClass({
     },
 
     render: function () {
+        let positionArray = []
+        getPosition(this, positionArray)
+
         let className = classNames([
             {'selected': this.state.selected},
             {'absolute': this.props.dragSourceAbsolute}
@@ -353,9 +345,6 @@ const Edit = React.createClass({
         let editStyle = {}
 
         let newChildProps = _.cloneDeep(this.state.childProps)
-        if (this.state.childProps.opts.position) {
-            console.log('absolute渲染customOpts', _.cloneDeep(this.state.customOpts), this.props.opts)
-        }
 
         // 将edit本身传给子组件
         newChildProps.edit = this

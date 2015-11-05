@@ -32,12 +32,6 @@ let ComponentTree = React.createClass({
         //component.clickAction()
     },
 
-    onComponentChange: function () {
-        var component = editStore.get()
-        var uniqueKey = component.props.uniqueKey
-        var treeNode = treeNodes[uniqueKey]
-    },
-
     onEditMounted: function (component) {
         if (component.props.name === 'Container') {
             var info = {}
@@ -57,7 +51,6 @@ let ComponentTree = React.createClass({
     },
 
     componentDidMount: function () {
-        editStore.addChangeListener(this.onComponentChange)
         treeStore.addMountListener(this.onEditMounted)
     },
 

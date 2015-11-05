@@ -12,7 +12,7 @@ const History = require('./history')
 const Right = React.createClass({
     getInitialState: function () {
         return {
-            historyCount: '0'
+            historyCount: 0
         }
     },
 
@@ -24,9 +24,9 @@ const Right = React.createClass({
         historyStore.removeChangeListener(this.historyChangeCount)
     },
 
-    historyChangeCount: function (count) {
+    historyChangeCount: function () {
         this.setState({
-            historyCount: historyStore.get().length.toString()
+            historyCount: historyStore.get().length
         })
     },
 
