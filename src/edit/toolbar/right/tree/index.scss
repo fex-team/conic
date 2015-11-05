@@ -1,7 +1,62 @@
+@import "../../../../minxin";
+
 .ant-tree-checkbox-inner {
   background-color: transparent;
 }
 
 .ant-tree {
   padding-left: 10px;
+}
+
+.none-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.src-edit-toolbar-right-tree  {
+
+  .section {
+
+    .section-inner {
+      @extend %btn;
+      height: 30px;
+      line-height: 30px;
+      padding-left: 15px;
+      background-color: #393939;
+
+      .dropdown {
+        margin: 0 5px;
+        padding: 0 6px;
+
+        i {
+          width: 10px;
+          font-size: 16px;
+          text-align: center;
+        }
+      }
+    }
+
+    .selected {
+      background: #4279ac !important;
+    }
+  }
+
+  .children {
+    .node {
+      @extend %btn;
+      border-bottom: 0;
+      line-height: 30px;
+      background-color: #393939;
+    }
+  }
 }

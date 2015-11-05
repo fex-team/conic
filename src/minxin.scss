@@ -35,7 +35,7 @@ $input-height: 26px;
 %btn {
   display: block;
   color: $font-color;
-  box-shadow: inset 1px 1px 1px $shadow-color;
+  box-shadow: inset 0 1px 1px $shadow-color;
   cursor: pointer;
   border-bottom: 1px solid $border-color;
   &:hover, &.active {

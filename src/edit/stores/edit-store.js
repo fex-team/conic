@@ -72,6 +72,8 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
         previousComponent = currentComponent
         currentComponent = action.component
 
+        //currentComponent.treeNode.select()
+
         // 如果上个组件存在，则取消选中状态
         if (previousComponent) {
             previousComponent.unSelected()
@@ -79,6 +81,15 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
 
         EditStore.emitChange()
         break
+
+    case 'triggerComponent':
+
+        if (action.component === currentComponent) {
+            return
+        }
+
+        break;
+
     case 'freshComponent':
         currentComponent = action.component
         EditStore.emitChange()

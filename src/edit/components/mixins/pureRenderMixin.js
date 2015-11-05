@@ -7,7 +7,7 @@ var _ = require('lodash')
 
 function isValueEqual(value, other) {
     function compare(val, name) {
-        if (_.isArray(val)) {
+        if (_.isArray(val) && other[name]) {
             return val.length !== other[name].length;
         }
 

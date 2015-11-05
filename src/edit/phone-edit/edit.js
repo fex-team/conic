@@ -6,6 +6,7 @@ var editAction = require('../actions/edit-action')
 var editStore = require('../stores/edit-store')
 var footerAction = require('../actions/footer-action')
 var historyAction = require('../actions/history-action')
+var treeNodeAction = require('../actions/tree-node-action')
 var treeAction = require('../actions/tree-action')
 var classNames = require('classnames')
 var _ = require('lodash')
@@ -98,6 +99,10 @@ const Edit = React.createClass({
         this.setState({
             selected: true
         })
+
+        // 触发右侧树选中
+        this.treeNode.select()
+
         editAction.selectComponent(this)
     },
 
@@ -278,11 +283,8 @@ const Edit = React.createClass({
             })
         })
 
-<<<<<<< HEAD
-=======
         newChilds.push(childInfo)
 
->>>>>>> 05f3182d348e25b374760d4c2cd309dd5e6a0476
         this.setState({
             childs: newChilds
         })
