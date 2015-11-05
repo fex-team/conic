@@ -48,21 +48,24 @@ let TreeNodeStore = assign({}, EventEmitter.prototype, {
 TreeNodeStore.dispatchToken = dispatcher.register((action) => {
 
     switch (action.type) {
-    case 'selectTreeNode':
-        if (action.component === currentTreeNode) {
-            return
+        case 'selectTreeNode':
+            if (action.component === currentTreeNode) {
+                return
+            }
+
+            previousTreeNode = currentTreeNode
+            currentTreeNode = action.component
+
+            if (previousTreeNode) {
+                previousTreeNode.unSelected()
+            }
+
+            TreeNodeStore.emitChange(currentTreeNode)
+            break
+
+        case 'expandAll':
+
         }
-
-        previousTreeNode = currentTreeNode
-        currentTreeNode = action.component
-
-        if (previousTreeNode) {
-            previousTreeNode.unSelected()
-        }
-
-        TreeNodeStore.emitChange(currentTreeNode)
-        break
-    }
 })
 
 module.exports = TreeNodeStore

@@ -12,7 +12,6 @@ module.exports = {
             component: component
         })
     },
-
     editComponentMounted: function (component) {
         dispatcher.dispatch({
             type: 'editComponentMounted',

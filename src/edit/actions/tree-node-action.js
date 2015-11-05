@@ -13,17 +13,9 @@ module.exports = {
         })
     },
 
-    triggerComponent: function (component) {
+    expandAll: function () {
         dispatcher.dispatch({
-            type: 'triggerComponent',
-            component: component
-        })
-    },
-
-    editComponentMounted: function (component) {
-        dispatcher.dispatch({
-            type: 'editComponentMounted',
-            component: component
+            type: 'expandAll'
         })
     }
 }

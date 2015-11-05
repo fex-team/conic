@@ -18,7 +18,7 @@ let TreeNode = React.createClass({
     getInitialState: function () {
         return {
             childs: [],
-            childrenExpand: false,
+            expand: false,
             selected: false
         }
     },
@@ -42,20 +42,33 @@ let TreeNode = React.createClass({
         }
     },
 
-    onComponentChange: function () {
-        var component = editStore.get()
-
-
-    },
-
     showChildren: function (e) {
         e.preventDefault()
         e.stopPropagation()
 
-        var childrenExpand = this.state.childrenExpand
+        this.expand();
+    },
+
+    hideChildren: function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+
+        this.collapse()
+    },
+
+    expand: function () {
+        if (this.state.expand) return
 
         this.setState({
-            childrenExpand: !childrenExpand
+            expand: true
+        })
+    },
+
+    collapse: function () {
+        if (!this.state.expand) return
+
+        this.setState({
+           expand: false
         })
     },
 
@@ -87,7 +100,7 @@ let TreeNode = React.createClass({
     },
 
     render: function () {
-        var childrenExpand = this.state.childrenExpand
+        var expand = this.state.expand
         var angle
         var selected = this.state.selected
         var padding = this.props.padding
@@ -97,8 +110,8 @@ let TreeNode = React.createClass({
         }
 
         if (this.state.childs.length > 0) {
-            if (childrenExpand) {
-                angle = <i onClick={this.showChildren} className="fa fa-angle-down"></i>
+            if (expand) {
+                angle = <i onClick={this.hideChildren} className="fa fa-angle-down"></i>
             }
             else {
                 angle = <i onClick={this.showChildren} className="fa fa-angle-right"></i>
@@ -133,7 +146,7 @@ let TreeNode = React.createClass({
                         <span className="dropdown">{angle}</span>
                         <span className="section-name">{this.props.name}</span>
                     </div>
-                    <div className={classNames('children', 'none-select', {'show': childrenExpand, 'hide': !childrenExpand})}>
+                    <div className={classNames('children', 'none-select', {'show': expand, 'hide': !expand})}>
                         {childNodes}
                     </div>
                 </div>

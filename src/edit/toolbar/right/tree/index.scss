@@ -1,13 +1,5 @@
 @import "../../../../minxin";
 
-.ant-tree-checkbox-inner {
-  background-color: transparent;
-}
-
-.ant-tree {
-  padding-left: 10px;
-}
-
 .none-select {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -23,40 +15,82 @@
   display: block;
 }
 
-.src-edit-toolbar-right-tree  {
+.clearfix {
+  clear: both;
+  display: block;
+  overflow: hidden;
 
-  .section {
+  &:before, &:after {
+    content: ' ';
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+}
 
-    .section-inner {
-      @extend %btn;
-      height: 30px;
-      line-height: 30px;
-      padding-left: 15px;
-      background-color: #393939;
+.navigator {
+  max-height: 100%;
+  padding: 12px 9px;
+  background: #4b4b4b;
+  border-bottom: 1px solid #272727;
+  color: #d6d6d6;
+  text-shadow: 0 -1px rgba(0,0,0,.3);
 
-      .dropdown {
-        margin: 0 5px;
-        padding: 0 6px;
+  .title {
+    float: left;
+    font-weight: 600;
+    font-size: 11px;
+  }
 
-        i {
-          width: 10px;
-          font-size: 16px;
-          text-align: center;
-        }
-      }
+  .nav-buttons {
+    float: right;
+
+    span {
+      float: left;
+      margin-left: 13px;
+      color: #999;
+      -webkit-transition: color .15s ease;
+      transition: color .15s ease;
     }
 
-    .selected {
-      background: #4279ac !important;
+    span:hover {
+      color: #ddd;
+      cursor: pointer;
+    }
+  }
+}
+
+.section {
+
+  .section-inner {
+    @extend %btn;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 15px;
+    background-color: #393939;
+
+    .dropdown {
+      margin: 0 5px;
+      padding: 0 6px;
+
+      i {
+        width: 10px;
+        font-size: 16px;
+        text-align: center;
+      }
     }
   }
 
-  .children {
-    .node {
-      @extend %btn;
-      border-bottom: 0;
-      line-height: 30px;
-      background-color: #393939;
-    }
+  .selected {
+    background: #4279ac !important;
+  }
+}
+
+.children {
+  .node {
+    @extend %btn;
+    border-bottom: 0;
+    line-height: 30px;
+    background-color: #393939;
   }
 }

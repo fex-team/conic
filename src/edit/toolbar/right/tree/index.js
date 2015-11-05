@@ -6,6 +6,7 @@ var treeStore = require('../../../stores/tree-store')
 var _ = require('lodash');
 var getTree = require('../../../phone-edit/get-tree')
 var defaultJson = require('../../../phone-edit/default.json')
+var treeAction = require('../../../actions/tree-action')
 
 require('./index.scss');
 
@@ -15,15 +16,31 @@ const animation = {
     }
 };
 
-var treeNodes = {}
-var branches = {}
-var cooked
+function expand (component, info) {
+    var treeNode = component.treeNode
+    treeNode.expand()
+    component.childInstance.getChildsEdit && component.childInstance.getChildsEdit().map((item, index)=> {
+        expand(item, info.childs[index])
+    })
+}
+
+function collapse (component, info) {
+    var treeNode = component.treeNode
+    treeNode.collapse()
+    component.childInstance.getChildsEdit && component.childInstance.getChildsEdit().map((item, index)=> {
+        collapse(item, info.childs[index])
+    })
+}
 
 let ComponentTree = React.createClass({
     getInitialState: function () {
         return {
             info: {}
         }
+    },
+
+    componentDidMount: function () {
+        treeStore.addMountListener(this.onEditMounted)
     },
 
     onEditMounted: function (component) {
@@ -44,23 +61,29 @@ let ComponentTree = React.createClass({
         }
     },
 
-    componentDidMount: function () {
-        treeStore.addMountListener(this.onEditMounted)
+    expandAll: function () {
+        var info = this.state.info
+        expand(info.component, info)
+    },
+
+    collapseAll: function () {
+        var info = this.state.info
+        collapse(info.component, info)
     },
 
     render: function () {
-        let tree;
         let info = this.state.info
-
-        tree = (
-            <div key="tree" className="layout">
-                <TreeNode {...info} />
-            </div>
-        );
 
         return (
             <div>
-                {tree}
+                <div className="navigator clearfix">
+                    <div className="title">导航</div>
+                    <div className="nav-buttons">
+                        <span onClick={this.expandAll}>全部展开</span>
+                        <span onClick={this.collapseAll}>全部闭合</span>
+                    </div>
+                </div>
+                <TreeNode {...info} />
             </div>
         )
     }
