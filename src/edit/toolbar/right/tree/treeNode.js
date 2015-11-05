@@ -88,13 +88,6 @@ let TreeNode = React.createClass({
         })
     },
 
-    unSectionSelect: function (e) {
-        e.preventDefault()
-        e.stopPropagation()
-
-        this.unSelected()
-    },
-
     render: function () {
         var childrenExpand = this.state.childrenExpand
         var angle

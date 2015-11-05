@@ -26,12 +26,6 @@ let ComponentTree = React.createClass({
         }
     },
 
-    onSelect: function (e) {
-        //var node = e.node
-        //var component = node.props.component
-        //component.clickAction()
-    },
-
     onEditMounted: function (component) {
         if (component.props.name === 'Container') {
             var info = {}
