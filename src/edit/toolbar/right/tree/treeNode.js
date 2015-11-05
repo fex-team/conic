@@ -10,8 +10,6 @@ let pureRenderMixin = require('../../../components/mixins/pureRenderMixin')
 let treeNodeAction = require('../../../actions/tree-node-action')
 let treeNodeStore = require('../../../stores/tree-node-store')
 
-require('./index.scss');
-
 let selectType = null
 
 let TreeNode = React.createClass({
@@ -106,8 +104,6 @@ let TreeNode = React.createClass({
                 angle = <i onClick={this.showChildren} className="fa fa-angle-right"></i>
             }
         }
-
-        console.log('render..')
 
         let childNodes = this.state.childs.map((item, index) => {
 
