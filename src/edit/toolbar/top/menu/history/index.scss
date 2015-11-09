@@ -1,0 +1,15 @@
+@import "../../../../../minxin";
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.disabled {
+  color: #999;
+  &:hover {
+    background: $bg-color;
+    color: #999;
+    cursor: default;
+  }
+}

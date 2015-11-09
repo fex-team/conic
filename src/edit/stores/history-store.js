@@ -5,6 +5,7 @@ const _ = require('lodash')
 const editAction = require('../actions/edit-action')
 
 const CHANGE_EVENT = 'change'
+const REVERSE_EVENT = 'reverseEvent'
 
 let containerEdit
 let historys = []
@@ -40,6 +41,18 @@ var HistoryStore = assign({}, EventEmitter.prototype, {
         this.removeListener(CHANGE_EVENT, callback)
     },
 
+    emitReverse: function () {
+        this.emit(REVERSE_EVENT)
+    },
+
+    addReverseListener: function (callback) {
+        this.on(REVERSE_EVENT, callback)
+    },
+
+    removeReverseListener: function (callback) {
+        this.removeListener(REVERSE_EVENT, callback)
+    },
+
     get: function () {
         return historys
     },
@@ -62,6 +75,18 @@ var HistoryStore = assign({}, EventEmitter.prototype, {
 HistoryStore.dispatchToken = dispatcher.register(function (action) {
     switch (action.type) {
     case 'addHistory':
+        if (historys.length === 0) {
+            historys.push({
+                operateName: '空白',
+                type: 'none'
+            })
+        }
+
+        // 如果当前历史不是最新的，则删除之后的历史
+        if (currentIndex !== 0) {
+            HistoryStore.removeAfterCurrent()
+        }
+
         historys.push(action.operate)
         HistoryStore.emitChange()
         break
@@ -176,6 +201,8 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
                 }
             }
         })
+
+        HistoryStore.emitReverse()
         break
     }
 })

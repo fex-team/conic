@@ -16,20 +16,22 @@ const History = React.createClass({
 
     componentDidMount: function () {
         historyStore.addChangeListener(this.onHistoryChange)
+        historyStore.addReverseListener(this.onHistoryChange)
     },
 
     componentWillUnmount: function () {
         historyStore.removeChangeListener(this.onHistoryChange)
+        historyStore.removeReverseListener(this.onHistoryChange)
     },
 
     onHistoryChange: function () {
         this.setState({
             historys: historyStore.get(),
-            current: 0
+            current: historyStore.getCurrentIndex()
         })
     },
 
-    revertHistory: function (history, index, event) {
+    revertHistory: function (index) {
         if (index === this.state.current)return
 
         let start = this.state.current
@@ -43,10 +45,6 @@ const History = React.createClass({
                 end = start - 20
             }
         }
-
-        this.setState({
-            current: end
-        })
 
         setTimeout(()=> {
             historyAction.revertHistory(start, end)
@@ -63,7 +61,7 @@ const History = React.createClass({
 
             return (
                 <div className={classname}
-                     onClick={this.revertHistory.bind(this,item,index)}
+                     onClick={this.revertHistory.bind(this,index)}
                      key={index}>
                     <i className="fa fa-history"
                        style={{marginRight:5}}></i>

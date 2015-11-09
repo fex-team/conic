@@ -1,6 +1,6 @@
-var React = require('react')
-var reactRouter = require('react-router')
-var Link = reactRouter.Link
+const React = require('react')
+const reactRouter = require('react-router')
+const Link = reactRouter.Link
 require('./index.scss')
 
 var Home = React.createClass({

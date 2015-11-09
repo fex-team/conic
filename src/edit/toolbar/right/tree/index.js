@@ -83,7 +83,7 @@ let ComponentTree = React.createClass({
                         <span onClick={this.collapseAll}>全部闭合</span>
                     </div>
                 </div>
-                <TreeNode {...info} />
+                <TreeNode />
             </div>
         )
     }

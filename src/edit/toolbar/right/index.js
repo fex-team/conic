@@ -34,12 +34,12 @@ const Right = React.createClass({
         return (
             <div style={{height:'100%'}}>
                 <Tabs defaultActiveKey="1">
-                    <TabPane tab={<Tooltip title="项目树状结构"><i className="fa fa-tree"></i></Tooltip>}
+                    <TabPane tab={<Tooltip placement="bottom" title="项目树状结构"><i className="fa fa-tree"></i></Tooltip>}
                              key="1">
                         <Tree />
                     </TabPane>
                     <TabPane tab={
-                        <Tooltip title="历史纪录">
+                        <Tooltip placement="bottom" title="历史纪录">
                             <Badge count={this.state.historyCount}>
                                 <i className="fa fa-history"></i>
                             </Badge>
@@ -48,7 +48,7 @@ const Right = React.createClass({
                              key="2">
                         <History/>
                     </TabPane>
-                    <TabPane tab={<Tooltip title="设置"><i className="fa fa-gear"></i></Tooltip>}
+                    <TabPane tab={<Tooltip placement="bottom" title="设置"><i className="fa fa-gear"></i></Tooltip>}
                              key="3">
                         <Auxiliary/>
                     </TabPane>

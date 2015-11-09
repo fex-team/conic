@@ -59,6 +59,14 @@ body {
   color: #888;
 }
 
+.ant-menu-horizontal > .ant-menu-item > a, .ant-menu-horizontal > .ant-menu-submenu > .ant-menu-submenu-title > a {
+  color: $font-color;
+}
+
+.ant-menu-horizontal > .ant-menu-item > a:hover, .ant-menu-horizontal > .ant-menu-submenu > .ant-menu-submenu-title > a:hover {
+  color: $font-active-color;
+}
+
 // checkbox
 .ant-checkbox-inner, .ant-radio-inner {
   border-color: #222;
@@ -319,10 +327,9 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
 }
 
 .ant-menu {
-  border-color: $border-color;
+  border: none;
   color: $font-color;
   border-radius: 0;
-  border-top: none;
 }
 
 // message提示
@@ -338,8 +345,8 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
 }
 
 .ant-tabs-nav-container {
+  box-shadow: inset 0 -1px 0 $shadow-color;
   border-color: $border-color;
-  box-shadow: 0 1px 0 $shadow-color;
   margin: 0;
 }
 
@@ -349,7 +356,7 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
 }
 
 .ant-tabs-nav .ant-tabs-tab > a {
-  padding: 5px 14px;
+  padding: 3px 12px;
   font-size: 16px;
   color: $font-color;
   border-right: 1px solid $border-color;

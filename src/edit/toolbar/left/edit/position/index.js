@@ -10,28 +10,21 @@ module.exports = React.createClass({
         }
     },
 
+    // 同步拖拽位移带来的修改
     componentWillReceiveProps: function (nextProps) {
         if (this.state.item !== nextProps.item) {
             this.setState({
                 item: nextProps.item
             })
-
-            this.props.onChange(nextProps.item, {
-                name: '修改位置'
-            })
         }
     },
 
-    onChange: function (key, event) {
+    onChange: function (key, value) {
         let newItem = this.state.item
-        if (typeof event === 'object') {
-            newItem.value[key] = event.target.value
-        } else {
-            newItem.value[key] = event
-        }
+        newItem.value[key] = value
 
-        this.props.onChange(this.state.item, {
-            name: '修改位置'
+        this.props.onChange(newItem, {
+            name: '移动'
         })
     },
 
@@ -43,7 +36,7 @@ module.exports = React.createClass({
                 return (
                     <div key={key}
                          className="ant-form-item">
-                        <label htmlFor="control-input"
+                        <label htmlFor="style-position-left"
                                className="col-8">x（距左侧）</label>
 
                         <div className="col-16">
@@ -53,7 +46,7 @@ module.exports = React.createClass({
                                 style={{width:normalWidth}}
                                 onChange={this.onChange.bind(this,key)}
                                 className="ant-input"
-                                id="control-input"/>
+                                id="style-position-left"/>
                         </div>
                     </div>
                 )
@@ -61,7 +54,7 @@ module.exports = React.createClass({
                 return (
                     <div key={key}
                          className="ant-form-item">
-                        <label htmlFor="control-input"
+                        <label htmlFor="style-position-top"
                                className="col-8">y（距顶部）</label>
 
                         <div className="col-16">
@@ -71,7 +64,7 @@ module.exports = React.createClass({
                                 style={{width:normalWidth}}
                                 onChange={this.onChange.bind(this,key)}
                                 className="ant-input"
-                                id="control-input"/>
+                                id="style-position-top"/>
                         </div>
                     </div>
                 )

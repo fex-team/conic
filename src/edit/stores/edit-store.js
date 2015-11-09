@@ -1,7 +1,6 @@
 let dispatcher = require('../dispatcher')
 let EventEmitter = require('events').EventEmitter
 let assign = require('object-assign')
-let historyStore = require('./history-store')
 
 let CHANGE_EVENT = 'changeComponent'
 let CHANGE_SELECT_CONTAINER_EVENT = 'changeSelectContainer'
@@ -95,11 +94,6 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
         EditStore.emitChange()
         break
     case 'updateComponent':
-        if (historyStore.getCurrentIndex() !== 0) {
-            // 如果当前历史不是最新，则删除之后的历史
-            historyStore.removeAfterCurrent()
-        }
-
         currentComponent.UpdateChildren(action.opts, action.historyInfo)
         break
     case 'removeCurrent':

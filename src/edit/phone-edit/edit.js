@@ -45,7 +45,7 @@ const Edit = React.createClass({
     componentDidMount: function () {
         setTimeout(() => {
             footerAction.increaseInstanceNumber()
-            treeAction.editComponentMounted(this)
+            //treeAction.editComponentMounted(this)
         })
 
         // 如果默认是选中状态，通知左侧组件更新
@@ -62,8 +62,18 @@ const Edit = React.createClass({
         })
     },
 
+    shouldComponentUpdate: function (nextProps, nextState) {
+        if (nextState !== this.state) {
+            return true
+        }
+        return false
+    },
+
     // 取消选择状态
     unSelected: function () {
+        // 如果组件被删除，取消更新
+        if (!this.isMounted())return
+
         // 取消选中状态
         this.setState({
             selected: false
@@ -87,7 +97,7 @@ const Edit = React.createClass({
         })
 
         // 触发右侧树选中
-        this.treeNode.select()
+        //this.treeNode.select()
 
         editAction.selectComponent(this)
     },
@@ -126,7 +136,7 @@ const Edit = React.createClass({
 
     // 修改是否可以作为拖拽目标（当父级dragsource被拖动时，禁止子dragtarget生效）
     onChangeEnableTarget: function (isOk) {
-        // 如果组件被效果，取消更新
+        // 如果组件被删除，取消更新
         if (!this.isMounted())return
 
         this.setState({
@@ -322,8 +332,20 @@ const Edit = React.createClass({
     // 绝对定位拖拽元素属性变化
     onDragSourceAbsoluteChange: function (opts) {
         // 与customOpts作merge
+        var mergeOpts = $.extend(true, _.cloneDeep(this.state.customOpts), opts)
+
+        let positionArray = []
+        getPosition(this, positionArray)
+        historyAction.addHistory({
+            position: positionArray,
+            optsBefore: _.cloneDeep(this.state.customOpts),
+            optsAfter: _.cloneDeep(mergeOpts),
+            type: 'update',
+            operateName: this.state.childProps.name + ' 移动'
+        })
+
         this.setState({
-            customOpts: $.extend(true, this.state.customOpts, opts)
+            customOpts: mergeOpts
         }, function () {
             // 同步左侧编辑器内容，如果选中了
             if (this.state.selected) {
@@ -333,6 +355,10 @@ const Edit = React.createClass({
     },
 
     render: function () {
+        let position = []
+        getPosition(this, position)
+        console.log('%c[render] edit:' + position.reverse(), 'color:green');
+
         let positionArray = []
         getPosition(this, positionArray)
 
