@@ -9,7 +9,12 @@ let currentComponent = null
 let previousComponent = null
 let position
 
+let CHANGE_SHOW_MODE = 'changeShowMode'
+let showMode = 'edit'
+let showModeInfo = {}
+
 var EditStore = assign({}, EventEmitter.prototype, {
+    // 选中组件
     emitChange: function () {
         this.emit(CHANGE_EVENT)
     },
@@ -26,6 +31,7 @@ var EditStore = assign({}, EventEmitter.prototype, {
         return currentComponent
     },
 
+    // 选择container
     emitSelectContainer: function () {
         this.emit(CHANGE_SELECT_CONTAINER_EVENT)
     },
@@ -38,6 +44,7 @@ var EditStore = assign({}, EventEmitter.prototype, {
         this.removeListener(CHANGE_SELECT_CONTAINER_EVENT, callback)
     },
 
+    // 修改左侧编辑栏tab
     emitLeftTabChange: function (tabName) {
         this.tabName = tabName
         this.emit(CHANGE_LEFT_TAB_EVENT)
@@ -53,6 +60,27 @@ var EditStore = assign({}, EventEmitter.prototype, {
 
     getTabName: function () {
         return this.tabName
+    },
+
+    // 修改渲染模式（编辑态、预览态）
+    emitChangeShowMode: function () {
+        this.emit(CHANGE_SHOW_MODE)
+    },
+
+    addChangeShowModeListener: function (callback) {
+        this.on(CHANGE_SHOW_MODE, callback)
+    },
+
+    removeChangeShowModeListener: function (callback) {
+        this.removeListener(CHANGE_SHOW_MODE, callback)
+    },
+
+    getShowMode: function () {
+        return showMode
+    },
+
+    getShowModeInfo: function () {
+        return showModeInfo
     }
 })
 
@@ -102,6 +130,11 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
         break
     case 'selectContainer':
         EditStore.emitSelectContainer()
+        break
+    case 'changeShowMode':
+        showMode = action.mode
+        showModeInfo = action.info
+        EditStore.emitChangeShowMode()
         break
     }
 })

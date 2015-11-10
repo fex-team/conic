@@ -41,5 +41,14 @@ module.exports = {
             type: 'changePosition',
             position: position
         })
+    },
+
+    // 修改显示模式
+    changeShowMode: function (mode, info) {
+        dispatcher.dispatch({
+            type: 'changeShowMode',
+            mode: mode,
+            info: info
+        })
     }
 }

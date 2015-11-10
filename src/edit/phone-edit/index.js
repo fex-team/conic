@@ -1,28 +1,31 @@
-var React = require('react')
-var Edit = require('./edit')
-var Container = require('../components/container')
-var DragContainer = require('./drag-container')
-var DragAround = require('./drag-around')
-var historyAction = require('../actions/history-action')
+const React = require('react')
+const Edit = require('./edit')
+const Container = require('../components/container')
+const DragContainer = require('./drag-container')
+const DragAround = require('./drag-around')
+const historyAction = require('../actions/history-action')
+const editStore = require('../stores/edit-store')
 require('./index.scss')
 
 var defaultJson = require('./default.json')
 
 var PhoneEdit = React.createClass({
-    getInitialState: function () {
-        return {
-            defaultTree: {}
-        }
-    },
-
-    componentWillMount: function () {
-        this.setState({
-            defaultTree: defaultJson
-        })
-    },
-
     ref: function (ref) {
         historyAction.setContainerEdit(ref)
+    },
+
+    componentDidMount: function () {
+        editStore.addChangeShowModeListener(this.changeMode)
+    },
+
+    componentWillUnmount: function () {
+        editStore.removeChangeShowModeListener(this.changeMode)
+    },
+
+    changeMode: function () {
+        if (editStore.getShowMode() === 'preview') {
+            console.log(editStore.getShowModeInfo())
+        }
     },
 
     render: function () {
@@ -30,8 +33,8 @@ var PhoneEdit = React.createClass({
             <div>
                 <DragContainer>
                     <DragAround>
-                        <Edit {...this.state.defaultTree} dragTarget="true"
-                                                          ref={this.ref}>
+                        <Edit {...defaultJson} dragTarget="true"
+                                               ref={this.ref}>
                             <Container/>
                         </Edit>
                     </DragAround>
