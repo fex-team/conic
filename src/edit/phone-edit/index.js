@@ -35,7 +35,7 @@ var PhoneEdit = React.createClass({
                     <DragAround>
                         <Edit {...defaultJson} dragTarget="true"
                                                ref={this.ref}>
-                            <Container/>
+                            <Container/>2
                         </Edit>
                     </DragAround>
                 </DragContainer>

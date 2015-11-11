@@ -6,9 +6,9 @@
   "scripts": {
     "server": "node server.js",
     "webpack-dev": "node webpack.js",
-    "webpack-dist": "webpack -p",
+    "webpack-dist": "webpack -p --profile --display-modules",
     "start": "npm run server & npm run webpack-dev",
-    "release": "npm run webpack-dist && npm run pm2"
+    "release": "npm run webpack-dist && npm run server"
   },
   "repository": {
     "type": "git",

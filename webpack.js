@@ -14,6 +14,10 @@ var server = new webpackDevServer(webpack(webpackConf), {
     hot: true,
     quiet: false,
     noInfo: false,
+    watchOptions: {
+        aggregateTimeout: 300,
+        poll: 1000
+    },
     stats: {
         colors: true,
         hash: false,
