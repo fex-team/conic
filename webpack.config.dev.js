@@ -26,6 +26,7 @@ var config = {
     },
 
     module: {
+        noParse: [],
         loaders: [
             {
                 test: /\.js?$/,
@@ -50,8 +51,7 @@ var config = {
                 test: /\.json$/,
                 loader: 'json-loader'
             }
-        ],
-        noParse: []
+        ]
     },
 
     plugins: [
