@@ -1,11 +1,11 @@
-var React = require('react')
-var $ = require('jquery')
-var _ = require('lodash')
-var Edit = require('../../phone-edit/edit')
-var LayoutBox = require('../../components/layout-box')
-var LayoutBoxAbsolute = require('../../components/layout-box-absolute')
-var Components = require('../../components')
-var editStore = require('../../stores/edit-store')
+const React = require('react')
+const $ = require('jquery')
+const _ = require('lodash')
+const Edit = require('../../phone-edit/edit')
+const LayoutBox = require('../../components/layout-box')
+const LayoutBoxAbsolute = require('../../components/layout-box-absolute')
+const Components = require('../../components')
+const editStore = require('../../stores/edit-store')
 const pureRenderMixin = require('../mixins/pureRenderMixin')
 
 let Container = React.createClass({
@@ -49,11 +49,15 @@ let Container = React.createClass({
     },
 
     componentDidMount: function () {
-        editStore.addSelectContainerListener(this.onSelectContainer)
+        if (this.props.mode==='edit'){
+            editStore.addSelectContainerListener(this.onSelectContainer)
+        }
     },
 
     componentWillUnmount: function () {
-        editStore.removeSelectContainerListener(this.onSelectContainer)
+        if (this.props.mode==='edit') {
+            editStore.removeSelectContainerListener(this.onSelectContainer)
+        }
     },
 
     // 获得子元素的edit引用
@@ -62,51 +66,64 @@ let Container = React.createClass({
     },
 
     render: function () {
-        // 存储子元素的edit引用清空
-        this.childEdits = []
-
-        let childs = this.props.childs || []
-        let children = childs.map((item, index)=> {
-            let component = Components[item.name]
-            let Editprops = {
-                key: item.uniqueKey,
-                uniqueKey: item.uniqueKey,
-                parent: this.props.edit || null,
-                index: index,
-                opts: item.opts || {},
-                dragSource: true,
-                childs: item.childs || [],
-                selected: item.selected || false,
-                ref: (ref)=> {
-                    if (ref === null)return
-                    this.childEdits.push(ref)
-                }
-            }
-            if (item.name === 'LayoutBox') {
-                component = LayoutBox
-                Editprops.dragTarget = true
-            }
-            if (item.name === 'LayoutBoxAbsolute') {
-                component = LayoutBoxAbsolute
-                Editprops.dragSource = false
-                Editprops.dragSourceAbsolute = true
-                Editprops.dragTarget = true
-            }
-            return React.createElement(Edit, Editprops, React.createElement(component))
-        })
-
         const defaultStyle = {
             minHeight: 800,
             position: 'relative'
         }
 
-        return (
-            <div>
-                <div style={_.assign(this.props.opts.flex.value,this.props.opts.base.value,defaultStyle)}>
-                    {children}
+        switch(this.props.mode){
+        case 'edit':
+            // 存储子元素的edit引用清空
+            this.childEdits = []
+
+            let childs = this.props.childs || []
+            let children = childs.map((item, index)=> {
+                let component = Components[item.name]
+                let Editprops = {
+                    key: item.uniqueKey,
+                    uniqueKey: item.uniqueKey,
+                    parent: this.props.edit || null,
+                    index: index,
+                    opts: item.opts || {},
+                    dragSource: true,
+                    childs: item.childs || [],
+                    selected: item.selected || false,
+                    ref: (ref)=> {
+                        if (ref === null)return
+                        this.childEdits.push(ref)
+                    }
+                }
+                if (item.name === 'LayoutBox') {
+                    component = LayoutBox
+                    Editprops.dragTarget = true
+                }
+                if (item.name === 'LayoutBoxAbsolute') {
+                    component = LayoutBoxAbsolute
+                    Editprops.dragSource = false
+                    Editprops.dragSourceAbsolute = true
+                    Editprops.dragTarget = true
+                }
+                return React.createElement(Edit, Editprops, React.createElement(component))
+            })
+
+            return (
+                <div>
+                    <div style={_.assign(this.props.opts.flex.value,this.props.opts.base.value,defaultStyle)}>
+                        {children}
+                    </div>
                 </div>
-            </div>
-        )
+            )
+
+        case 'preview':
+            return (
+                <div>
+                    <div style={_.assign(this.props.opts.flex.value,this.props.opts.base.value,defaultStyle)}>
+                        {children}
+                    </div>
+                </div>
+            )
+        }
+
     }
 })
 

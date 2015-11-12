@@ -67,7 +67,6 @@ var config = {
 var node_modules = __dirname + '/node_modules'
 config.addVendor('flux', node_modules + '/flux/dist/flux.min.js')
 config.addVendor('react-dnd', node_modules + '/react-dnd/dist/ReactDnD.min.js')
-config.addVendor('react-color', node_modules + '/react-color/build/bundle.js')
 config.addVendor('react-router', node_modules + '/react-router/umd/ReactRouter.min.js')
 config.addVendor('jquery', node_modules + '/jquery/dist/jquery.min.js')
 

@@ -63,10 +63,7 @@ const Edit = React.createClass({
     },
 
     shouldComponentUpdate: function (nextProps, nextState) {
-        if (nextState !== this.state) {
-            return true
-        }
-        return false
+        return nextState !== this.state
     },
 
     // 取消选择状态

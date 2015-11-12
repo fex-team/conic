@@ -10,6 +10,12 @@ require('./index.scss')
 var defaultJson = require('./default.json')
 
 var PhoneEdit = React.createClass({
+    getInitialState: function () {
+        return {
+            mode: 'edit'
+        }
+    },
+
     ref: function (ref) {
         historyAction.setContainerEdit(ref)
     },
@@ -23,23 +29,36 @@ var PhoneEdit = React.createClass({
     },
 
     changeMode: function () {
-        if (editStore.getShowMode() === 'preview') {
-            console.log(editStore.getShowModeInfo())
-        }
+        this.setState({
+            mode: editStore.getShowMode()
+        })
     },
 
     render: function () {
-        return (
-            <div>
+        let editTree
+
+        switch (this.state.mode) {
+        case 'edit':
+            return (
                 <DragContainer>
                     <DragAround>
                         <Edit {...defaultJson} dragTarget="true"
                                                ref={this.ref}>
-                            <Container/>2
+                            <Container mode="edit"/>
                         </Edit>
                     </DragAround>
                 </DragContainer>
-            </div>
+            )
+            break
+        case 'preview':
+            return (
+                <Container mode="preview" {...editStore.getShowModeInfo()}/>
+            )
+            break
+        }
+
+        return (
+            <div>{editTree}</div>
         )
     }
 })
