@@ -34,14 +34,6 @@ let TreeNode = React.createClass({
     componentDidMount: function () {
     },
 
-    componentWillReceiveProps: function (nextProps) {
-        if (!_.isEmpty(nextProps.childs)) {
-            this.setState({
-                childs: nextProps.childs
-            })
-        }
-    },
-
     showChildren: function (e) {
         e.preventDefault()
         e.stopPropagation()
@@ -99,6 +91,36 @@ let TreeNode = React.createClass({
         })
     },
 
+    removeSelf: function () {
+        this.props.parent.removeChild(this.props.index)
+    },
+
+    removeChild: function (index) {
+        let newChilds = _.cloneDeep(this.state.childs, function (value, name) {
+            if (name === 'component') {
+                return value
+            }
+        })
+
+        _.pullAt(newChilds, index)
+
+        this.setState({
+            childs: newChilds
+        })
+    },
+
+    addChild: function (props) {
+        let newChilds = _.cloneDeep(this.state.childs, function (value, name) {
+            if (name === 'component') {
+                return value
+            }
+        })
+        newChilds.push(props)
+        this.setState({
+            childs: newChilds
+        })
+    },
+
     render: function () {
         var expand = this.state.expand
         var angle
@@ -126,6 +148,7 @@ let TreeNode = React.createClass({
                 parent: this,
                 name: item.name,
                 padding: padding + 1,
+                index: index,
                 ref: (ref) => {
                     if (ref === null) return
                     item.component.treeNode = ref

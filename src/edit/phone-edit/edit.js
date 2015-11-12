@@ -9,7 +9,24 @@ var historyAction = require('../actions/history-action')
 var treeNodeAction = require('../actions/tree-node-action')
 var treeAction = require('../actions/tree-action')
 var classNames = require('classnames')
-var _ = require('lodash')
+var lodash = require('lodash')
+var _ = {}
+
+lodash.extend(_, lodash)
+
+_.cloneDeep = function (obj, fn) {
+    if (!fn) {
+        return lodash.cloneDeep(obj, function (value, name) {
+            if (name === 'component' || name === 'treeNode') {
+                return value;
+            }
+        })
+    }
+    else {
+        return lodash.cloneDeep(obj, fn)
+    }
+}
+
 var $ = require('jquery')
 var getTree = require('./get-tree')
 
@@ -45,7 +62,7 @@ const Edit = React.createClass({
     componentDidMount: function () {
         setTimeout(() => {
             footerAction.increaseInstanceNumber()
-            //treeAction.editComponentMounted(this)
+            treeAction.editComponentMounted(this)
         })
 
         // 如果默认是选中状态，通知左侧组件更新
@@ -94,7 +111,7 @@ const Edit = React.createClass({
         })
 
         // 触发右侧树选中
-        //this.treeNode.select()
+        this.treeNode.select()
 
         editAction.selectComponent(this)
     },
@@ -160,7 +177,8 @@ const Edit = React.createClass({
         let childInfo = {
             name: item.type,
             uniqueKey: uniqueKey,
-            selected: item.edit ? item.edit.state.selected : false
+            selected: item.edit ? item.edit.state.selected : false,
+            index: newChilds.length
         }
 
         // 如果这个组件是新拖拽的万能矩形，不是最外层，则宽度设定为父级宽度的一半
@@ -236,6 +254,10 @@ const Edit = React.createClass({
 
         newChilds.push(childInfo)
 
+        setTimeout(() => {
+            treeNodeAction.addTreeNode(this, item, childInfo)
+        })
+
         this.setState({
             childs: newChilds
         }, function () {
@@ -261,7 +283,8 @@ const Edit = React.createClass({
             name: item.type,
             uniqueKey: uniqueKey,
             selected: false,
-            opts: item.opts
+            opts: item.opts,
+            index: newChilds.length
         }
 
         // 加入历史纪录
@@ -280,6 +303,10 @@ const Edit = React.createClass({
         })
 
         newChilds.push(childInfo)
+
+        setTimeout(() => {
+            treeNodeAction.addTreeNode(this, item, childInfo)
+        })
 
         this.setState({
             childs: newChilds
@@ -322,6 +349,9 @@ const Edit = React.createClass({
                 })
             })
         }
+
+        // 右侧树删除节点
+        this.treeNode.removeSelf()
 
         this.props.parent.removeChild(this.props.index)
     },

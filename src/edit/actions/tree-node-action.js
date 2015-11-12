@@ -13,6 +13,22 @@ module.exports = {
         })
     },
 
+    addTreeNode: function (component, item, childInfo) {
+        dispatcher.dispatch({
+            type: 'addTreeNode',
+            component: component,
+            item: item,
+            childInfo: childInfo
+        })
+    },
+
+    removeSelf: function (component) {
+        dispatcher.dispatch({
+            type: 'removeSelf',
+            component: component
+        })
+    },
+
     expandAll: function () {
         dispatcher.dispatch({
             type: 'expandAll'

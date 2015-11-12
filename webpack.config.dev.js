@@ -8,7 +8,7 @@ var config = {
     },
 
     devtool: 'eval-source-map',
-    watch: true,
+    //watch: true,
 
     entry: [
         'webpack-dev-server/client?http://localhost:8090',

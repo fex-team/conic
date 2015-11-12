@@ -4,11 +4,25 @@ var TreeNode = require('./treeNode')
 var editStore = require('../../../stores/edit-store')
 var treeStore = require('../../../stores/tree-store')
 var _ = require('lodash');
-var getTree = require('../../../phone-edit/get-tree')
 var defaultJson = require('../../../phone-edit/default.json')
 var treeAction = require('../../../actions/tree-action')
 
 require('./index.scss');
+
+// 根据edit生成树状json配置
+function getTree(edit, info, index) {
+    info.childs = _.cloneDeep(edit.state.childs, function (value, name) {
+        if (name === 'childs') {
+            return value;
+        }
+    })
+    info.component = edit
+    info.index = index
+    info.uniqueKey = edit.props.uniqueKey
+    edit.childInstance.getChildsEdit && edit.childInstance.getChildsEdit().map((item, index)=> {
+        getTree(item, info.childs[index], index)
+    })
+}
 
 const animation = {
     enter: {
@@ -46,7 +60,10 @@ let ComponentTree = React.createClass({
     onEditMounted: function (component) {
         if (component.props.name === 'Container') {
             var info = {}
-            getTree(component, info)
+            var _time = + new Date()
+            getTree(component, info, 0)
+
+            console.log('%c[script] clone tree info:' + (+new Date() - _time) + 'ms', 'color:green');
 
             info['name'] = '手机壳'
             info['key'] = 0
@@ -83,7 +100,7 @@ let ComponentTree = React.createClass({
                         <span onClick={this.collapseAll}>全部闭合</span>
                     </div>
                 </div>
-                <TreeNode />
+                <TreeNode {...info} />
             </div>
         )
     }
