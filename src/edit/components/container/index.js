@@ -72,13 +72,15 @@ let Container = React.createClass({
             position: 'relative'
         }
 
+        let childs = this.props.childs || []
+        let children
+
         switch (this.props.mode) {
         case 'edit':
             // 存储子元素的edit引用清空
             this.childEdits = []
 
-            let childs = this.props.childs || []
-            let children = childs.map((item, index)=> {
+            children = childs.map((item, index)=> {
                 let component = Components[item.name]
                 let Editprops = {
                     key: item.uniqueKey,
@@ -116,6 +118,26 @@ let Container = React.createClass({
             )
 
         case 'preview':
+            children = childs.map((item, index)=> {
+                let component = Components[item.name]
+
+                switch (item.name) {
+                case 'LayoutBox':
+                    component = LayoutBox
+                    break
+                case'LayoutBoxAbsolute':
+                    component = LayoutBoxAbsolute
+                    break
+                }
+
+                return React.createElement(component, {
+                    key: index,
+                    opts: item.opts,
+                    childs: item.childs,
+                    mode: 'preview'
+                })
+            })
+
             return (
                 <div>
                     <div style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.base.value,defaultStyle)}>

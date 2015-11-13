@@ -368,6 +368,7 @@ const Edit = React.createClass({
 
         // 给子元素传递的信息
         let newChildProps = {
+            mode: 'edit',
             // 将edit本身传给子组件
             edit: this,
             // 将自定义属性与组件原本属性merge
