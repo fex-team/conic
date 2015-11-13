@@ -1,13 +1,15 @@
-var React = require('react')
-var renderEdit = require('../mixins/render-edit')
-var LayoutBox = require('../layout-box')
-const pureRenderMixin = require('../mixins/pureRenderMixin')
+const React = require('react')
+const renderEdit = require('../mixins/render-edit')
+const LayoutBox = require('../layout-box')
+const pureRenderMixin = require('../mixins/pure-render')
+const mergeOptsMixin = require('../mixins/merge-opts')
+
 const defaultStyle = {
     position: 'absolute'
 }
 
 let LayoutBoxAbsolute = React.createClass({
-    mixins: [renderEdit, pureRenderMixin],
+    mixins: [renderEdit, pureRenderMixin, mergeOptsMixin],
 
     getSelfComponent: function () {
         return LayoutBoxAbsolute
@@ -19,7 +21,7 @@ let LayoutBoxAbsolute = React.createClass({
         return {
             name: 'LayoutBoxAbsolute',
             desc: '自由矩形',
-            opts: {
+            defaultOpts: {
                 position: {
                     value: {
                         left: 0,

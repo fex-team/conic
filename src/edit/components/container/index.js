@@ -6,16 +6,17 @@ const LayoutBox = require('../../components/layout-box')
 const LayoutBoxAbsolute = require('../../components/layout-box-absolute')
 const Components = require('../../components')
 const editStore = require('../../stores/edit-store')
-const pureRenderMixin = require('../mixins/pureRenderMixin')
+const pureRenderMixin = require('../mixins/pure-render')
+const mergeOptsMixin = require('../mixins/merge-opts')
 
 let Container = React.createClass({
-    mixins: [pureRenderMixin],
+    mixins: [pureRenderMixin, mergeOptsMixin],
 
     getDefaultProps: function () {
         return {
             name: 'Container',
             desc: '手机壳',
-            opts: {
+            defaultOpts: {
                 flex: {
                     edit: 'flex',
                     value: {
@@ -41,23 +42,23 @@ let Container = React.createClass({
         }
     },
 
-    onSelectContainer: function () {
-        // 保证上一个dispatcher已完成
-        setTimeout(()=> {
-            this.props.edit.onClick()
-        })
-    },
-
     componentDidMount: function () {
-        if (this.props.mode==='edit'){
+        if (this.props.mode === 'edit') {
             editStore.addSelectContainerListener(this.onSelectContainer)
         }
     },
 
     componentWillUnmount: function () {
-        if (this.props.mode==='edit') {
+        if (this.props.mode === 'edit') {
             editStore.removeSelectContainerListener(this.onSelectContainer)
         }
+    },
+
+    onSelectContainer: function () {
+        // 保证上一个dispatcher已完成
+        setTimeout(()=> {
+            this.props.edit.onClick()
+        })
     },
 
     // 获得子元素的edit引用
@@ -71,7 +72,7 @@ let Container = React.createClass({
             position: 'relative'
         }
 
-        switch(this.props.mode){
+        switch (this.props.mode) {
         case 'edit':
             // 存储子元素的edit引用清空
             this.childEdits = []
@@ -108,7 +109,7 @@ let Container = React.createClass({
 
             return (
                 <div>
-                    <div style={_.assign(this.props.opts.flex.value,this.props.opts.base.value,defaultStyle)}>
+                    <div style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.base.value,defaultStyle)}>
                         {children}
                     </div>
                 </div>
@@ -117,7 +118,7 @@ let Container = React.createClass({
         case 'preview':
             return (
                 <div>
-                    <div style={_.assign(this.props.opts.flex.value,this.props.opts.base.value,defaultStyle)}>
+                    <div style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.base.value,defaultStyle)}>
                         {children}
                     </div>
                 </div>

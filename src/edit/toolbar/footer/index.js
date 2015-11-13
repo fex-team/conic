@@ -70,7 +70,7 @@ module.exports = React.createClass({
                      key={index}
                      onClick={this.selectComponent.bind(this,item)}>
                     <i style={{marginRight:5}}
-                       className={'fa fa-'+iconMap[item.state.childProps.name]}></i>{item.state.childProps.desc}
+                       className={'fa fa-'+iconMap[item.props.children.props.name]}></i>{item.props.children.props.desc}
                 </div>
             )
         })

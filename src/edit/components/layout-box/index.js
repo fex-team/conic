@@ -1,9 +1,10 @@
-var React = require('react')
-var renderEdit = require('../mixins/render-edit')
-const pureRenderMixin = require('../mixins/pureRenderMixin')
+const React = require('react')
+const renderEdit = require('../mixins/render-edit')
+const pureRenderMixin = require('../mixins/pure-render')
+const mergeOptsMixin = require('../mixins/merge-opts')
 
 let LayoutBox = React.createClass({
-    mixins: [renderEdit, pureRenderMixin],
+    mixins: [renderEdit, pureRenderMixin, mergeOptsMixin],
 
     getSelfComponent: function () {
         return LayoutBox
@@ -13,7 +14,7 @@ let LayoutBox = React.createClass({
         return {
             name: 'LayoutBox',
             desc: '万能矩形',
-            opts: {
+            defaultOpts: {
                 flex: {
                     edit: 'flex',
                     value: {

@@ -27,8 +27,6 @@ const Edit = React.createClass({
             enabledTarget: true,
             // 自定义属性
             customOpts: _.cloneDeep(this.props.opts),
-            // 包含的组件属性
-            childProps: this.props.children && _.cloneDeep(this.props.children.props),
             // 子元素属性数组
             childs: this.props.childs,
             selected: this.props.selected || false
@@ -112,7 +110,7 @@ const Edit = React.createClass({
 
             // 如果before为空，为了完全还原，需要记下原始状态信息
             if (_.isEmpty(optsBefore)) {
-                optsBefore = _.cloneDeep(this.state.childProps.opts)
+                optsBefore = _.cloneDeep(this.props.children.props.defaultOpts)
             }
 
             setTimeout(()=> {
@@ -121,7 +119,7 @@ const Edit = React.createClass({
                     optsBefore: optsBefore,
                     optsAfter: optsAfter,
                     type: 'update',
-                    operateName: this.state.childProps.name + ' ' + historyInfo.name
+                    operateName: this.props.children.props.name + ' ' + historyInfo.name
                 })
             })
         }
@@ -164,14 +162,14 @@ const Edit = React.createClass({
         }
 
         // 如果这个组件是新拖拽的万能矩形，不是最外层，则宽度设定为父级宽度的一半
-        if (!item.edit && item.type === 'LayoutBox' && this.state.childProps.name !== 'Container') {
+        if (!item.edit && item.type === 'LayoutBox' && this.props.children.props.name !== 'Container') {
             let customWidth = this.state.customOpts && this.state.customOpts.base && this.state.customOpts.base.value.width
             let customHeight = this.state.customOpts && this.state.customOpts.base && this.state.customOpts.base.value.height
 
-            let baseWidth = this.state.childProps.opts.base.value.width
+            let baseWidth = this.props.children.props.defaultOpts.base.value.width
             let parentWidth = customWidth || baseWidth
 
-            let baseHeight = this.state.childProps.opts.base.value.height
+            let baseHeight = this.props.children.props.defaultOpts.base.value.height
             let parentHeight = customHeight || baseHeight
 
             // 获取拖拽父级的布局方式
@@ -316,9 +314,9 @@ const Edit = React.createClass({
                     optsBefore: _.cloneDeep(this.state.customOpts),
                     childs: info.childs,
                     uniqueKey: this.props.uniqueKey,
-                    componentName: this.state.childProps.name,
+                    componentName: this.props.children.props.name,
                     type: 'delete',
-                    operateName: '删除组件 ' + this.state.childProps.name
+                    operateName: '删除组件 ' + this.props.children.props.name
                 })
             })
         }
@@ -338,7 +336,7 @@ const Edit = React.createClass({
             optsBefore: _.cloneDeep(this.state.customOpts),
             optsAfter: _.cloneDeep(mergeOpts),
             type: 'update',
-            operateName: this.state.childProps.name + ' 移动'
+            operateName: this.props.children.props.name + ' 移动'
         })
 
         this.setState({
@@ -352,6 +350,7 @@ const Edit = React.createClass({
     },
 
     render: function () {
+        // 记录render日志
         let position = []
         getPosition(this, position)
         console.log('%c[render] edit:' + position.reverse(), 'color:green');
@@ -367,15 +366,16 @@ const Edit = React.createClass({
         // 放在edit上的style
         let editStyle = {}
 
-        let newChildProps = _.cloneDeep(this.state.childProps)
-
-        // 将edit本身传给子组件
-        newChildProps.edit = this
-        // 将自定义属性与组件原本属性merge
-        newChildProps.opts = $.extend(true, newChildProps.opts, this.state.customOpts)
-        newChildProps.childs = this.state.childs
-        newChildProps.ref = (ref)=> {
-            this.childInstance = ref
+        // 给子元素传递的信息
+        let newChildProps = {
+            // 将edit本身传给子组件
+            edit: this,
+            // 将自定义属性与组件原本属性merge
+            opts: this.state.customOpts,
+            childs: this.state.childs,
+            ref: (ref)=> {
+                this.childInstance = ref
+            }
         }
 
         let childComponent = (
@@ -388,7 +388,7 @@ const Edit = React.createClass({
         if (this.props.dragSource) {
             childComponent = (
                 <DragSource onChangeEnableTarget={this.onChangeEnableTarget}
-                            type={newChildProps.name}
+                            type={this.props.children.props.name}
                             existComponent={true}
                             edit={this}>
                     {childComponent}
@@ -407,12 +407,12 @@ const Edit = React.createClass({
         // 绝对定位要包在最外层，所以判断逻辑放最后
         if (this.props.dragSourceAbsolute) {
             editStyle.position = 'absolute'
-            editStyle.left = newChildProps.opts.position.value.left
-            editStyle.top = newChildProps.opts.position.value.top
+            editStyle.left = this.state.customOpts.position.value.left
+            editStyle.top = this.state.customOpts.position.value.top
             childComponent = (
-                <DragSourceAbsolute type={newChildProps.name}
-                                    left={newChildProps.opts.position.value.left}
-                                    top={newChildProps.opts.position.value.top}
+                <DragSourceAbsolute type={this.props.children.props.name}
+                                    left={this.state.customOpts.position.value.left}
+                                    top={this.state.customOpts.position.value.top}
                                     onChange={this.onDragSourceAbsoluteChange}
                                     edit={this}>
                     {childComponent}
