@@ -35,8 +35,8 @@ const Edit = React.createClass({
 
     componentWillMount: function () {
         // 为每个子组件生成uniqueKey
-        this.state.childs && this.state.childs.map((item, index)=> {
-            item.uniqueKey = index
+        this.state.childs && this.state.childs.map((item)=> {
+            item.uniqueKey = editStore.getUniqueKey()
         })
     },
 
@@ -148,16 +148,10 @@ const Edit = React.createClass({
 
         let newChilds = _.cloneDeep(this.state.childs)
 
-        // 分配一个唯一key
-        let uniqueKey = 0
-        if (newChilds.length > 0) {
-            uniqueKey = newChilds[newChilds.length - 1].uniqueKey + 1
-        }
-
         // 添加子元素的属性
         let childInfo = {
             name: item.type,
-            uniqueKey: uniqueKey,
+            uniqueKey: editStore.getUniqueKey(),
             selected: item.edit ? item.edit.state.selected : false
         }
 
@@ -248,16 +242,10 @@ const Edit = React.createClass({
     dropAbsolute: function (item) {
         let newChilds = _.cloneDeep(this.state.childs)
 
-        // 分配一个唯一key
-        let uniqueKey = 0
-        if (newChilds.length > 0) {
-            uniqueKey = newChilds[newChilds.length - 1].uniqueKey + 1
-        }
-
         // 添加子元素的属性
         let childInfo = {
             name: item.type,
-            uniqueKey: uniqueKey,
+            uniqueKey: editStore.getUniqueKey(),
             selected: false,
             opts: item.opts
         }
