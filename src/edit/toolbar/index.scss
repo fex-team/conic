@@ -34,12 +34,14 @@ html {
 
 .g-sd {
   overflow-x: hidden;
+  z-index: 2;
 }
 
 .g-rd {
   position: absolute;
   width: 250px;
   right: 0;
+  z-index: 2;
 }
 
 .g-hd {
@@ -48,7 +50,7 @@ html {
 }
 
 .g-sd {
-  width: 300px;
+  width: 250px;
   user-select: none;
 }
 
@@ -56,18 +58,20 @@ html {
   display: flex;
   justify-content: center;
   _position: relative;
-  left: 300px;
+  left: 250px;
   right: 250px;
   _top: 0;
   _left: 0;
   _margin-left: 250px;
   background: #444;
+  z-index: 1;
 }
 
 .g-ft {
   bottom: 0;
   height: 30px;
   border-top: 1px solid $border-color;
+  z-index: 2;
 }
 
 .phone-dev {

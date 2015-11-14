@@ -42,7 +42,7 @@ module.exports = React.createClass({
         let popupPosition = {
             position: 'absolute',
             top: -250,
-            left: -70
+            left: -95
         }
 
         return (

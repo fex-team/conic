@@ -36,14 +36,15 @@ var PhoneEdit = React.createClass({
 
     render: function () {
         let editTree
+        let defaultTreeInfo = editStore.getShowModeInfo() || defaultJson
 
         switch (this.state.mode) {
         case 'edit':
             return (
                 <DragContainer>
                     <DragAround>
-                        <Edit {...defaultJson} dragTarget="true"
-                                               ref={this.ref}>
+                        <Edit {...defaultTreeInfo} dragTarget="true"
+                                                   ref={this.ref}>
                             <Container mode="edit"/>
                         </Edit>
                     </DragAround>

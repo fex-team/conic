@@ -6,7 +6,7 @@ const Option = Select.Option
 const Background = require('./background')
 const MarginPadding = require('./margin-padding')
 
-const normalWidth = 180
+const normalWidth = 150
 
 module.exports = React.createClass({
     getInitialState: function () {

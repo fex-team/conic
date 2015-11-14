@@ -11,7 +11,7 @@ let position
 
 let CHANGE_SHOW_MODE = 'changeShowMode'
 let showMode = 'edit'
-let showModeInfo = {}
+let showModeInfo = null
 
 var EditStore = assign({}, EventEmitter.prototype, {
     // 选中组件
