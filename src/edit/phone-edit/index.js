@@ -5,9 +5,8 @@ const DragContainer = require('./drag-container')
 const DragAround = require('./drag-around')
 const historyAction = require('../actions/history-action')
 const editStore = require('../stores/edit-store')
+const settingStore = require('../stores/setting-store')
 require('./index.scss')
-
-var defaultJson = require('./default.json')
 
 var PhoneEdit = React.createClass({
     getInitialState: function () {
@@ -36,7 +35,7 @@ var PhoneEdit = React.createClass({
 
     render: function () {
         let editTree
-        let defaultTreeInfo = editStore.getShowModeInfo() || defaultJson
+        let defaultTreeInfo = editStore.getShowModeInfo() || settingStore.getTree()
 
         switch (this.state.mode) {
         case 'edit':

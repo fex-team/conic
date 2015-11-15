@@ -7,6 +7,8 @@ const editStore = require('../stores/edit-store')
 const settingAction = require('../actions/setting-action')
 const classnames = require('classnames')
 
+const defaultJson = require('../phone-edit/default.json')
+
 require('./index.scss')
 require('./animate.scss')
 require('./loading.scss')
@@ -29,14 +31,14 @@ let Container = React.createClass({
         editStore.addChangeShowModeListener(this.changeMode)
 
         // :TODO 异步请求配置信息
-        settingAction.setDefaultSetting({
-            viewType: 'pc'
+        settingAction.setDefault({
+            viewType: 'mobile'
+        }, defaultJson)
+        setTimeout(()=> {
+            this.setState({
+                loading: false
+            })
         })
-        //setTimeout(()=> {
-        //    this.setState({
-        //        loading: false
-        //    })
-        //})
     },
 
     componentWillUnmount: function () {
@@ -77,7 +79,7 @@ let Container = React.createClass({
         if (this.state.loading) {
             children = (
                 <div className="loading">
-                    loading
+                    <i className="fa fa-refresh fa-spin"></i>
                 </div>
             )
         } else {

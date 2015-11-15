@@ -5,6 +5,7 @@ let assign = require('object-assign')
 let CHANGE_VIEW_TYPE = 'viewType'
 
 let setting = {}
+let tree = {}
 
 var SettingStore = assign({}, EventEmitter.prototype, {
     emitViewType: function () {
@@ -21,14 +22,19 @@ var SettingStore = assign({}, EventEmitter.prototype, {
 
     getViewType: function () {
         return setting.viewType
+    },
+
+    getTree: function () {
+        return tree
     }
 })
 
 SettingStore.dispatchToken = dispatcher.register(function (action) {
     // 选择编辑组件
     switch (action.type) {
-    case 'setDefaultSetting':
+    case 'setDefault':
         setting = action.setting
+        tree = action.tree
         break
 
     case 'changeViewType':

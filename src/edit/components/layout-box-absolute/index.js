@@ -4,10 +4,6 @@ const LayoutBox = require('../layout-box')
 const pureRenderMixin = require('../mixins/pure-render')
 const mergeOptsMixin = require('../mixins/merge-opts')
 
-const defaultStyle = {
-    position: 'absolute'
-}
-
 let LayoutBoxAbsolute = React.createClass({
     mixins: [renderEdit, pureRenderMixin, mergeOptsMixin],
 

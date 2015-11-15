@@ -17,10 +17,17 @@ const defaultStyle = {
 
 const editStyle = {}
 
-function handleViewTypeChange() {
+function handleViewTypeChange(mode) {
     switch (settingStore.getViewType()) {
     case 'pc':
-        editStyle.width = 600
+        switch (mode) {
+        case 'edit':
+            editStyle.width = $(window).width() - 250 - 7
+            break
+        case 'preview':
+            editStyle.width = $(window).width() - 7
+            break
+        }
         break
     case 'mobile':
         editStyle.width = 500
@@ -63,10 +70,10 @@ let Container = React.createClass({
     componentWillMount: function () {
         switch (this.props.mode) {
         case 'edit':
-            handleViewTypeChange()
+            handleViewTypeChange(this.props.mode)
             break
         case 'preview':
-            handleViewTypeChange()
+            handleViewTypeChange(this.props.mode)
             break
         }
     },
@@ -76,11 +83,9 @@ let Container = React.createClass({
         case 'edit':
             editStore.addSelectContainerListener(this.onSelectContainer)
             settingStore.addViewTypeListener(this.viewTypeChange)
-            handleViewTypeChange()
             break
         case 'preview':
             settingStore.addViewTypeListener(this.viewTypeChange)
-            handleViewTypeChange()
             break
         }
     },
@@ -90,11 +95,9 @@ let Container = React.createClass({
         case 'edit':
             editStore.removeSelectContainerListener(this.onSelectContainer)
             settingStore.removeViewTypeListener(this.viewTypeChange)
-            handleViewTypeChange()
             break
         case 'preview':
             settingStore.removeViewTypeListener(this.viewTypeChange)
-            handleViewTypeChange()
             break
         }
     },
@@ -107,7 +110,7 @@ let Container = React.createClass({
     },
 
     viewTypeChange: function () {
-        handleViewTypeChange()
+        handleViewTypeChange(this.props.mode)
         this.forceUpdate()
     },
 

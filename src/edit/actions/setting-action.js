@@ -1,10 +1,11 @@
 var dispatcher = require('../dispatcher')
 
 module.exports = {
-    setDefaultSetting: function (setting) {
+    setDefault: function (setting, tree) {
         dispatcher.dispatch({
-            type: 'setDefaultSetting',
-            setting: setting
+            type: 'setDefault',
+            setting: setting,
+            tree: tree
         })
     },
 

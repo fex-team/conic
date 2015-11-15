@@ -339,9 +339,9 @@ const Edit = React.createClass({
 
     render: function () {
         // 记录render日志
-        let position = []
-        getPosition(this, position)
-        console.log('%c[render] edit:' + position.reverse(), 'color:green');
+        //let position = []
+        //getPosition(this, position)
+        //console.log('%c[render] edit:' + position.reverse(), 'color:green')
 
         let positionArray = []
         getPosition(this, positionArray)
@@ -410,7 +410,8 @@ const Edit = React.createClass({
         }
 
         return (
-            <div style={editStyle}>
+            <div namespace
+                 style={editStyle}>
                 {childComponent}
             </div>
         )
