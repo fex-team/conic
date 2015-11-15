@@ -59,7 +59,7 @@ var PhoneEdit = React.createClass({
         }
 
         return (
-            <div>{editTree}</div>
+            <div namespace>{editTree}</div>
         )
     }
 })

@@ -51,7 +51,7 @@ module.exports = React.createClass({
         })
 
         return (
-            <div>
+            <div namespace>
                 <div className="row">
                     <div onClick={this.reverse}
                          style={{boxShadow:'none'}}

@@ -50,5 +50,13 @@ module.exports = {
             mode: mode,
             info: info
         })
+    },
+
+    // 修改显示分辨率类型
+    changeViewType: function (viewType) {
+        dispatcher.dispatch({
+            type: 'changeViewType',
+            viewType: viewType
+        })
     }
 }

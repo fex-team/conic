@@ -17,7 +17,8 @@ module.exports = React.createClass({
         return (
             <div onClick={this.backToEdit}
                  className="operate-btn">
-                <i className="fa fa-reply" style={{marginRight:5}}></i>编辑
+                <i className="fa fa-reply"
+                   style={{marginRight:5}}></i>返回编辑
             </div>
         )
     }

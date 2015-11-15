@@ -24,7 +24,11 @@ html, body {
 
 body {
   font-size: 12px;
-  background: #444;
+  background: gray;
+}
+
+#react-dom {
+  height: 100%;
 }
 
 // 覆盖antd样式

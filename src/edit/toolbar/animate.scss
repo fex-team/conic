@@ -13,16 +13,6 @@
   @extend %enter-opts;
 }
 
-.g-rd-enter {
-  transform: translate3d(0, 0, 0);
-  @extend %enter-opts;
-}
-
-.g-rd-leave {
-  transform: translate3d(250px, 0, 0);
-  @extend %enter-opts;
-}
-
 .g-ft-enter {
   transform: translate3d(0, 0, 0);
   @extend %enter-opts;

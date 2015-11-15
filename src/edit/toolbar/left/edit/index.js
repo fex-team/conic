@@ -150,7 +150,7 @@ module.exports = React.createClass({
         }
 
         return (
-            <div>
+            <div namespace>
                 {editForm}
             </div>
         )

@@ -5,6 +5,7 @@ const reactRouter = require('react-router')
 const Link = reactRouter.Link
 const classnames = require('classnames')
 const editStore = require('../../../stores/edit-store')
+const ViewType = require('./view-type')
 require('./index.scss')
 require('./animate.scss')
 
@@ -48,7 +49,7 @@ module.exports = React.createClass({
         })
 
         return (
-            <div>
+            <div namespace>
                 <div className="g-bd2 f-cb">
                     <div className="g-mn2">
                         <div className="g-mnc2">
@@ -66,6 +67,9 @@ module.exports = React.createClass({
                         <Publish/>
                         <Preview/>
                         <History/>
+                    </div>
+                    <div className="g-sd3">
+                        <ViewType/>
                     </div>
                     <div className={sd2PreviewClass}>
                         <Edit/>

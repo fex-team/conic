@@ -18,7 +18,7 @@ const EditPanel = React.createClass({
 
     render: function () {
         return (
-            <div>
+            <div namespace>
                 <ComponentTable onChangeType={this.onChangeMenuType}/>
                 <Components type={this.state.menuType}/>
             </div>

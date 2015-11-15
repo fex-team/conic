@@ -47,7 +47,7 @@ module.exports = {
             })
 
             return (
-                <div>
+                <div namespace>
                     <div style={_.assign(this.mergedOpts.flex.value, this.mergedOpts.base.value)}>
                         {children}
                     </div>
@@ -73,7 +73,7 @@ module.exports = {
             })
 
             return (
-                <div>
+                <div namespace>
                     <div style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.base.value)}>
                         {children}
                     </div>

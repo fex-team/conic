@@ -6,8 +6,27 @@ const LayoutBox = require('../../components/layout-box')
 const LayoutBoxAbsolute = require('../../components/layout-box-absolute')
 const Components = require('../../components')
 const editStore = require('../../stores/edit-store')
+const settingStore = require('../../stores/setting-store')
 const pureRenderMixin = require('../mixins/pure-render')
 const mergeOptsMixin = require('../mixins/merge-opts')
+
+const defaultStyle = {
+    minHeight: 800,
+    position: 'relative'
+}
+
+const editStyle = {}
+
+function handleViewTypeChange() {
+    switch (settingStore.getViewType()) {
+    case 'pc':
+        editStyle.width = 600
+        break
+    case 'mobile':
+        editStyle.width = 500
+        break
+    }
+}
 
 let Container = React.createClass({
     mixins: [pureRenderMixin, mergeOptsMixin],
@@ -33,8 +52,7 @@ let Container = React.createClass({
                         padding: 0,
                         fontSize: 14,
                         color: '#333',
-                        background: 'white',
-                        width: 500
+                        background: 'white'
                     },
                     edit: 'style'
                 }
@@ -42,15 +60,42 @@ let Container = React.createClass({
         }
     },
 
+    componentWillMount: function () {
+        switch (this.props.mode) {
+        case 'edit':
+            handleViewTypeChange()
+            break
+        case 'preview':
+            handleViewTypeChange()
+            break
+        }
+    },
+
     componentDidMount: function () {
-        if (this.props.mode === 'edit') {
+        switch (this.props.mode) {
+        case 'edit':
             editStore.addSelectContainerListener(this.onSelectContainer)
+            settingStore.addViewTypeListener(this.viewTypeChange)
+            handleViewTypeChange()
+            break
+        case 'preview':
+            settingStore.addViewTypeListener(this.viewTypeChange)
+            handleViewTypeChange()
+            break
         }
     },
 
     componentWillUnmount: function () {
-        if (this.props.mode === 'edit') {
+        switch (this.props.mode) {
+        case 'edit':
             editStore.removeSelectContainerListener(this.onSelectContainer)
+            settingStore.removeViewTypeListener(this.viewTypeChange)
+            handleViewTypeChange()
+            break
+        case 'preview':
+            settingStore.removeViewTypeListener(this.viewTypeChange)
+            handleViewTypeChange()
+            break
         }
     },
 
@@ -61,17 +106,17 @@ let Container = React.createClass({
         })
     },
 
+    viewTypeChange: function () {
+        handleViewTypeChange()
+        this.forceUpdate()
+    },
+
     // 获得子元素的edit引用
     getChildsEdit: function () {
         return this.childEdits
     },
 
     render: function () {
-        const defaultStyle = {
-            minHeight: 800,
-            position: 'relative'
-        }
-
         let childs = this.props.childs || []
         let children
 
@@ -110,8 +155,8 @@ let Container = React.createClass({
             })
 
             return (
-                <div>
-                    <div style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.base.value,defaultStyle)}>
+                <div namespace>
+                    <div style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.base.value,defaultStyle,editStyle)}>
                         {children}
                     </div>
                 </div>
@@ -139,8 +184,8 @@ let Container = React.createClass({
             })
 
             return (
-                <div>
-                    <div style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.base.value,defaultStyle)}>
+                <div namespace>
+                    <div style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.base.value,defaultStyle,editStyle)}>
                         {children}
                     </div>
                 </div>

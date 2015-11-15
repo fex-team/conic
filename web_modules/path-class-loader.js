@@ -9,9 +9,9 @@ module.exports = function (source, map) {
 
     // 豁免全局样式
     if (namespace !== 'src') {
-        // 匹配 render ( <div
-        source = source.replace(/(render:\s*function\s*\(\)\s*\{\s*\n[\w\W]*return\s*\(\s*\n\s*)<(\w*)>/g, function (text, $1, $2) {
-            return $1 + '<div className="' + namespace + '">'
+        // 匹配 namespace
+        source = source.replace(/(namespace)/g, function (text, $1) {
+            return 'className="' + namespace + '"'
         })
     }
 

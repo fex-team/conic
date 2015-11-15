@@ -11,7 +11,7 @@ require('./index.scss');
 module.exports = React.createClass({
     render: function () {
         return (
-            <div>
+            <div namespace>
                 <div className={'btn btn-'+this.props.type}>{this.props.children || '默认按钮'}</div>
             </div>
         )

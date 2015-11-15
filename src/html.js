@@ -11,7 +11,7 @@ module.exports = `
 
 <title>gaea 移动端构建平台</title>
 
-<body style="background:#444;">
+<body style="background:gray;">
       <div id="react-dom"></div>
 </body>
 

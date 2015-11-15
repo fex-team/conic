@@ -3,28 +3,16 @@
  * @date 15/10/29.
  * @email dongtiancheng@baidu.com
  */
-var _ = require('lodash')
+const _ = require('lodash')
 
-function isValueEqual(value, other) {
-    function compare(val, name) {
-        if (_.isArray(val) && other[name]) {
-            return val.length !== other[name].length;
-        }
-
-        if (!_.isObject(val)) {
-            return other[name] !== val
-        } else if (!val.state && other[name]) {
-            return !isValueEqual(val, other[name])
-        }
-    }
-
-    var result = _.filter(value, compare)
-    return result.length === 0
+function isValueEqual(value, oldValue) {
+    return _.isEqual(value.childs, oldValue.childs) && _.isEqual(value.opts, oldValue.opts) && _.isEqual(value.mode, oldValue.mode)
 }
 
 var ReactComponentWithPureRenderMixin = {
     shouldComponentUpdate: function (nextProps, nextState) {
-        return !isValueEqual(nextProps, this.props) || !isValueEqual(nextState, this.state)
+        console.log(this.state, nextState)
+        return !isValueEqual(nextProps, this.props) || this.state !== nextState
     }
 }
 
