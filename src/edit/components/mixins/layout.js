@@ -10,7 +10,7 @@ module.exports = {
         return this.childEdits
     },
 
-    render: function () {
+    getChildrens: function () {
         let childs = this.props.childs || []
         let children
 
@@ -18,7 +18,6 @@ module.exports = {
         case 'edit':
             // 存储子元素的edit引用清空
             this.childEdits = []
-
             children = this.props.childs.map((item, index)=> {
                 let component = Components[item.name]
                 let Editprops = {
@@ -39,20 +38,17 @@ module.exports = {
                 if (item.name === this.props.name) {
                     component = this.getSelfComponent()
                     Editprops.dragTarget = true
-                } else if (item.name === 'LayoutBox' && this.props.name === 'LayoutBoxAbsolute') {
+                } else if (item.name === 'LayoutBox') {
                     component = this.getLayoutBox()
                     Editprops.dragTarget = true
+                } else if (item.name === 'LayoutBoxAbsolute') {
+                    component = this.getLayoutBoxAbsolute()
+                    Editprops.dragTarget = true
+                    Editprops.dragSourceAbsolute = true
                 }
                 return React.createElement(Edit, Editprops, React.createElement(component))
             })
-
-            return (
-                <div namespace>
-                    <div style={_.assign(this.mergedOpts.flex.value, this.mergedOpts.base.value)}>
-                        {children}
-                    </div>
-                </div>
-            )
+            break
 
         case 'preview':
             children = childs.map((item, index)=> {
@@ -60,8 +56,10 @@ module.exports = {
 
                 if (item.name === this.props.name) {
                     component = this.getSelfComponent()
-                } else if (item.name === 'LayoutBox' && this.props.name === 'LayoutBoxAbsolute') {
+                } else if (item.name === 'LayoutBox') {
                     component = this.getLayoutBox()
+                } else if (item.name === 'LayoutBoxAbsolute') {
+                    component = this.getLayoutBoxAbsolute()
                 }
 
                 return React.createElement(component, {
@@ -71,15 +69,8 @@ module.exports = {
                     mode: 'preview'
                 })
             })
-
-            return (
-                <div namespace>
-                    <div style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.base.value)}>
-                        {children}
-                    </div>
-                </div>
-            )
-
+            break
         }
+        return children
     }
 }

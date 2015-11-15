@@ -9,7 +9,7 @@
         {
           "name": "LayoutBox",
           "opts": {
-            "base": {
+            "style": {
               "value": {
                 "width": 300
               }
@@ -19,7 +19,7 @@
             {
               "name": "LayoutBox",
               "opts": {
-                "base": {
+                "style": {
                   "value": {
                     "width": 200
                   }
@@ -29,49 +29,7 @@
                 {
                   "name": "LayoutBox",
                   "opts": {
-                    "base": {
-                      "value": {
-                        "width": 100
-                      }
-                    }
-                  },
-                  "childs": [
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "LayoutBox",
-      "opts": {},
-      "childs": [
-        {
-          "name": "LayoutBox",
-          "opts": {
-            "base": {
-              "value": {
-                "width": 300
-              }
-            }
-          },
-          "childs": [
-            {
-              "name": "LayoutBox",
-              "opts": {
-                "base": {
-                  "value": {
-                    "width": 200
-                  }
-                }
-              },
-              "childs": [
-                {
-                  "name": "LayoutBox",
-                  "opts": {
-                    "base": {
+                    "style": {
                       "value": {
                         "width": 100
                       }

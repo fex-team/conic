@@ -157,22 +157,18 @@ const Edit = React.createClass({
 
         // 如果这个组件是新拖拽的万能矩形，不是最外层，则宽度设定为父级宽度的一半
         if (!item.edit && item.type === 'LayoutBox' && this.props.children.props.name !== 'Container') {
-            let customWidth = this.state.customOpts && this.state.customOpts.base && this.state.customOpts.base.value.width
-            let customHeight = this.state.customOpts && this.state.customOpts.base && this.state.customOpts.base.value.height
-
-            let baseWidth = this.props.children.props.defaultOpts.base.value.width
-            let parentWidth = customWidth || baseWidth
-
-            let baseHeight = this.props.children.props.defaultOpts.base.value.height
-            let parentHeight = customHeight || baseHeight
-
             // 获取拖拽父级的布局方式
             let parentFlexDirection = this.state.customOpts && this.state.customOpts.flex && this.state.customOpts.flex.value.flexDirection || 'row'
 
+            let customHeight = this.state.customOpts && this.state.customOpts.style && this.state.customOpts.style.value.height
+
+            let baseHeight = this.props.children.props.defaultOpts.style.value.height
+            let parentHeight = customHeight || baseHeight
+
             childInfo.opts = $.extend(true, childInfo.opts, {
-                base: {
+                style: {
                     value: {
-                        width: parentFlexDirection === 'row' || parentFlexDirection === 'row-reverse' ? parentWidth / 2 : parentWidth,
+                        width: parentFlexDirection === 'row' || parentFlexDirection === 'row-reverse' ? '50%' : '100%',
                         height: parentFlexDirection === 'column' || parentFlexDirection === 'column-reverse' ? parentHeight / 2 : parentHeight
                     }
                 }
@@ -374,7 +370,7 @@ const Edit = React.createClass({
             </div>
         )
 
-        if (this.props.dragSource) {
+        if (this.props.dragSource && !this.props.dragSourceAbsolute) {
             childComponent = (
                 <DragSource onChangeEnableTarget={this.onChangeEnableTarget}
                             type={this.props.children.props.name}
@@ -408,6 +404,15 @@ const Edit = React.createClass({
                 </DragSourceAbsolute>
             )
         }
+
+        // style属性作merge
+        let mergedStyle = $.extend(true, _.cloneDeep(this.props.children.props.defaultOpts.style.value), this.state.customOpts.style && this.state.customOpts.style.value)
+
+        // 继承子元素宽高
+        editStyle.width = mergedStyle.width
+        editStyle.height = mergedStyle.height
+        // 集成子元素外边距
+        editStyle.margin = mergedStyle.margin || null
 
         return (
             <div namespace

@@ -32,7 +32,7 @@ let Container = React.createClass({
 
         // :TODO 异步请求配置信息
         settingAction.setDefault({
-            viewType: 'mobile'
+            viewType: 'pc'
         }, defaultJson)
         setTimeout(()=> {
             this.setState({

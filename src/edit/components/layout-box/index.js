@@ -1,14 +1,10 @@
 const React = require('react')
-const renderEdit = require('../mixins/render-edit')
+const layoutMixin = require('../mixins/layout')
 const pureRenderMixin = require('../mixins/pure-render')
 const mergeOptsMixin = require('../mixins/merge-opts')
 
 let LayoutBox = React.createClass({
-    mixins: [renderEdit, pureRenderMixin, mergeOptsMixin],
-
-    getSelfComponent: function () {
-        return LayoutBox
-    },
+    mixins: [layoutMixin, pureRenderMixin, mergeOptsMixin],
 
     getDefaultProps: function () {
         return {
@@ -25,11 +21,11 @@ let LayoutBox = React.createClass({
                         alignItems: 'stretch'
                     }
                 },
-                base: {
+                style: {
                     value: {
                         margin: 0,
                         padding: 0,
-                        width: 500,
+                        width: '100%',
                         height: 50,
                         fontSize: 14,
                         color: '#333',
@@ -39,6 +35,19 @@ let LayoutBox = React.createClass({
                 }
             }
         }
+    },
+
+    getSelfComponent: function () {
+        return LayoutBox
+    },
+
+    render: function () {
+        return (
+            <div namespace
+                 style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.style.value)}>
+                {this.getChildrens()}
+            </div>
+        )
     }
 })
 
