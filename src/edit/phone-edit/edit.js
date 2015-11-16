@@ -411,8 +411,10 @@ const Edit = React.createClass({
         // 继承子元素宽高
         editStyle.width = mergedStyle.width
         editStyle.height = mergedStyle.height
-        // 集成子元素外边距
+        // 继承子元素外边距
         editStyle.margin = mergedStyle.margin || null
+        // 继承flex-grow
+        editStyle.flexGrow = mergedStyle.flexGrow || null
 
         return (
             <div namespace
