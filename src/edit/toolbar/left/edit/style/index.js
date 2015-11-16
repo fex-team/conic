@@ -3,8 +3,10 @@ const Select = require('antd/lib/select')
 const InputNumber = require('antd/lib/input-number')
 const Color = require('../lib/color')
 const Option = Select.Option
+
 const Background = require('./background')
 const MarginPadding = require('./margin-padding')
+const Width = require('./width')
 
 const normalWidth = 150
 
@@ -84,21 +86,11 @@ module.exports = React.createClass({
             switch (key) {
             case 'width':
                 return (
-                    <div key={key}
-                         className="ant-form-item">
-                        <label htmlFor="control-input"
-                               className="col-8">宽度</label>
-
-                        <div className="col-16">
-                            <InputNumber
-                                type="text"
-                                value={value}
-                                style={{width:normalWidth}}
-                                onChange={this.onWidthChange.bind(this,key)}
-                                className="ant-input"
-                                id="control-input"/>
-                        </div>
-                    </div>
+                    <Width key={key}
+                           propKey={key}
+                           value={value}
+                           allStyle={this.state.item.value}
+                           onChange={this.onWidthChange.bind(this,key)}/>
                 )
             case 'height':
                 return (

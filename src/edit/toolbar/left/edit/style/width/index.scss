@@ -1,0 +1,12 @@
+@import "../../../../../../minxin";
+
+.mode-btn {
+  @extend %btn;
+  padding: 3px;
+  border: 1px solid $border-color;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+}

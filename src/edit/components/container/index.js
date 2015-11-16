@@ -12,7 +12,7 @@ const pureRenderMixin = require('../mixins/pure-render')
 const mergeOptsMixin = require('../mixins/merge-opts')
 
 const defaultStyle = {
-    minHeight: 800,
+    minHeight: 1200,
     position: 'relative'
 }
 

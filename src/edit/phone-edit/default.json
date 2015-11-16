@@ -43,6 +43,48 @@
           ]
         }
       ]
+    },
+    {
+      "name": "LayoutBox",
+      "opts": {},
+      "childs": [
+        {
+          "name": "LayoutBox",
+          "opts": {
+            "style": {
+              "value": {
+                "width": 300
+              }
+            }
+          },
+          "childs": [
+            {
+              "name": "LayoutBox",
+              "opts": {
+                "style": {
+                  "value": {
+                    "width": 200
+                  }
+                }
+              },
+              "childs": [
+                {
+                  "name": "LayoutBox",
+                  "opts": {
+                    "style": {
+                      "value": {
+                        "width": 100
+                      }
+                    }
+                  },
+                  "childs": [
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }
