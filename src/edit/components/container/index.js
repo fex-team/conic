@@ -12,7 +12,6 @@ const pureRenderMixin = require('../mixins/pure-render')
 const mergeOptsMixin = require('../mixins/merge-opts')
 
 const defaultStyle = {
-    minHeight: 1200,
     position: 'relative'
 }
 
@@ -23,10 +22,10 @@ function handleViewTypeChange(mode) {
     case 'pc':
         switch (mode) {
         case 'edit':
-            editStyle.width = $(window).width() - 250 - 7
+            editStyle.width = $(window).width() - 250
             break
         case 'preview':
-            editStyle.width = $(window).width() - 7
+            editStyle.width = $(window).width()
             break
         }
         break
@@ -60,7 +59,9 @@ let Container = React.createClass({
                         padding: 0,
                         fontSize: 14,
                         color: '#333',
-                        background: 'white'
+                        background: 'white',
+                        minHeight: 1200,
+                        height: null
                     },
                     edit: 'style'
                 }

@@ -272,10 +272,15 @@ const Edit = React.createClass({
         // 继承子元素宽高
         editStyle.width = mergedStyle.width
         editStyle.height = mergedStyle.height
+        editStyle.minHeight = mergedStyle.minHeight
         // 继承子元素外边距
         editStyle.margin = mergedStyle.margin || null
         // 继承flex-grow
         editStyle.flexGrow = mergedStyle.flexGrow || null
+
+        if (!editStyle.height && !editStyle.minHeight) {
+            editStyle.height = 'inherit'
+        }
 
         return (
             <div namespace

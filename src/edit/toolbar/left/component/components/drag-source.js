@@ -42,7 +42,7 @@ var DragSource = React.createClass({
     render: function () {
         return (
             this.props.connectDragSource(
-                <div>
+                <div style={{height:'100%'}}>
                     {this.props.children}
                 </div>
             )

@@ -43,13 +43,12 @@ var PhoneEdit = React.createClass({
     },
 
     render: function () {
-        let editTree
         let defaultTreeInfo = editStore.getShowModeInfo() || settingStore.getTree()
 
         switch (this.state.mode) {
         case 'edit':
             return (
-                <div onMouseLeave={this.onMouseLeave}>
+                <div style={{height:'inherit'}} onMouseLeave={this.onMouseLeave}>
                     <DragContainer>
                         <DragAround>
                             <Edit {...defaultTreeInfo} dragTarget="true"
@@ -69,11 +68,6 @@ var PhoneEdit = React.createClass({
             )
             break
         }
-
-        return (
-            <div style={{position:'relative'}}
-                 namespace>{editTree}</div>
-        )
     }
 })
 

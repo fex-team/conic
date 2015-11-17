@@ -61,8 +61,8 @@ var Dustbin = React.createClass({
         ])
 
         return this.props.connectDropTarget(
-            <div>
-                <div className={className}>
+            <div style={{height:'100%'}}>
+                <div style={{height:'100%'}} className={className}>
                     {this.props.children}
                 </div>
             </div>

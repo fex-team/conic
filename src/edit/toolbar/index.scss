@@ -56,7 +56,7 @@ html {
   _top: 0;
   _left: 0;
   _margin-left: 250px;
-  background: gray;
+  background: url(./image/transparent.png);
   z-index: 1;
 }
 
@@ -67,9 +67,14 @@ html {
 }
 
 // 手机样式
-.phone {
-  position: relative;
-  overflow: hidden;
+.phone-out {
+  height: 100%;
+  .phone {
+    position: relative;
+    height: inherit;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 
 hr {

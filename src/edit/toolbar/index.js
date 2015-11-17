@@ -9,6 +9,8 @@ const classnames = require('classnames')
 
 const defaultJson = require('../phone-edit/default.json')
 
+const Phone = require('../../edit/phone-edit')
+
 require('./index.scss')
 require('./animate.scss')
 require('./loading.scss')
@@ -97,7 +99,7 @@ let Container = React.createClass({
                          onClick={this.onClickPhoneOut}>
                         <div className="phone-out">
                             <div className="phone">
-                                {this.props.children}
+                                <Phone/>
                             </div>
                         </div>
                     </div>
@@ -109,8 +111,7 @@ let Container = React.createClass({
         }
 
         return (
-            <div namespace
-                 style={{height:'100%'}}>
+            <div namespace>
                 {children}
             </div>
         )

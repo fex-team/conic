@@ -26,7 +26,8 @@ let LayoutBox = React.createClass({
                         margin: 0,
                         padding: 0,
                         width: '100%',
-                        height: 50,
+                        minHeight: 50,
+                        height: null,
                         fontSize: 14,
                         color: '#333',
                         background: 'white'
