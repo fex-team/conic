@@ -58,5 +58,21 @@ module.exports = {
             type: 'changeViewType',
             viewType: viewType
         })
+    },
+
+    // hover
+    hoverComponent: function (component, $dom) {
+        dispatcher.dispatch({
+            type: 'hoverComponent',
+            component: component,
+            $dom: $dom
+        })
+    },
+
+    // 更新样式
+    afterUpdateComponent:function(){
+        dispatcher.dispatch({
+            type: 'afterUpdateComponent'
+        })
     }
 }

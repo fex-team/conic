@@ -1,9 +1,13 @@
 const React = require('react')
 const ReactDnd = require('react-dnd')
 const dragItem = require('./drag-type')
+var editAction = require('../../../../actions/edit-action')
 
 const source = {
     beginDrag: function (props) {
+        // 取消hover效果
+        editAction.hoverComponent(null)
+
         return {}
     },
     endDrag: function (props, monitor, component) {

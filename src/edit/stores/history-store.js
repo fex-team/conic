@@ -1,13 +1,16 @@
+const ReactDOM = require('react-dom')
 const dispatcher = require('../dispatcher')
 const EventEmitter = require('events').EventEmitter
 const assign = require('object-assign')
 const _ = require('lodash')
 const editAction = require('../actions/edit-action')
+const $ = require('jquery')
 
 const CHANGE_EVENT = 'change'
 const REVERSE_EVENT = 'reverseEvent'
 
 let containerEdit
+let $containerDom
 let historys = []
 
 // 当前操作位置（是倒序的，从上到下，0表示最后一次操作）
@@ -69,6 +72,10 @@ var HistoryStore = assign({}, EventEmitter.prototype, {
 
     getContainerEdit: function () {
         return containerEdit
+    },
+
+    get$ContainerEditDom: function () {
+        return $containerDom
     }
 })
 
@@ -92,6 +99,7 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
         break
     case 'setContainerEdit':
         containerEdit = action.edit
+        $containerDom = $(ReactDOM.findDOMNode(containerEdit))
         break
     case 'revertHistory':
         currentIndex = action.end
@@ -130,9 +138,9 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
                 switch (item.type) {
                 case 'update':
                     if (topToBottom) { // 撤销
-                        componentEdit.UpdateChildren(item.optsBefore, null)
+                        componentEdit.updateSelf(item.optsBefore, null)
                     } else { // 还原
-                        componentEdit.UpdateChildren(item.optsAfter, null)
+                        componentEdit.updateSelf(item.optsAfter, null)
                     }
                     break
                 case 'add':

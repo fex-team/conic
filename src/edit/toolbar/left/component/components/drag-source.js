@@ -9,6 +9,9 @@ const source = {
     },
 
     beginDrag: function (props) {
+        // 取消hover效果
+        editAction.hoverComponent(null)
+
         if (typeof props.onChangeEnableTarget === 'function') {
             props.onChangeEnableTarget(false)
         }
@@ -32,11 +35,6 @@ const source = {
 }
 
 var DragSource = React.createClass({
-    propTypes: {
-        connectDragSource: React.PropTypes.func.isRequired,
-        isDragging: React.PropTypes.bool.isRequired,
-    },
-
     getInitialState: function () {
         return {}
     },
