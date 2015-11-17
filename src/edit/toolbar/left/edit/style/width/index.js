@@ -78,7 +78,7 @@ module.exports = React.createClass({
             newValue = cacheValue[type] || 100
             break
         case 'scale':
-            newValue = cacheValue[type] || '50%'
+            newValue = cacheValue[type] || 50
             break
         case 'auto':
             newValue = cacheValue[type] || 1

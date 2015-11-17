@@ -21,7 +21,7 @@ var DragAround = React.createClass({
 
     render: function () {
         return this.props.connectDropTarget(
-            <div>
+            <div style={{height:'inherit'}}>
                 {this.props.children}
             </div>
         )

@@ -7,6 +7,7 @@ const Option = Select.Option
 const Background = require('./background')
 const MarginPadding = require('./margin-padding')
 const Width = require('./width')
+const Height = require('./height')
 
 const normalWidth = 150
 
@@ -42,9 +43,19 @@ module.exports = React.createClass({
 
     onHeightChange: function (key, value) {
         let newItem = this.state.item
-        newItem.value[key] = value
+        newItem.value['height'] = value
+        newItem.value['minHeight'] = null
         this.props.onChange(newItem, {
             name: `高度改为 ${value}`
+        })
+    },
+
+    onMinHeightChange: function (key, value) {
+        let newItem = this.state.item
+        newItem.value['minHeight'] = value
+        newItem.value['height'] = null
+        this.props.onChange(newItem, {
+            name: `高度改为 ${value}， 可被撑开`
         })
     },
 
@@ -93,6 +104,9 @@ module.exports = React.createClass({
         let forms = Object.keys(this.state.item.value).map((key)=> {
             var value = this.state.item.value[key]
 
+            // 过滤掉null
+            if (value === null)return
+
             switch (key) {
             case 'width':
                 return (
@@ -105,20 +119,21 @@ module.exports = React.createClass({
                 )
             case 'height':
                 return (
-                    <div key={key}
-                         className="ant-form-item">
-                        <label htmlFor="control-input"
-                               className="col-8">高度</label>
-
-                        <div className="col-16">
-                            <InputNumber type="text"
-                                         value={value}
-                                         style={{width:normalWidth}}
-                                         onChange={this.onHeightChange.bind(this,key)}
-                                         className="ant-input"
-                                         id="control-input"/>
-                        </div>
-                    </div>
+                    <Height key={key}
+                            propKey={key}
+                            value={value}
+                            allStyle={this.state.item.value}
+                            onHeightChange={this.onHeightChange.bind(this,key)}
+                            onMinHeightChange={this.onMinHeightChange.bind(this,key)}/>
+                )
+            case 'minHeight':
+                return (
+                    <Height key={key}
+                            propKey={key}
+                            value={value}
+                            allStyle={this.state.item.value}
+                            onHeightChange={this.onHeightChange.bind(this,key)}
+                            onMinHeightChange={this.onMinHeightChange.bind(this,key)}/>
                 )
             case 'fontSize':
                 return (

@@ -8,7 +8,7 @@ var DragContainer = React.createClass({
 
     render: function () {
         return (
-            <div>
+            <div style={{height:'inherit'}}>
                 {this.props.children}
             </div>
         )

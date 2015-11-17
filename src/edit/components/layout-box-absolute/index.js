@@ -34,7 +34,8 @@ let LayoutBoxAbsolute = React.createClass({
                         margin: 0,
                         padding: 0,
                         width: 250,
-                        height: 80,
+                        minHeight: 80,
+                        height: null,
                         fontSize: 14,
                         color: '#333',
                         background: 'white'
