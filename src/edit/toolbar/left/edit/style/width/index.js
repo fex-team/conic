@@ -6,6 +6,13 @@ require('./index.scss')
 
 const normalWidth = 80
 
+// 存储px/scale/auto值
+let cacheValue = {
+    px: null,
+    scale: null,
+    auto: null
+}
+
 // 判断当前宽度类型
 function getType(allStyle, value) {
     let type
@@ -23,8 +30,18 @@ function getType(allStyle, value) {
 
 // 宽度转化为数字 100%
 function widthToNumber(allStyle, value) {
-    if (allStyle.flexGrow)return value
+    if (allStyle.flexGrow) {
+        cacheValue.auto = allStyle.flexGrow
+        return cacheValue.auto
+    }
 
+    if (_.isString(value)) {
+        cacheValue.scale = _.parseInt(value.replace('%', ''))
+        return cacheValue.scale
+    } else {
+        cacheValue.px = value
+        return cacheValue.px
+    }
 }
 
 module.exports = React.createClass({
@@ -37,6 +54,11 @@ module.exports = React.createClass({
 
     componentWillReceiveProps: function (nextProps) {
         if (this.state.value !== nextProps.value) {
+            cacheValue = {
+                px: null,
+                scale: null,
+                auto: null
+            }
             this.setState({
                 value: widthToNumber(nextProps.allStyle, nextProps.value),
                 type: getType(nextProps.allStyle, nextProps.value)
@@ -45,13 +67,51 @@ module.exports = React.createClass({
     },
 
     onChange: function (value) {
-        this.props.onChange(value)
+        cacheValue[this.state.type] = value
+        this.changeParentOpts(this.state.type, value)
     },
 
     changeType: function (type) {
+        let newValue = 0
+        switch (type) {
+        case 'px':
+            newValue = cacheValue[type] || 100
+            break
+        case 'scale':
+            newValue = cacheValue[type] || '50%'
+            break
+        case 'auto':
+            newValue = cacheValue[type] || 1
+            break
+        }
+
         this.setState({
-            type: type
+            type: type,
+            value: newValue
+        }, function () {
+            this.changeParentOpts(this.state.type, this.state.value)
         })
+    },
+
+    changeParentOpts: function (type, value) {
+        switch (this.state.type) {
+        case 'px':
+            this.props.onChange(value)
+            break
+        case 'scale':
+            if (value > 100) {
+                value = 100
+            }
+            this.setState({
+                value: value
+            }, function () {
+                this.props.onChange(value + '%')
+            })
+            break
+        case 'auto':
+            this.props.onFlexGrowChange(value)
+            break
+        }
     },
 
     render: function () {

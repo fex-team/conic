@@ -1,5 +1,5 @@
 const React = require('react')
-const getTree = require('../../../../phone-edit/get-tree')
+const getTree = require('../../../../phone-edit/lib/get-tree')
 const historyStore = require('../../../../stores/history-store')
 const editAction = require('../../../../actions/edit-action')
 const editStore = require('../../../../stores/edit-store')

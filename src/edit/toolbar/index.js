@@ -95,8 +95,7 @@ let Container = React.createClass({
 
                     <div className={mnClass}
                          onClick={this.onClickPhoneOut}>
-                        <div className="phone-out"
-                            >
+                        <div className="phone-out">
                             <div className="phone">
                                 {this.props.children}
                             </div>

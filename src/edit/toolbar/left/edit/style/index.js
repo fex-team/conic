@@ -34,6 +34,7 @@ module.exports = React.createClass({
     onWidthChange: function (key, value) {
         let newItem = this.state.item
         newItem.value[key] = value
+        newItem.value['flexGrow'] = null
         this.props.onChange(newItem, {
             name: `宽度改为 ${value}`
         })
@@ -79,6 +80,15 @@ module.exports = React.createClass({
         }
     },
 
+    onFlexGrowChange: function (value) {
+        let newItem = this.state.item
+        newItem.value['flexGrow'] = value
+        newItem.value['width'] = null
+        this.props.onChange(newItem, {
+            name: `宽度改为自适应 ${value}`
+        })
+    },
+
     render: function () {
         let forms = Object.keys(this.state.item.value).map((key)=> {
             var value = this.state.item.value[key]
@@ -90,7 +100,8 @@ module.exports = React.createClass({
                            propKey={key}
                            value={value}
                            allStyle={this.state.item.value}
-                           onChange={this.onWidthChange.bind(this,key)}/>
+                           onChange={this.onWidthChange.bind(this,key)}
+                           onFlexGrowChange={this.onFlexGrowChange}/>
                 )
             case 'height':
                 return (

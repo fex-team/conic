@@ -1,44 +1,39 @@
-var React = require('react')
-var DragSource = require('../toolbar/left/component/components/drag-source')
-var DragSourceAbsolute = require('../toolbar/left/component/components/drag-source-absolute')
-var DragTarget = require('./drag-target')
-var editAction = require('../actions/edit-action')
-var editStore = require('../stores/edit-store')
-var footerAction = require('../actions/footer-action')
-var historyAction = require('../actions/history-action')
-var treeNodeAction = require('../actions/tree-node-action')
-var treeAction = require('../actions/tree-action')
-var classNames = require('classnames')
-var lodash = require('lodash')
-var _ = {}
+const React = require('react')
+const ReactDOM = require('react-dom')
+const DragSource = require('../toolbar/left/component/components/drag-source')
+const DragSourceAbsolute = require('../toolbar/left/component/components/drag-source-absolute')
+const DragTarget = require('./drag-target')
+const editAction = require('../actions/edit-action')
+const editStore = require('../stores/edit-store')
+const footerAction = require('../actions/footer-action')
+const historyAction = require('../actions/history-action')
+const treeNodeAction = require('../actions/tree-node-action')
+const treeAction = require('../actions/tree-action')
+const classNames = require('classnames')
+const _ = require('lodash')
+const $ = require('jquery')
+const getTree = require('./lib/get-tree')
 
-lodash.extend(_, lodash)
+const onDragMixins = require('./edit-mixins/on-drag')
+const getPosition = require('./lib/get-position')
 
-_.cloneDeep = function (obj, fn) {
-    if (!fn) {
-        return lodash.cloneDeep(obj, function (value, name) {
-            if (name === 'component' || name === 'treeNode') {
-                return value;
-            }
-        })
-    }
-    else {
-        return lodash.cloneDeep(obj, fn)
-    }
-}
+//_.cloneDeep = function (obj, fn) {
+//    if (!fn) {
+//        return lodash.cloneDeep(obj, function (value, name) {
+//            if (name === 'component' || name === 'treeNode') {
+//                return value;
+//            }
+//        })
+//    }
+//    else {
+//        return lodash.cloneDeep(obj, fn)
+//    }
+//}
 
-var $ = require('jquery')
-var getTree = require('./get-tree')
-
-// 根据edit生成位置数组
-function getPosition(edit, positionArray) {
-    if (edit.props.parent) {
-        positionArray.push(edit.props.uniqueKey)
-        getPosition(edit.props.parent, positionArray)
-    }
-}
 
 const Edit = React.createClass({
+    mixins: [onDragMixins],
+
     getInitialState: function () {
         return {
             enabledTarget: true,
@@ -58,9 +53,11 @@ const Edit = React.createClass({
     },
 
     componentDidMount: function () {
+        this.$dom = $(ReactDOM.findDOMNode(this))
+
         setTimeout(() => {
             footerAction.increaseInstanceNumber()
-            treeAction.editComponentMounted(this)
+            //treeAction.editComponentMounted(this)
         })
 
         // 如果默认是选中状态，通知左侧组件更新
@@ -109,13 +106,13 @@ const Edit = React.createClass({
         })
 
         // 触发右侧树选中
-        this.treeNode.select()
+        //this.treeNode.select()
 
         editAction.selectComponent(this)
     },
 
     // 触发修改子元素事件(由edit-store直接调用)
-    UpdateChildren: function (opts, historyInfo) {
+    updateSelf: function (opts, historyInfo) {
         let mergeOpts = $.extend(true, _.cloneDeep(this.state.customOpts), opts)
 
         // 如果是历史记录，则附加到历史中
@@ -143,6 +140,11 @@ const Edit = React.createClass({
 
         this.setState({
             customOpts: mergeOpts
+        }, function () {
+            // 更新外部selector
+            setTimeout(()=> {
+                editAction.afterUpdateComponent()
+            })
         })
     },
 
@@ -153,144 +155,6 @@ const Edit = React.createClass({
 
         this.setState({
             enabledTarget: isOk
-        })
-    },
-
-    // 拖拽某个元素进来
-    onDrop: function (item) {
-        // 如果item的edit的parent是自己，则不执行任何操作
-        if (item.edit && item.edit.props.parent === this) {
-            return
-        }
-
-        let newChilds = _.cloneDeep(this.state.childs)
-
-        // 添加子元素的属性
-        let childInfo = {
-            name: item.type,
-            uniqueKey: editStore.getUniqueKey(),
-            selected: item.edit ? item.edit.state.selected : false
-        }
-
-        // 如果这个组件是新拖拽的万能矩形，不是最外层，则宽度设定为父级宽度的一半
-        if (!item.edit && item.type === 'LayoutBox' && this.props.children.props.name !== 'Container') {
-            // 获取拖拽父级的布局方式
-            let parentFlexDirection = this.state.customOpts && this.state.customOpts.flex && this.state.customOpts.flex.value.flexDirection || 'row'
-
-            let customHeight = this.state.customOpts && this.state.customOpts.style && this.state.customOpts.style.value.height
-
-            let baseHeight = this.props.children.props.defaultOpts.style.value.height
-            let parentHeight = customHeight || baseHeight
-
-            childInfo.opts = $.extend(true, childInfo.opts, {
-                style: {
-                    value: {
-                        width: parentFlexDirection === 'row' || parentFlexDirection === 'row-reverse' ? '50%' : '100%',
-                        height: parentFlexDirection === 'column' || parentFlexDirection === 'column-reverse' ? parentHeight / 2 : parentHeight
-                    }
-                }
-            })
-        }
-
-        // 如果有edit，是从模拟器中拖拽的元素，保留原有属性
-        if (item.edit) {
-            childInfo.opts = item.edit.state.customOpts
-            // 循环所有childs附加到当前state上（如果有子元素）
-            if (item.edit.state.childs) {
-                let info = {}
-                getTree(item.edit, info)
-                childInfo.childs = info.childs
-            }
-
-            // 记录拖拽
-            let positionArray = []
-            getPosition(item.edit, positionArray)
-            let afterPositionArray = []
-            getPosition(this, afterPositionArray)
-            afterPositionArray.unshift(childInfo.uniqueKey)
-            let info = {}
-            getTree(item.edit, info)
-            setTimeout(()=> {
-                historyAction.addHistory({
-                    position: positionArray,
-                    afterPosition: afterPositionArray,
-                    beforeUniqueKey: item.edit.props.uniqueKey,
-                    uniqueKey: childInfo.uniqueKey,
-                    componentName: childInfo.name,
-                    childs: info.childs,
-                    opts: _.cloneDeep($.extend(true, item.edit.state.customOpts, childInfo.opts)),
-                    type: 'move',
-                    operateName: '移动组件 ' + childInfo.name
-                })
-            })
-        } else { // 否则为新增组件
-            let positionArray = []
-            getPosition(this, positionArray)
-            positionArray.unshift(childInfo.uniqueKey)
-            setTimeout(()=> {
-                historyAction.addHistory({
-                    position: positionArray,
-                    uniqueKey: childInfo.uniqueKey,
-                    componentName: childInfo.name,
-                    opts: _.cloneDeep(childInfo.opts),
-                    type: 'add',
-                    operateName: '新增组件 ' + childInfo.name
-                })
-            })
-        }
-
-        newChilds.push(childInfo)
-
-        setTimeout(() => {
-            treeNodeAction.addTreeNode(this, item, childInfo)
-        })
-
-        this.setState({
-            childs: newChilds
-        }, function () {
-            if (item.existComponent) {
-                // 销毁组件
-                item.edit.removeSelf(false)
-            }
-        })
-    },
-
-    // 拖拽绝对定位组件进来，由布局->自由矩形直接调用
-    dropAbsolute: function (item) {
-        let newChilds = _.cloneDeep(this.state.childs)
-
-        // 添加子元素的属性
-        let childInfo = {
-            name: item.type,
-            uniqueKey: editStore.getUniqueKey(),
-            selected: false,
-            opts: item.opts,
-            index: newChilds.length
-        }
-
-        // 加入历史纪录
-        let positionArray = []
-        getPosition(this, positionArray)
-        positionArray.unshift(childInfo.uniqueKey)
-        setTimeout(()=> {
-            historyAction.addHistory({
-                position: positionArray,
-                uniqueKey: childInfo.uniqueKey,
-                componentName: childInfo.name,
-                opts: _.cloneDeep(childInfo.opts),
-                type: 'add',
-                operateName: '新增组件 ' + childInfo.name
-            })
-        })
-
-        newChilds.push(childInfo)
-
-        setTimeout(() => {
-            treeNodeAction.addTreeNode(this, item, childInfo)
-        })
-
-        this.setState({
-            childs: newChilds
         })
     },
 
@@ -331,50 +195,23 @@ const Edit = React.createClass({
             })
         }
 
-        // 右侧树删除节点
-        this.treeNode.removeSelf()
+        //// 右侧树删除节点
+        //this.treeNode.removeSelf()
 
         this.props.parent.removeChild(this.props.index)
     },
 
-    // 绝对定位拖拽元素属性变化
-    onDragSourceAbsoluteChange: function (opts) {
-        // 与customOpts作merge
-        var mergeOpts = $.extend(true, _.cloneDeep(this.state.customOpts), opts)
-
-        let positionArray = []
-        getPosition(this, positionArray)
-        historyAction.addHistory({
-            position: positionArray,
-            optsBefore: _.cloneDeep(this.state.customOpts),
-            optsAfter: _.cloneDeep(mergeOpts),
-            type: 'update',
-            operateName: this.props.children.props.name + ' 移动'
-        })
-
-        this.setState({
-            customOpts: mergeOpts
-        }, function () {
-            // 同步左侧编辑器内容，如果选中了
-            if (this.state.selected) {
-                editAction.freshComponent(this)
-            }
-        })
+    onMouseOver: function (event) {
+        event.stopPropagation()
+        editAction.hoverComponent(this, this.$dom)
     },
 
     render: function () {
         // 记录render日志
-        //let position = []
-        //getPosition(this, position)
-        //console.log('%c[render] edit:' + position.reverse(), 'color:green')
+        // console.log('%c[render] edit', 'color:green')
 
         let positionArray = []
         getPosition(this, positionArray)
-
-        let className = classNames([
-            {'selected': this.state.selected},
-            {'absolute': this.props.dragSourceAbsolute}
-        ])
 
         // 放在edit上的style
         let editStyle = {}
@@ -392,12 +229,7 @@ const Edit = React.createClass({
             }
         }
 
-        let childComponent = (
-            <div className={className}
-                 onClick={this.onClick}>
-                {React.cloneElement(this.props.children, newChildProps)}
-            </div>
-        )
+        let childComponent = React.cloneElement(this.props.children, newChildProps)
 
         if (this.props.dragSource && !this.props.dragSourceAbsolute) {
             childComponent = (
@@ -440,12 +272,16 @@ const Edit = React.createClass({
         // 继承子元素宽高
         editStyle.width = mergedStyle.width
         editStyle.height = mergedStyle.height
-        // 集成子元素外边距
+        // 继承子元素外边距
         editStyle.margin = mergedStyle.margin || null
+        // 继承flex-grow
+        editStyle.flexGrow = mergedStyle.flexGrow || null
 
         return (
             <div namespace
-                 style={editStyle}>
+                 style={editStyle}
+                 onMouseOver={this.onMouseOver}
+                 onClick={this.onClick}>
                 {childComponent}
             </div>
         )
