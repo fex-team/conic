@@ -1,24 +1,54 @@
-var React = require('react')
-var Left = require('./left')
-var Top = require('./top')
-var Right = require('./right')
-var Footer = require('./footer')
-var editAction = require('../actions/edit-action')
+const React = require('react')
+const Left = require('./left')
+const Top = require('./top')
+const Footer = require('./footer')
+const editAction = require('../actions/edit-action')
+const editStore = require('../stores/edit-store')
+const settingAction = require('../actions/setting-action')
+const classnames = require('classnames')
+
+const defaultJson = require('../phone-edit/default.json')
 
 require('./index.scss')
+require('./animate.scss')
+require('./loading.scss')
 
 let Container = React.createClass({
     getInitialState: function () {
         return {
             // 操作页面中当前选中对象
-            selection: {}
+            selection: {},
+
+            // 页面模式
+            mode: 'edit',
+
+            // 是否加载完毕
+            loading: true
         }
     },
 
-    // 点击空白区域
-    onClickEmpty: function (event) {
-        event.stopPropagation()
-        editAction.selectComponent(null)
+    componentDidMount: function () {
+        editStore.addChangeShowModeListener(this.changeMode)
+
+        // :TODO 异步请求配置信息
+        settingAction.setDefault({
+            viewType: 'pc'
+        }, defaultJson)
+        setTimeout(()=> {
+            this.setState({
+                loading: false
+            })
+        })
+    },
+
+    componentWillUnmount: function () {
+        editStore.removeChangeShowModeListener(this.changeMode)
+    },
+
+    changeMode: function () {
+        this.setState({
+            mode: editStore.getShowMode()
+        })
     },
 
     // 点击手机外部，选中手机壳
@@ -28,33 +58,61 @@ let Container = React.createClass({
     },
 
     render: function () {
-        return (
-            <div>
-                <div className="g-hd">
-                    <Top/>
-                </div>
+        let sdClass = classnames({
+            'g-sd': true,
+            'g-sd-enter': this.state.mode === 'edit',
+            'g-sd-leave': this.state.mode === 'preview'
+        })
 
-                <div className="g-sd">
-                    <Left/>
-                </div>
+        let ftClass = classnames({
+            'g-ft': true,
+            'g-ft-enter': this.state.mode === 'edit',
+            'g-ft-leave': this.state.mode === 'preview'
+        })
 
-                <div className="g-rd">
-                    <Right/>
-                </div>
+        let mnClass = classnames({
+            'g-mn': true,
+            'g-mn-leave': this.state.mode === 'preview'
+        })
 
-                <div className="g-mn"
-                     onClick={this.onClickEmpty}>
-                    <div className="phone-out"
+        let children
+        if (this.state.loading) {
+            children = (
+                <div className="loading">
+                    <i className="fa fa-refresh fa-spin"></i>
+                </div>
+            )
+        } else {
+            children = (
+                <div>
+                    <div className="g-hd">
+                        <Top/>
+                    </div>
+
+                    <div className={sdClass}>
+                        <Left/>
+                    </div>
+
+                    <div className={mnClass}
                          onClick={this.onClickPhoneOut}>
-                        <div className="phone">
-                            <div className="status-bar"></div>
-                            {this.props.children}
+                        <div className="phone-out"
+                            >
+                            <div className="phone">
+                                {this.props.children}
+                            </div>
                         </div>
                     </div>
+                    <div className={ftClass}>
+                        <Footer/>
+                    </div>
                 </div>
-                <div className="g-ft">
-                    <Footer/>
-                </div>
+            )
+        }
+
+        return (
+            <div namespace
+                 style={{height:'100%'}}>
+                {children}
             </div>
         )
     }

@@ -32,13 +32,22 @@
   border-right: 1px solid $border-color;
 }
 
+.g-sd3 {
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 29px;
+  right: 250px;
+}
+
 .g-mn2 {
   float: left;
-  width: 100%;;
+  width: 100%;
+  background-color: $bg-color;
 }
 
 .g-mnc2 {
-  margin-right: 250px;
+  margin-right: 350px;
 }
 
 // 功能按钮样式

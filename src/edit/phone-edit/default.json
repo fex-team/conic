@@ -9,7 +9,7 @@
         {
           "name": "LayoutBox",
           "opts": {
-            "base": {
+            "style": {
               "value": {
                 "width": 300
               }
@@ -19,7 +19,7 @@
             {
               "name": "LayoutBox",
               "opts": {
-                "base": {
+                "style": {
                   "value": {
                     "width": 200
                   }
@@ -29,7 +29,7 @@
                 {
                   "name": "LayoutBox",
                   "opts": {
-                    "base": {
+                    "style": {
                       "value": {
                         "width": 100
                       }
@@ -51,7 +51,7 @@
         {
           "name": "LayoutBox",
           "opts": {
-            "base": {
+            "style": {
               "value": {
                 "width": 300
               }
@@ -61,7 +61,7 @@
             {
               "name": "LayoutBox",
               "opts": {
-                "base": {
+                "style": {
                   "value": {
                     "width": 200
                   }
@@ -71,7 +71,7 @@
                 {
                   "name": "LayoutBox",
                   "opts": {
-                    "base": {
+                    "style": {
                       "value": {
                         "width": 100
                       }

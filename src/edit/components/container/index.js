@@ -6,16 +6,44 @@ const LayoutBox = require('../../components/layout-box')
 const LayoutBoxAbsolute = require('../../components/layout-box-absolute')
 const Components = require('../../components')
 const editStore = require('../../stores/edit-store')
-const pureRenderMixin = require('../mixins/pureRenderMixin')
+const settingStore = require('../../stores/setting-store')
+const layoutMixin = require('../mixins/layout')
+const pureRenderMixin = require('../mixins/pure-render')
+const mergeOptsMixin = require('../mixins/merge-opts')
+
+const defaultStyle = {
+    minHeight: 1200,
+    position: 'relative'
+}
+
+const editStyle = {}
+
+function handleViewTypeChange(mode) {
+    switch (settingStore.getViewType()) {
+    case 'pc':
+        switch (mode) {
+        case 'edit':
+            editStyle.width = $(window).width() - 250 - 7
+            break
+        case 'preview':
+            editStyle.width = $(window).width() - 7
+            break
+        }
+        break
+    case 'mobile':
+        editStyle.width = 500
+        break
+    }
+}
 
 let Container = React.createClass({
-    mixins: [pureRenderMixin],
+    mixins: [layoutMixin, pureRenderMixin, mergeOptsMixin],
 
     getDefaultProps: function () {
         return {
             name: 'Container',
             desc: '手机壳',
-            opts: {
+            defaultOpts: {
                 flex: {
                     edit: 'flex',
                     value: {
@@ -26,18 +54,52 @@ let Container = React.createClass({
                         alignItems: 'flex-start'
                     }
                 },
-                base: {
+                style: {
                     value: {
                         margin: 0,
                         padding: 0,
                         fontSize: 14,
                         color: '#333',
-                        background: 'white',
-                        width: 500
+                        background: 'white'
                     },
                     edit: 'style'
                 }
             }
+        }
+    },
+
+    componentWillMount: function () {
+        switch (this.props.mode) {
+        case 'edit':
+            handleViewTypeChange(this.props.mode)
+            break
+        case 'preview':
+            handleViewTypeChange(this.props.mode)
+            break
+        }
+    },
+
+    componentDidMount: function () {
+        switch (this.props.mode) {
+        case 'edit':
+            editStore.addSelectContainerListener(this.onSelectContainer)
+            settingStore.addViewTypeListener(this.viewTypeChange)
+            break
+        case 'preview':
+            settingStore.addViewTypeListener(this.viewTypeChange)
+            break
+        }
+    },
+
+    componentWillUnmount: function () {
+        switch (this.props.mode) {
+        case 'edit':
+            editStore.removeSelectContainerListener(this.onSelectContainer)
+            settingStore.removeViewTypeListener(this.viewTypeChange)
+            break
+        case 'preview':
+            settingStore.removeViewTypeListener(this.viewTypeChange)
+            break
         }
     },
 
@@ -48,82 +110,26 @@ let Container = React.createClass({
         })
     },
 
-    componentDidMount: function () {
-        if (this.props.mode==='edit'){
-            editStore.addSelectContainerListener(this.onSelectContainer)
-        }
+    viewTypeChange: function () {
+        handleViewTypeChange(this.props.mode)
+        this.forceUpdate()
     },
 
-    componentWillUnmount: function () {
-        if (this.props.mode==='edit') {
-            editStore.removeSelectContainerListener(this.onSelectContainer)
-        }
+    getLayoutBox: function () {
+        return LayoutBox
     },
 
-    // 获得子元素的edit引用
-    getChildsEdit: function () {
-        return this.childEdits
+    getLayoutBoxAbsolute: function () {
+        return LayoutBoxAbsolute
     },
 
     render: function () {
-        const defaultStyle = {
-            minHeight: 800,
-            position: 'relative'
-        }
-
-        switch(this.props.mode){
-        case 'edit':
-            // 存储子元素的edit引用清空
-            this.childEdits = []
-
-            let childs = this.props.childs || []
-            let children = childs.map((item, index)=> {
-                let component = Components[item.name]
-                let Editprops = {
-                    key: item.uniqueKey,
-                    uniqueKey: item.uniqueKey,
-                    parent: this.props.edit || null,
-                    index: index,
-                    opts: item.opts || {},
-                    dragSource: true,
-                    childs: item.childs || [],
-                    selected: item.selected || false,
-                    ref: (ref)=> {
-                        if (ref === null)return
-                        this.childEdits.push(ref)
-                    }
-                }
-                if (item.name === 'LayoutBox') {
-                    component = LayoutBox
-                    Editprops.dragTarget = true
-                }
-                if (item.name === 'LayoutBoxAbsolute') {
-                    component = LayoutBoxAbsolute
-                    Editprops.dragSource = false
-                    Editprops.dragSourceAbsolute = true
-                    Editprops.dragTarget = true
-                }
-                return React.createElement(Edit, Editprops, React.createElement(component))
-            })
-
-            return (
-                <div>
-                    <div style={_.assign(this.props.opts.flex.value,this.props.opts.base.value,defaultStyle)}>
-                        {children}
-                    </div>
-                </div>
-            )
-
-        case 'preview':
-            return (
-                <div>
-                    <div style={_.assign(this.props.opts.flex.value,this.props.opts.base.value,defaultStyle)}>
-                        {children}
-                    </div>
-                </div>
-            )
-        }
-
+        return (
+            <div namespace
+                 style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.style.value,defaultStyle,editStyle)}>
+                {this.getChildrens()}
+            </div>
+        )
     }
 })
 

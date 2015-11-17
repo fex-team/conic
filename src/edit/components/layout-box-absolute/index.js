@@ -1,25 +1,17 @@
-var React = require('react')
-var renderEdit = require('../mixins/render-edit')
-var LayoutBox = require('../layout-box')
-const pureRenderMixin = require('../mixins/pureRenderMixin')
-const defaultStyle = {
-    position: 'absolute'
-}
+const React = require('react')
+const layoutMixin = require('../mixins/layout')
+const LayoutBox = require('../layout-box')
+const pureRenderMixin = require('../mixins/pure-render')
+const mergeOptsMixin = require('../mixins/merge-opts')
 
 let LayoutBoxAbsolute = React.createClass({
-    mixins: [renderEdit, pureRenderMixin],
+    mixins: [layoutMixin, pureRenderMixin, mergeOptsMixin],
 
-    getSelfComponent: function () {
-        return LayoutBoxAbsolute
-    },
-    getLayoutBox: function () {
-        return LayoutBox
-    },
     getDefaultProps: function () {
         return {
             name: 'LayoutBoxAbsolute',
             desc: '自由矩形',
-            opts: {
+            defaultOpts: {
                 position: {
                     value: {
                         left: 0,
@@ -37,12 +29,12 @@ let LayoutBoxAbsolute = React.createClass({
                         alignItems: 'stretch'
                     }
                 },
-                base: {
+                style: {
                     value: {
                         margin: 0,
                         padding: 0,
-                        width: 100,
-                        height: 100,
+                        width: 250,
+                        height: 80,
                         fontSize: 14,
                         color: '#333',
                         background: 'white'
@@ -51,6 +43,34 @@ let LayoutBoxAbsolute = React.createClass({
                 }
             }
         }
+    },
+
+    getSelfComponent: function () {
+        return LayoutBoxAbsolute
+    },
+
+    getLayoutBox: function () {
+        return LayoutBox
+    },
+
+    render: function () {
+        let style = {}
+        switch (this.props.mode) {
+        case 'edit':
+            style = _.assign(this.mergedOpts.flex.value, this.mergedOpts.style.value)
+            break
+        case 'preview':
+            style = _.assign(this.mergedOpts.flex.value, this.mergedOpts.style.value, this.mergedOpts.position.value)
+            style.position = 'absolute'
+            break
+        }
+
+        return (
+            <div namespace
+                 style={style}>
+                {this.getChildrens()}
+            </div>
+        )
     }
 })
 

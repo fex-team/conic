@@ -29,8 +29,8 @@ module.exports = React.createClass({
     onComponentChange: function () {
         let component = editStore.get()
         if (component) {
-            currentComponentDesc = component.state.childProps.desc || '未命名组件'
-            currentComponentOpts = $.extend(true, _.cloneDeep(component.state.childProps.opts), component.state.customOpts)
+            currentComponentDesc = component.props.children.props.desc || '未命名组件'
+            currentComponentOpts = $.extend(true, _.cloneDeep(component.props.children.props.defaultOpts), _.cloneDeep(component.state.customOpts))
         } else {
             currentComponentOpts = currentComponentDesc = null
         }
@@ -67,6 +67,7 @@ module.exports = React.createClass({
 
         let editForm
         let collapseDefaultActiveKeys = []
+
         if (currentComponentOpts !== null) {
             // 解析编辑项目
             editForm = Object.keys(currentComponentOpts).map((key, index)=> {
@@ -149,7 +150,7 @@ module.exports = React.createClass({
         }
 
         return (
-            <div>
+            <div namespace>
                 {editForm}
             </div>
         )

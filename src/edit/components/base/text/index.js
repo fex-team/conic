@@ -1,5 +1,6 @@
 const React = require('react')
-const pureRenderMixin = require('../../mixins/pureRenderMixin')
+const pureRenderMixin = require('../../mixins/pure-render')
+const mergeOptsMixin = require('../../mixins/merge-opts')
 const _ = require('lodash')
 
 const defaultStyle = {
@@ -7,13 +8,13 @@ const defaultStyle = {
 }
 
 const Text = React.createClass({
-    mixins: [pureRenderMixin],
+    mixins: [pureRenderMixin, mergeOptsMixin],
 
     getDefaultProps: function () {
         return {
             name: 'BaseText',
             desc: '文字',
-            opts: {
+            defaultOpts: {
                 base: {
                     value: {
                         text: {
@@ -38,14 +39,10 @@ const Text = React.createClass({
         }
     },
 
-    getInitialState: function () {
-        return {}
-    },
-
     render: function () {
         return (
-            <div style={_.assign(_.cloneDeep(this.props.opts.style.value), defaultStyle)}>
-                {this.props.opts.base.value.text.value}
+            <div namespace style={_.assign(this.mergedOpts.style.value, defaultStyle)}>
+                {this.mergedOpts.base.value.text.value}
             </div>
         )
     }

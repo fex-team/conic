@@ -9,9 +9,9 @@ module.exports = `
 <meta name="format-detection"
       content="telephone=no">
 
-<title>gaea 移动端构建平台</title>
+<title>gaea 网页构建平台</title>
 
-<body style="background:#4b4b4b;">
+<body style="background:gray;">
       <div id="react-dom"></div>
 </body>
 

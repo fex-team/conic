@@ -3,20 +3,53 @@ const Menu = require('antd/lib/menu')
 const SubMenu = Menu.SubMenu
 const reactRouter = require('react-router')
 const Link = reactRouter.Link
+const classnames = require('classnames')
+const editStore = require('../../../stores/edit-store')
+const ViewType = require('./view-type')
 require('./index.scss')
+require('./animate.scss')
 
 const History = require('./history')
 const Preview = require('./preview')
 const Publish = require('./publish')
+const Edit = require('./edit')
 
 module.exports = React.createClass({
     getInitialState: function () {
-        return {}
+        return {
+            mode: 'edit'
+        }
+    },
+
+    componentDidMount: function () {
+        editStore.addChangeShowModeListener(this.changeMode)
+    },
+
+    componentWillUnmount: function () {
+        editStore.removeChangeShowModeListener(this.changeMode)
+    },
+
+    changeMode: function () {
+        this.setState({
+            mode: editStore.getShowMode()
+        })
     },
 
     render: function () {
+        let sd2Class = classnames({
+            'g-sd2': true,
+            'g-sd2-enter': this.state.mode === 'edit',
+            'g-sd2-leave': this.state.mode === 'preview'
+        })
+
+        let sd2PreviewClass = classnames({
+            'g-sd2': true,
+            'g-sd2-preview-enter': this.state.mode === 'edit',
+            'g-sd2-preview-leave': this.state.mode === 'preview'
+        })
+
         return (
-            <div>
+            <div namespace>
                 <div className="g-bd2 f-cb">
                     <div className="g-mn2">
                         <div className="g-mnc2">
@@ -30,10 +63,16 @@ module.exports = React.createClass({
                             </Menu>
                         </div>
                     </div>
-                    <div className="g-sd2">
+                    <div className={sd2Class}>
                         <Publish/>
                         <Preview/>
                         <History/>
+                    </div>
+                    <div className="g-sd3">
+                        <ViewType/>
+                    </div>
+                    <div className={sd2PreviewClass}>
+                        <Edit/>
                     </div>
                 </div>
             </div>

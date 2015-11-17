@@ -24,7 +24,11 @@ html, body {
 
 body {
   font-size: 12px;
-  background: #444;
+  background: gray;
+}
+
+#react-dom {
+  height: 100%;
 }
 
 // 覆盖antd样式
@@ -380,7 +384,7 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
 }
 
 .ant-tabs-content {
-  height: calc(100% - 34px);
+  height: calc(100% - 29px);
   overflow-y: auto;
 }
 

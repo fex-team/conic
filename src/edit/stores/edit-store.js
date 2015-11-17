@@ -11,7 +11,10 @@ let position
 
 let CHANGE_SHOW_MODE = 'changeShowMode'
 let showMode = 'edit'
-let showModeInfo = {}
+let showModeInfo = null
+
+// 当前unique计数器
+let uniqueKeyIndex = 0
 
 var EditStore = assign({}, EventEmitter.prototype, {
     // 选中组件
@@ -81,6 +84,11 @@ var EditStore = assign({}, EventEmitter.prototype, {
 
     getShowModeInfo: function () {
         return showModeInfo
+    },
+
+    // 获得uniqueKey
+    getUniqueKey: function () {
+        return uniqueKeyIndex++
     }
 })
 

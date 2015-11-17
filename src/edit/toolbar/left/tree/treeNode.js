@@ -6,7 +6,7 @@
 
 let React = require('react')
 let classNames = require('classnames')
-let pureRenderMixin = require('../../../components/mixins/pureRenderMixin')
+let pureRenderMixin = require('../../../components/mixins/pure-render')
 let treeNodeAction = require('../../../actions/tree-node-action')
 let treeNodeStore = require('../../../stores/tree-node-store')
 

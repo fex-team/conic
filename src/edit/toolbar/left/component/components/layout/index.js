@@ -44,7 +44,7 @@ module.exports = React.createClass({
 
     render: function () {
         return (
-            <div>
+            <div namespace>
                 <div className="container">
                     <DragSource type="LayoutBox">
                         <Component icon={iconMap.LayoutBox}>万能矩形</Component>

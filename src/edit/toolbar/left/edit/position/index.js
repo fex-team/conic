@@ -1,7 +1,7 @@
 const React = require('react')
 const InputNumber = require('antd/lib/input-number')
 
-const normalWidth = 180
+const normalWidth = 150
 
 module.exports = React.createClass({
     getInitialState: function () {

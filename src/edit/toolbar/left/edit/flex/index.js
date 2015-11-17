@@ -2,7 +2,7 @@ var React = require('react')
 var Select = require('antd/lib/select')
 var Option = Select.Option
 
-const selectWidth = 180
+const selectWidth = 150
 
 module.exports = React.createClass({
     getInitialState: function () {
