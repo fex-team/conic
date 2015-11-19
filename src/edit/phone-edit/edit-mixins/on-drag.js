@@ -99,6 +99,9 @@ module.exports = {
                 // 销毁组件
                 item.edit.removeSelf(false)
             }
+
+            // 通知drag结束
+            editAction.finishDropComponent(this)
         })
     },
 
@@ -158,6 +161,31 @@ module.exports = {
             if (this.state.selected) {
                 editAction.freshComponent(this)
             }
+        })
+    },
+
+    // 当前拖拽框正在有元素被拖入
+    onDragHover: function () {
+        editAction.setDragHoverComponent(this)
+    },
+
+    // 所有子元素添加变小动画
+    scaleChildsSmaller:function(){
+        // 如果没有父元素，取消操作
+        if (!this.props.parent) return
+
+        this.props.parent.childInstance.childEdits.map((item)=> {
+            item.$dom.removeClass('to-normal').addClass('to-small')
+        })
+    },
+
+    // 所有子元素添加变大动画
+    resetChildsScale: function () {
+        // 如果没有父元素，取消操作
+        if (!this.props.parent) return
+
+        this.props.parent.childInstance.childEdits.map((item)=> {
+            item.$dom.removeClass('to-small').addClass('to-normal')
         })
     }
 }

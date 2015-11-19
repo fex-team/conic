@@ -10,6 +10,8 @@ const CHANGE_LEFT_TAB_EVENT = 'changeLeftTab'
 const CHANGE_SHOW_MODE = 'changeShowMode'
 const CHANGE_HOVER_DOM = 'changeHoverDom'
 const CHANGE_AFTER_UPDATE_COMPONENT = 'changeAfterUpdateComponent'
+const CHANGE_START_DROP_COMPONENT = 'changeStartDropComponent'
+const CHANGE_FINISH_DROP_COMPONENT = 'changeFinishDropComponent'
 
 let currentComponent = null
 let $currentComponentDom
@@ -20,11 +22,21 @@ let position
 let hoverComponent
 let $hoverDom
 
+// 显示模式
 let showMode = 'edit'
 let showModeInfo = null
 
 // 当前unique计数器
 let uniqueKeyIndex = 0
+
+// 当前drag状态hover的组件
+let dragHoverComponent = null
+let dragHoverScaleComponent = null
+let dragHoverInterval = null
+let dragHoverTimeout = null
+
+// 当前drag状态正在拖拽的组件（如果是从组件库里拖拽的，则为null）
+let dragComponent = null
 
 var EditStore = assign({}, EventEmitter.prototype, {
     // 选中组件
@@ -137,6 +149,37 @@ var EditStore = assign({}, EventEmitter.prototype, {
 
     removeAfterUpdateComponentListener: function (callback) {
         this.removeListener(CHANGE_AFTER_UPDATE_COMPONENT, callback)
+    },
+
+    // drag状态hover组件
+    getDragHoverComponent: function () {
+        return dragHoverComponent
+    },
+
+    // 拖拽组件开始
+    emitStartDropComponentChange: function () {
+        this.emit(CHANGE_START_DROP_COMPONENT)
+    },
+
+    addStartDropComponentListener: function (callback) {
+        this.on(CHANGE_START_DROP_COMPONENT, callback)
+    },
+
+    removeStartDropComponentListener: function (callback) {
+        this.removeListener(CHANGE_START_DROP_COMPONENT, callback)
+    },
+
+    // 拖拽组件结束
+    emitFinishDropComponentChange: function () {
+        this.emit(CHANGE_FINISH_DROP_COMPONENT)
+    },
+
+    addFinishDropComponentListener: function (callback) {
+        this.on(CHANGE_FINISH_DROP_COMPONENT, callback)
+    },
+
+    removeFinishDropComponentListener: function (callback) {
+        this.removeListener(CHANGE_FINISH_DROP_COMPONENT, callback)
     }
 })
 
@@ -200,6 +243,55 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
         break
     case 'afterUpdateComponent':
         EditStore.emitAfterUpdateComponent()
+        break
+    case 'setDragHoverComponent':
+        dragHoverComponent = action.component
+
+        // 撤销已存在的setTimeout
+        if (dragHoverTimeout) {
+            clearTimeout(dragHoverTimeout)
+        }
+
+        // 1.5s后子元素缩小
+        if (dragHoverComponent) {
+            dragHoverTimeout = setTimeout(()=> {
+                dragHoverComponent.scaleChildsSmaller()
+                dragHoverScaleComponent = dragHoverComponent
+            }, 1500)
+        }
+
+        // 如果有active的组件
+        // 每0.5秒检测一次是否要还原
+        if (dragHoverScaleComponent) {
+            if (dragHoverInterval) {
+                clearInterval(dragHoverInterval)
+            }
+
+            dragHoverInterval = setInterval(()=> {
+                // 如果父级元素不相等，还原大小
+                if (!dragHoverComponent || dragHoverComponent.props.parent !== dragHoverScaleComponent.props.parent) {
+                    dragHoverScaleComponent.resetChildsScale()
+                    dragHoverScaleComponent = null
+                    clearInterval(dragHoverInterval)
+                    dragHoverInterval = null
+                }
+            }, 500)
+        }
+        break
+    case 'startDropComponent':
+        EditStore.emitStartDropComponentChange()
+        break
+    case 'finishDropComponent':
+        if (dragHoverInterval) {
+            clearInterval(dragHoverInterval)
+        }
+        if (dragHoverTimeout) {
+            clearTimeout(dragHoverTimeout)
+        }
+        if (dragHoverScaleComponent) {
+            dragHoverScaleComponent.resetChildsScale()
+        }
+        EditStore.emitFinishDropComponentChange()
         break
     }
 })

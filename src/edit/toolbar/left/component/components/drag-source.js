@@ -9,8 +9,7 @@ const source = {
     },
 
     beginDrag: function (props) {
-        // 取消hover效果
-        editAction.hoverComponent(null)
+        editAction.startDropComponent()
 
         if (typeof props.onChangeEnableTarget === 'function') {
             props.onChangeEnableTarget(false)

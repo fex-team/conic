@@ -28,12 +28,6 @@ var Dustbin = React.createClass({
         }
     },
 
-    propTypes: {
-        connectDropTarget: React.PropTypes.func.isRequired,
-        isOver: React.PropTypes.bool.isRequired,
-        canDrop: React.PropTypes.bool.isRequired
-    },
-
     onChange: function () {
         const auxiliartInfo = auxiliartStore.get()
         this.setState({
@@ -50,6 +44,12 @@ var Dustbin = React.createClass({
         auxiliartStore.removeChangeListener(this.onChange)
     },
 
+    componentWillReceiveProps: function (nextProps) {
+        if (nextProps.isOver) {
+            nextProps.dragHover()
+        }
+    },
+
     render: function () {
         let isActive = this.props.canDrop && this.props.isOver
 
@@ -62,7 +62,8 @@ var Dustbin = React.createClass({
 
         return this.props.connectDropTarget(
             <div style={{height:'100%'}}>
-                <div style={{height:'100%'}} className={className}>
+                <div style={{height:'100%'}}
+                     className={className}>
                     {this.props.children}
                 </div>
             </div>

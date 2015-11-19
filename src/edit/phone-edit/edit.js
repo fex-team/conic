@@ -229,7 +229,8 @@ const Edit = React.createClass({
             childComponent = (
                 <DragTarget enabledTarget={this.state.enabledTarget}
                             onDrop={this.onDrop}
-                            absolute={this.props.dragSourceAbsolute}>{childComponent}</DragTarget>
+                            absolute={this.props.dragSourceAbsolute}
+                            dragHover={this.onDragHover}>{childComponent}</DragTarget>
             )
         }
 
