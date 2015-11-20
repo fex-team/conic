@@ -4,7 +4,6 @@ var TreeNode = require('./treeNode')
 var editStore = require('../../../stores/edit-store')
 var treeStore = require('../../../stores/tree-store')
 var _ = require('lodash');
-var getTree = require('../../../phone-edit/lib/get-tree')
 var defaultJson = require('../../../phone-edit/default.json')
 var treeAction = require('../../../actions/tree-action')
 
@@ -55,28 +54,22 @@ let ComponentTree = React.createClass({
     },
 
     componentDidMount: function () {
-        treeStore.addMountListener(this.onEditMounted)
-    },
-
-    onEditMounted: function (component) {
-        if (component.props.name === 'Container') {
-            var info = {}
-            var _time = + new Date()
-            getTree(component, info, 0)
-
-            console.log('%c[script] clone tree info:' + (+new Date() - _time) + 'ms', 'color:green');
-
-            info['name'] = '手机壳'
-            info['key'] = 0
-            info['padding'] = 1
-            info['ref'] = (ref) => {
-                info.component.treeNode = ref
-            }
-
-            this.setState({
-                info: info
-            })
+        let container = editStore.getContainer()
+        //
+        var info = {}
+        /getTree(container, info, 0)
+        //
+        info['name'] = '手机壳'
+        info['key'] = 0
+        info['padding'] = 1
+        info['ref'] = (ref) => {
+            info.component.treeNode = ref
         }
+        //
+        this.setState({
+            info: info
+        })
+
     },
 
     expandAll: function () {

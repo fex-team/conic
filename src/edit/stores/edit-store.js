@@ -16,6 +16,9 @@ let $currentComponentDom
 let previousComponent = null
 let position
 
+let editContainer = null
+let $editContainerDom
+
 // 当前hover组件
 let hoverComponent
 let $hoverDom
@@ -46,6 +49,14 @@ var EditStore = assign({}, EventEmitter.prototype, {
 
     get$dom: function () {
         return $currentComponentDom
+    },
+
+    getContainer: function () {
+        return editContainer
+    },
+
+    getContainerDom: function () {
+        return $editContainerDom
     },
 
     // 选择container
@@ -200,6 +211,10 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
         break
     case 'afterUpdateComponent':
         EditStore.emitAfterUpdateComponent()
+        break
+    case 'setContainer':
+        editContainer = action.edit
+        $editContainerDom = $(ReactDOM.findDOMNode(editContainer))
         break
     }
 })

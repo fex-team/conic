@@ -21,6 +21,7 @@ var PhoneEdit = React.createClass({
 
     ref: function (ref) {
         historyAction.setContainerEdit(ref)
+        editAction.setContainer(ref)
     },
 
     componentDidMount: function () {

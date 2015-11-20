@@ -17,6 +17,10 @@ const getTree = require('./lib/get-tree')
 const onDragMixins = require('./edit-mixins/on-drag')
 const getPosition = require('./lib/get-position')
 
+//const _ = {};
+//
+//_ = lodash.extend({}, lodash);
+//
 //_.cloneDeep = function (obj, fn) {
 //    if (!fn) {
 //        return lodash.cloneDeep(obj, function (value, name) {
@@ -57,7 +61,6 @@ const Edit = React.createClass({
 
         setTimeout(() => {
             footerAction.increaseInstanceNumber()
-            //treeAction.editComponentMounted(this)
         })
 
         // 如果默认是选中状态，通知左侧组件更新

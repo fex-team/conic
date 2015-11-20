@@ -35,6 +35,13 @@ module.exports = {
         })
     },
 
+    setContainer: function (edit) {
+        dispatcher.dispatch({
+            type: 'setContainer',
+            edit: edit
+        })
+    },
+
     // 修改组件位置
     changePosition: function (position) {
         dispatcher.dispatch({
