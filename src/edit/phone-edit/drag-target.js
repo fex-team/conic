@@ -1,15 +1,13 @@
-var React = require('react')
-var ItemTypes = require('../toolbar/left/component/components/drag-type')
-var ReactDnD = require('react-dnd')
-var classNames = require('classnames')
-var auxiliartStore = require('../stores/auxiliary-store')
+const React = require('react')
+const ItemTypes = require('../toolbar/left/component/components/drag-type')
+const ReactDnD = require('react-dnd')
+const classNames = require('classnames')
+const auxiliartStore = require('../stores/auxiliary-store')
+const editStore = require('../stores/edit-store')
+const isParentEdit = require('./lib/is-parent-edit')
 
-var boxTarget = {
+const boxTarget = {
     drop: function (props, monitor, component) {
-        if (!props.enabledTarget) {
-            return
-        }
-
         const hasDroppedOnChild = monitor.didDrop()
         if (hasDroppedOnChild) {
             return
@@ -21,10 +19,11 @@ var boxTarget = {
     }
 }
 
-var Dustbin = React.createClass({
+const Dustbin = React.createClass({
     getInitialState: function () {
         return {
-            show: false
+            show: false,
+            canActive: true
         }
     },
 
@@ -48,15 +47,40 @@ var Dustbin = React.createClass({
         if (nextProps.isOver) {
             nextProps.dragHover()
         }
+
+        // 如果正在拖拽的组件是当前组件的父级（无限向上递归），或者是子一级，或者是自身，则不可拖拽
+        let dragComponent = editStore.getDragComponent()
+
+        if (dragComponent && dragComponent === nextProps.edit) {
+            return this.setState({
+                canActive: false
+            })
+        }
+
+        if (dragComponent && dragComponent.props.parent === nextProps.edit) {
+            return this.setState({
+                canActive: false
+            })
+        }
+
+        if (dragComponent && isParentEdit(nextProps.edit, dragComponent)) {
+            return this.setState({
+                canActive: false
+            })
+        }
+
+        return this.setState({
+            canActive: true
+        })
     },
 
     render: function () {
         let isActive = this.props.canDrop && this.props.isOver
 
-        var className = classNames([
+        let className = classNames([
             'drag-target',
-            {'active': isActive && this.props.enabledTarget},
-            {'can-drop': !isActive && ((this.props.canDrop && this.props.enabledTarget) || this.state.show)},
+            {'active': isActive && this.state.canActive},
+            {'can-drop': (this.props.canDrop) || this.state.show},
             {'absolute': this.props.absolute}
         ])
 

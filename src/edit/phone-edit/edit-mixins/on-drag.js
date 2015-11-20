@@ -5,12 +5,21 @@ const getPosition = require('../lib/get-position')
 const getTree = require('../lib/get-tree')
 const $ = require('jquery')
 const _ = require('lodash')
+const isParentEdit = require('../lib/is-parent-edit')
 
 module.exports = {
     // 拖拽某个元素进来
     onDrop: function (item) {
-        // 如果item的edit的parent是自己，则不执行任何操作
+        // 如果正在拖拽的组件是当前组件的父级（无限向上递归），或者是子一级，或者是自身，则不进行任何操作
+        if (item.edit && item.edit === this) {
+            return
+        }
+
         if (item.edit && item.edit.props.parent === this) {
+            return
+        }
+
+        if (item.edit && isParentEdit(this, item.edit)) {
             return
         }
 
@@ -170,7 +179,7 @@ module.exports = {
     },
 
     // 所有子元素添加变小动画
-    scaleChildsSmaller:function(){
+    scaleChildsSmaller: function () {
         // 如果没有父元素，取消操作
         if (!this.props.parent) return
 

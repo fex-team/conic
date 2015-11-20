@@ -22,7 +22,6 @@ const Edit = React.createClass({
 
     getInitialState: function () {
         return {
-            enabledTarget: true,
             // 自定义属性
             customOpts: _.cloneDeep(this.props.opts),
             // 子元素属性数组
@@ -134,14 +133,13 @@ const Edit = React.createClass({
         })
     },
 
+    // 开始被拖拽
     // 修改是否可以作为拖拽目标（当父级dragsource被拖动时，禁止子dragtarget生效）
     onChangeEnableTarget: function (isOk) {
+        editAction.startDropComponent(this)
+
         // 如果组件被删除，取消更新
         if (!this.isMounted())return
-
-        this.setState({
-            enabledTarget: isOk
-        })
     },
 
     // 添加某个子元素（属性被定义好）
@@ -214,6 +212,17 @@ const Edit = React.createClass({
 
         let childComponent = React.cloneElement(this.props.children, newChildProps)
 
+        if (this.props.dragTarget) {
+            childComponent = (
+                <DragTarget onDrop={this.onDrop}
+                            absolute={this.props.dragSourceAbsolute}
+                            edit={this}
+                            dragHover={this.onDragHover}>
+                    {childComponent}
+                </DragTarget>
+            )
+        }
+
         if (this.props.dragSource && !this.props.dragSourceAbsolute) {
             childComponent = (
                 <DragSource onChangeEnableTarget={this.onChangeEnableTarget}
@@ -222,15 +231,6 @@ const Edit = React.createClass({
                             edit={this}>
                     {childComponent}
                 </DragSource>
-            )
-        }
-
-        if (this.props.dragTarget) {
-            childComponent = (
-                <DragTarget enabledTarget={this.state.enabledTarget}
-                            onDrop={this.onDrop}
-                            absolute={this.props.dragSourceAbsolute}
-                            dragHover={this.onDragHover}>{childComponent}</DragTarget>
             )
         }
 

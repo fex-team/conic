@@ -84,9 +84,10 @@ module.exports = {
         })
     },
 
-    startDropComponent: function () {
+    startDropComponent: function (component) {
         dispatcher.dispatch({
-            type: 'startDropComponent'
+            type: 'startDropComponent',
+            component: component
         })
     },
 

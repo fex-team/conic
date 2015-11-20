@@ -9,10 +9,11 @@ const source = {
     },
 
     beginDrag: function (props) {
-        editAction.startDropComponent()
-
         if (typeof props.onChangeEnableTarget === 'function') {
             props.onChangeEnableTarget(false)
+        } else {
+            // 触发dispatcher，但当前组件是编辑组件中拖拽的
+            editAction.startDropComponent(null)
         }
 
         return {
