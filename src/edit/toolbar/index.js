@@ -1,6 +1,7 @@
 const React = require('react')
 const Left = require('./left')
 const Top = require('./top')
+const Right = require('./right')
 const Footer = require('./footer')
 const editAction = require('../actions/edit-action')
 const editStore = require('../stores/edit-store')
@@ -66,6 +67,12 @@ let Container = React.createClass({
             'g-sd-leave': this.state.mode === 'preview'
         })
 
+        let rdClass = classnames({
+            'g-rd': true,
+            'g-rd-enter': this.state.mode === 'edit',
+            'g-rd-leave': this.state.mode === 'preview'
+        })
+
         let ftClass = classnames({
             'g-ft': true,
             'g-ft-enter': this.state.mode === 'edit',
@@ -93,6 +100,10 @@ let Container = React.createClass({
 
                     <div className={sdClass}>
                         <Left/>
+                    </div>
+
+                    <div className={rdClass}>
+                        <Right />
                     </div>
 
                     <div className={mnClass}

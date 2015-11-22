@@ -7,11 +7,10 @@ const Badge = require('antd/lib/badge')
 
 const Edit = require('./edit')
 const Component = require('./component')
-const Tree = require('./tree')
 const Auxiliary = require('./auxiliary')
 const History = require('./history')
 
-const Right = React.createClass({
+const Left = React.createClass({
     getInitialState: function () {
         return {
             activeTab: 'edit'
@@ -44,10 +43,6 @@ const Right = React.createClass({
                              key="component">
                         <Component/>
                     </TabPane>
-                    <TabPane tab={<Tooltip placement="bottom" title="项目树状结构"><i className="fa fa-tree"></i></Tooltip>}
-                             key="1">
-                        <Tree />
-                    </TabPane>
                     <TabPane tab={
                         <Tooltip placement="bottom" title="历史纪录">
                             <Badge count={this.state.historyCount}>
@@ -69,4 +64,4 @@ const Right = React.createClass({
 })
 
 
-module.exports = Right
+module.exports = Left
