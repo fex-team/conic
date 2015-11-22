@@ -7,6 +7,9 @@ const classnames = require('classnames')
 const editStore = require('../../../stores/edit-store')
 const viewAction = require('../../../actions/view-action')
 const ViewType = require('./view-type')
+const copyPasteAction = require('../../../actions/copy-paste-action')
+const copyPasteStore = require('../../../stores/copy-paste-store')
+const $ = require('jquery')
 require('./index.scss')
 require('./animate.scss')
 
@@ -24,9 +27,39 @@ module.exports = React.createClass({
 
     componentDidMount: function () {
         editStore.addChangeShowModeListener(this.changeMode)
+
+        // 保存按键
+        $(document).bind('keydown', (e)=> {
+            if ((e.metaKey || e.ctrlKey) && e.keyCode == 83) { // ctrl+s or command+s
+
+                e.preventDefault()
+                return false
+            }
+        })
+
+        // 复制按键
+        $(document).bind('keydown', (e)=> {
+            if ((e.metaKey || e.ctrlKey) && e.keyCode == 67) { // ctrl+c or command+c
+                let $focus = $(':focus')
+                if (!$focus.is('input') && !$focus.is('textarea')) {
+                    copyPasteAction.copy()
+                }
+            }
+        })
+
+        // 粘贴按键
+        $(document).bind('keydown', (e)=> {
+            if ((e.metaKey || e.ctrlKey) && e.keyCode == 86) { // ctrl+v or command+v
+                let $focus = $(':focus')
+                if (!$focus.is('input') && !$focus.is('textarea')) {
+                    copyPasteAction.paste()
+                }
+            }
+        })
     },
 
     componentWillUnmount: function () {
+        $(document).unbind('keydown')
         editStore.removeChangeShowModeListener(this.changeMode)
     },
 
@@ -43,6 +76,16 @@ module.exports = React.createClass({
         switch (infoArray[0]) {
         case 'view':
             viewAction.openView(infoArray[1])
+            break
+        case 'edit':
+            switch (infoArray[1]) {
+            case 'copy':
+                copyPasteAction.copy()
+                break
+            case 'paste':
+                copyPasteAction.paste()
+                break
+            }
             break
         }
     },
@@ -75,6 +118,10 @@ module.exports = React.createClass({
                                 </SubMenu>
                                 <SubMenu title={<span>视图</span>}>
                                     <Menu.Item key="view:layoutTemplate">布局模板</Menu.Item>
+                                </SubMenu>
+                                <SubMenu title={<span>编辑</span>}>
+                                    <Menu.Item key="edit:copy">复制</Menu.Item>
+                                    <Menu.Item key="edit:paste">粘贴</Menu.Item>
                                 </SubMenu>
                             </Menu>
                         </div>

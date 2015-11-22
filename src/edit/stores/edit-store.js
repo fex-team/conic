@@ -3,6 +3,7 @@ const $ = require('jquery')
 const dispatcher = require('../dispatcher')
 const EventEmitter = require('events').EventEmitter
 const assign = require('object-assign')
+const editAction = require('../actions/edit-action')
 
 const CHANGE_EVENT = 'changeComponent'
 const CHANGE_SELECT_CONTAINER_EVENT = 'changeSelectContainer'
@@ -15,6 +16,7 @@ const CHANGE_FINISH_DROP_COMPONENT = 'changeFinishDropComponent'
 const CHANGE_START_DROP_ABSOLUTE_COMPONENT = 'changeStartDropAbsoluteComponent'
 const CHANGE_FINISH_DROP_ABSOLUTE_COMPONENT = 'changeFinishDropAbsoluteComponent'
 const REMOVE_CURRENT = 'removeCurrent'
+const UPDATE_SELECTOR = 'updateSelector'
 
 const isParentEdit = require('../phone-edit/lib/is-parent-edit')
 
@@ -278,13 +280,25 @@ var EditStore = assign({}, EventEmitter.prototype, {
 
     removeRemoveCurrentListener: function (callback) {
         this.removeListener(REMOVE_CURRENT, callback)
+    },
+
+    // 更新selector
+    emitUpdateSelector: function () {
+        this.emit(UPDATE_SELECTOR)
+    },
+
+    addUpdateSelectorListener: function (callback) {
+        this.on(UPDATE_SELECTOR, callback)
+    },
+
+    removeUpdateSelectorListener: function (callback) {
+        this.removeListener(UPDATE_SELECTOR, callback)
     }
 })
 
 EditStore.dispatchToken = dispatcher.register(function (action) {
-    // 选择编辑组件
     switch (action.type) {
-    case 'selectComponent':
+    case 'selectComponent': // 选择编辑组件
         // 如果是同一个组件，不做处理
         if (action.component === currentComponent) {
             return
@@ -334,6 +348,13 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
         showMode = action.mode
         showModeInfo = action.info
         EditStore.emitChangeShowMode()
+
+        // 如果是编辑模式，刷新selector
+        if (showMode === 'edit') {
+            setTimeout(()=> {
+                editAction.updateSelector()
+            })
+        }
         break
     case 'hoverComponent':
         hoverComponent = action.component
@@ -369,6 +390,9 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
         break
     case 'endDragAbsoluteComponent':
         EditStore.emitFinishDropAbsoluteComponentChange()
+        break
+    case 'updateSelector':
+        EditStore.emitUpdateSelector()
         break
     }
 })

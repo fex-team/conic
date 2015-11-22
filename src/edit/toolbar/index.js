@@ -116,8 +116,8 @@ let Container = React.createClass({
 
                         <div className="phone-out">
                             <div className="phone">
-                                <PhoneEdit editKey={this.state.editKey}
-                                           previewKey={this.state.previewKey}
+                                <PhoneEdit editKey={'edit-'+this.state.editKey}
+                                           previewKey={'preview-'+this.state.previewKey}
                                            tree={this.state.tree}/>
                             </div>
                         </div>

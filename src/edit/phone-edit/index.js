@@ -7,6 +7,8 @@ const historyAction = require('../actions/history-action')
 const editAction = require('../actions/edit-action')
 const editStore = require('../stores/edit-store')
 const settingStore = require('../stores/setting-store')
+const copyPasteAction = require('../actions/copy-paste-action')
+const $ = require('jquery')
 require('./index.scss')
 
 const PhoneSelector = require('./selector')

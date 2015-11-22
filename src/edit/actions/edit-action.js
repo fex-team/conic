@@ -52,14 +52,6 @@ module.exports = {
         })
     },
 
-    // 修改显示分辨率类型
-    changeViewType: function (viewType) {
-        dispatcher.dispatch({
-            type: 'changeViewType',
-            viewType: viewType
-        })
-    },
-
     // hover
     hoverComponent: function (component, $dom) {
         dispatcher.dispatch({
@@ -105,10 +97,16 @@ module.exports = {
         })
     },
 
-    endDragAbsoluteComponent:function(component){
+    endDragAbsoluteComponent: function (component) {
         dispatcher.dispatch({
             type: 'endDragAbsoluteComponent',
             component: component
+        })
+    },
+
+    updateSelector: function () {
+        dispatcher.dispatch({
+            type: 'updateSelector'
         })
     }
 }

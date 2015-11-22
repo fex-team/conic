@@ -1,6 +1,7 @@
 const dispatcher = require('../dispatcher')
 const EventEmitter = require('events').EventEmitter
 const assign = require('object-assign')
+const editAction = require('../actions/edit-action')
 
 const CHANGE_VIEW_TYPE = 'viewType'
 const CHANGE_TREE = 'changeTree'
@@ -54,6 +55,11 @@ SettingStore.dispatchToken = dispatcher.register(function (action) {
     case 'changeViewType':
         setting.viewType = action.viewType
         SettingStore.emitViewType()
+
+        // 完毕后，更新selector样式
+        setTimeout(()=> {
+            editAction.updateSelector()
+        })
         break
 
     case 'changeTree':

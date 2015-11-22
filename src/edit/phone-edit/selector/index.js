@@ -32,6 +32,7 @@ var Selector = React.createClass({
         editStore.addStartDropAbsoluteComponentListener(this.onDragStart)
         editStore.addFinishDropAbsoluteComponentListener(this.onDragEnd)
         editStore.addRemoveCurrentListener(this.onRemoveComponent)
+        editStore.addUpdateSelectorListener(this.onSelectorChange)
     },
 
     componentWillUnmount: function () {
@@ -42,6 +43,7 @@ var Selector = React.createClass({
         editStore.removeStartDropAbsoluteComponentListener(this.onDragStart)
         editStore.removeFinishDropAbsoluteComponentListener(this.onDragEnd)
         editStore.removeRemoveCurrentListener(this.onRemoveComponent)
+        editStore.removeUpdateSelectorListener(this.onSelectorChange)
     },
 
     // 拖拽开始
