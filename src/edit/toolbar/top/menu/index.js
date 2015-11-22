@@ -5,6 +5,7 @@ const reactRouter = require('react-router')
 const Link = reactRouter.Link
 const classnames = require('classnames')
 const editStore = require('../../../stores/edit-store')
+const viewAction = require('../../../actions/view-action')
 const ViewType = require('./view-type')
 require('./index.scss')
 require('./animate.scss')
@@ -35,6 +36,17 @@ module.exports = React.createClass({
         })
     },
 
+    handleClick: function (e) {
+        if (e.key.indexOf(':') === -1)return
+        let infoArray = e.key.split(':')
+
+        switch (infoArray[0]) {
+        case 'view':
+            viewAction.openView(infoArray[1])
+            break
+        }
+    },
+
     render: function () {
         let sd2Class = classnames({
             'g-sd2': true,
@@ -53,12 +65,16 @@ module.exports = React.createClass({
                 <div className="g-bd2 f-cb">
                     <div className="g-mn2">
                         <div className="g-mnc2">
-                            <Menu mode="horizontal">
+                            <Menu mode="horizontal"
+                                  onClick={this.handleClick}>
                                 <Menu.Item>
                                     <Link to="/">Gaea平台</Link>
                                 </Menu.Item>
                                 <SubMenu title={<span>项目</span>}>
-                                    <Menu.Item key="setting:1">设置</Menu.Item>
+                                    <Menu.Item key="setting">设置</Menu.Item>
+                                </SubMenu>
+                                <SubMenu title={<span>视图</span>}>
+                                    <Menu.Item key="view:layoutTemplate">布局模板</Menu.Item>
                                 </SubMenu>
                             </Menu>
                         </div>

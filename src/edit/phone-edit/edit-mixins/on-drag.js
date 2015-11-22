@@ -148,8 +148,20 @@ module.exports = {
         })
     },
 
+    // 绝对定位组件开始拖拽
+    onAbsoluteDragStart:function(){
+        editAction.startDragAbsoluteComponent(this)
+    },
+
+    // 绝对定位组件结束拖拽
+    onAbsoluteDragEnd:function(){
+        editAction.endDragAbsoluteComponent(this)
+    },
+
     // 绝对定位拖拽元素属性变化
     onDragSourceAbsoluteChange: function (opts) {
+        editAction.startDropComponent(this)
+
         // 与customOpts作merge
         var mergeOpts = $.extend(true, _.cloneDeep(this.state.customOpts), opts)
 

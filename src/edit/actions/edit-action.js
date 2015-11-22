@@ -96,5 +96,19 @@ module.exports = {
             type: 'finishDropComponent',
             containerComponent: containerComponent
         })
+    },
+
+    startDragAbsoluteComponent: function (component) {
+        dispatcher.dispatch({
+            type: 'startDragAbsoluteComponent',
+            component: component
+        })
+    },
+
+    endDragAbsoluteComponent:function(component){
+        dispatcher.dispatch({
+            type: 'endDragAbsoluteComponent',
+            component: component
+        })
     }
 }

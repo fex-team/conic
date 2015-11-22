@@ -13,6 +13,7 @@ TODO
 - 删除时hover/selector位置没有更新
 - 整个页面滚动条消失时，hover/selector位置没有更新
 - 用editorStore的container取代historyStore
+- 颜色可选继承
 
 ## 页面
 - 多页面路由
@@ -86,3 +87,9 @@ DONE 1.1.1
 - 拖拽元素不能拖动到自己、自己的父级、自己的任意子元素
 - absolute组件移动过程中保持边框，并隐藏原来组件
 - 拖拽缩小时，如果hover组件是当前拖拽的组件，不应该触发缩放
+
+DONE 1.1.2
+===================
+
+## 页面
+- 删除组件时selector同时被隐藏

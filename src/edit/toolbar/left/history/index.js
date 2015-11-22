@@ -17,11 +17,13 @@ const History = React.createClass({
     componentDidMount: function () {
         historyStore.addChangeListener(this.onHistoryChange)
         historyStore.addReverseListener(this.onHistoryChange)
+        historyStore.addClearHistoryListener(this.onHistoryChange)
     },
 
     componentWillUnmount: function () {
         historyStore.removeChangeListener(this.onHistoryChange)
         historyStore.removeReverseListener(this.onHistoryChange)
+        historyStore.removeClearHistoryListener(this.onHistoryChange)
     },
 
     onHistoryChange: function () {

@@ -67,8 +67,23 @@ body {
   color: $font-color;
 }
 
-.ant-menu-horizontal > .ant-menu-item > a:hover, .ant-menu-horizontal > .ant-menu-submenu > .ant-menu-submenu-title > a:hover {
-  color: $font-active-color;
+.ant-menu-inline > .ant-menu-item-active:hover,
+.ant-menu-item-active,
+.ant-menu-submenu-active,
+.ant-menu-submenu-inline.ant-menu-submenu-active > .ant-menu-submenu-title:hover {
+  background-color: $bg-active-color !important;
+  color: $font-active-color !important;
+}
+
+.ant-menu-item-selected {
+  background-color: $bg-active-color !important;
+  color: $font-active-color !important;
+}
+
+.ant-select-dropdown-menu-item:hover,
+.ant-select-dropdown-menu-item-active {
+  background-color: $bg-active-color !important;
+  color: $font-active-color !important;
 }
 
 // checkbox
@@ -216,16 +231,26 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
 }
 
 // 按钮
-.ant-btn-default, .ant-btn-danger {
+.ant-btn-default, .ant-btn-danger, .ant-btn {
   background: #444;
   color: #ccc;
   border-color: #222;
+}
+
+.ant-btn:hover {
+  color: $font-active-color;
+  background-color: $bg-active-color;
+  border-color: $border-color;
 }
 
 .ant-btn-danger:hover {
   color: #F75757;
   background-color: #353535;
   border-color: #232323;
+}
+
+.ant-modal-close-x {
+  text-shadow: 0 1px 0 #111;
 }
 
 // Collapse 折叠面板
@@ -396,6 +421,13 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
   padding: 0 5px;
   top: -8px;
   box-shadow: 0 0 0 1px $border-color;
+}
+
+// 模态框
+.ant-modal-content, .ant-modal-footer, .ant-modal-header {
+  background-color: $bg-color;
+  color: $font-color;
+  border-color: $border-color;
 }
 
 // 邪能火焰字体

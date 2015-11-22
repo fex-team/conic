@@ -10,7 +10,7 @@ const source = {
 
     beginDrag: function (props) {
         if (typeof props.onChangeEnableTarget === 'function') {
-            props.onChangeEnableTarget(false)
+            props.onChangeEnableTarget()
         } else {
             // 触发dispatcher，但当前组件是编辑组件中拖拽的
             editAction.startDropComponent(null)
