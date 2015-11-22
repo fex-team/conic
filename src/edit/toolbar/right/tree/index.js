@@ -1,28 +1,15 @@
-var React = require('react')
-var EnterAnimation = require('antd/lib/enter-animation')
-var TreeNode = require('./treeNode')
-var editStore = require('../../../stores/edit-store')
-var treeStore = require('../../../stores/tree-store')
-var _ = require('lodash');
-var defaultJson = require('../../../phone-edit/default.json')
-var treeAction = require('../../../actions/tree-action')
+const React = require('react')
+const EnterAnimation = require('antd/lib/enter-animation')
+const TreeNode = require('./treeNode')
+const editStore = require('../../../stores/edit-store')
+const treeStore = require('../../../stores/tree-store')
+const _ = require('lodash');
+const defaultJson = require('../../../phone-edit/default.json')
+const treeAction = require('../../../actions/tree-action')
+const getTree = require('./get-tree')
+const treeNodeStore = require('../../../stores/tree-node-store')
 
 require('./index.scss');
-
-// 根据edit生成树状json配置
-function getTree(edit, info, index) {
-    info.childs = _.cloneDeep(edit.state.childs, function (value, name) {
-        if (name === 'childs') {
-            return value;
-        }
-    })
-    info.component = edit
-    info.index = index
-    info.uniqueKey = edit.props.uniqueKey
-    edit.childInstance.getChildsEdit && edit.childInstance.getChildsEdit().map((item, index)=> {
-        getTree(item, info.childs[index], index)
-    })
-}
 
 const animation = {
     enter: {
@@ -30,8 +17,19 @@ const animation = {
     }
 };
 
+function updateInfo(childInfo, info) {
+    if (info.component === childInfo.component.props.parent) {
+        info.childs.push(childInfo)
+    }
+    else {
+        info.childs.map((item) => {
+            updateInfo(childInfo, item)
+        })
+    }
+}
+
 function expand (component, info) {
-    var treeNode = component.treeNode
+    let treeNode = component.treeNode
     treeNode.expand()
     component.childInstance.getChildsEdit && component.childInstance.getChildsEdit().map((item, index)=> {
         expand(item, info.childs[index])
@@ -39,7 +37,7 @@ function expand (component, info) {
 }
 
 function collapse (component, info) {
-    var treeNode = component.treeNode
+    let treeNode = component.treeNode
     treeNode.collapse()
     component.childInstance.getChildsEdit && component.childInstance.getChildsEdit().map((item, index)=> {
         collapse(item, info.childs[index])
@@ -57,7 +55,7 @@ let ComponentTree = React.createClass({
         setTimeout(() => {
             let container = editStore.getContainer()
 
-            var info = {}
+            let info = {}
             getTree(container, info, 0)
 
             info['name'] = '手机壳'
@@ -71,6 +69,15 @@ let ComponentTree = React.createClass({
                 info: info
             })
         });
+
+        treeNodeStore.addAddListener(this.addTreeNode)
+    },
+
+    addTreeNode: function (item, component, childInfo) {
+        setTimeout(() => {
+            var info = this.state.info
+            updateInfo(childInfo, info)
+        })
     },
 
     expandAll: function () {

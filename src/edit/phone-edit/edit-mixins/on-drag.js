@@ -33,8 +33,6 @@ module.exports = {
             selected: item.edit ? item.edit.state.selected : false
         }
 
-        console.time('drop')
-
         // 如果这个组件是新拖拽的万能矩形，不是最外层，则宽度设定为父级宽度的一半
         if (!item.edit && item.type === 'LayoutBox' && this.props.children.props.name !== 'Container') {
             // 获取拖拽父级的布局方式
@@ -54,6 +52,7 @@ module.exports = {
                 }
             })
         }
+
         // 如果有edit，是从模拟器中拖拽的元素，保留原有属性
         if (item.edit) {
             childInfo.opts = item.edit.state.customOpts
@@ -71,9 +70,7 @@ module.exports = {
             getPosition(this, afterPositionArray)
             afterPositionArray.unshift(childInfo.uniqueKey)
             let info = {}
-            console.time('drop getTree')
             getTree(item.edit, info)
-            console.timeEnd('drop getTree')
             setTimeout(()=> {
                 historyAction.addHistory({
                     position: positionArray,
@@ -86,7 +83,7 @@ module.exports = {
                     type: 'move',
                     operateName: '移动组件 ' + childInfo.name
                 })
-                console.timeEnd('drop')
+
                 treeNodeAction.addTreeNode(this, item, childInfo)
             })
         } else { // 否则为新增组件
@@ -102,14 +99,12 @@ module.exports = {
                     type: 'add',
                     operateName: '新增组件 ' + childInfo.name
                 })
-            })
 
-            console.timeEnd('drop')
-            treeNodeAction.addTreeNode(this, item, childInfo)
+                treeNodeAction.addTreeNode(this, item, childInfo)
+            })
         }
 
         newChilds.push(childInfo)
-
 
         this.setState({
             childs: newChilds
@@ -126,7 +121,11 @@ module.exports = {
 
     // 拖拽绝对定位组件进来，由布局->自由矩形直接调用
     dropAbsolute: function (item) {
-        let newChilds = _.cloneDeep(this.state.childs)
+        let newChilds = _.cloneDeep(this.state.childs, function (value, name) {
+            if (name === 'childs') {
+                return value
+            }
+        })
 
         // 添加子元素的属性
         let childInfo = {
@@ -149,6 +148,8 @@ module.exports = {
                 type: 'add',
                 operateName: '新增组件 ' + childInfo.name
             })
+
+            treeNodeAction.addTreeNode(this, item, childInfo)
         })
 
         newChilds.push(childInfo)

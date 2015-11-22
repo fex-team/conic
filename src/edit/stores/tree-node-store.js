@@ -16,6 +16,8 @@ let previousTreeNode = null
 
 let _ = require('lodash')
 
+let getTree = require('../toolbar/right/tree/get-tree')
+
 let TreeNodeStore = assign({}, EventEmitter.prototype, {
     emitChange: function (e) {
         this.emit(CHANGE_EVENT, e)
@@ -29,8 +31,8 @@ let TreeNodeStore = assign({}, EventEmitter.prototype, {
         this.removeListener(CHANGE_EVENT, callback)
     },
 
-    emitAddChild: function (e) {
-        this.emit(ADD_CHILD, e)
+    emitAddChild: function (item, component, childInfo) {
+        this.emit(ADD_CHILD, item, component, childInfo)
     },
 
     addAddListener: function (callback) {
@@ -67,11 +69,12 @@ TreeNodeStore.dispatchToken = dispatcher.register((action) => {
         case 'addTreeNode':
             var item = action.item
             var component = action.component
-            var childInfo = action.childInfo
+            var childInfo = _.cloneDeep(action.childInfo)
 
-            console.log(item, component, childInfo)
             // 删除被拽出元素的树节点
-            item.edit.treeNode.removeSelf();
+            if (item.edit) {
+                item.edit.treeNode.removeSelf();
+            }
 
             var uniqueKey = childInfo.uniqueKey
 
@@ -81,31 +84,11 @@ TreeNodeStore.dispatchToken = dispatcher.register((action) => {
 
             childInfo.component = dragedEdit
 
+            getTree(dragedEdit, childInfo, 0)
+
             component.treeNode.addChild(childInfo)
 
-            TreeNodeStore.emitAddChild(action.component, action.item, action.childInfo)
-            //var childComponent = component.childInstance.childEdits[childInfo.index]
-            //
-            //// 新拖拽的节点
-            //if (item.edit) {
-            //    var oldTreeNode = item.edit.treeNode
-            //
-            //    oldTreeNode.removeSelf()
-            //}
-            //
-            //childInfo.component = childComponent
-            //
-            //component.treeNode.addChild(childInfo)
-            //
-            //TreeNodeStore.emitAddChild(action.component, action.item, action.childInfo)
-            break
-
-        case 'removeSelf':
-            var component = action.component
-
-            console.log(component)
-
-
+            TreeNodeStore.emitAddChild(action.component, action.item, childInfo)
             break
     }
 })
