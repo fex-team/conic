@@ -27,20 +27,53 @@ var Selector = React.createClass({
     componentDidMount: function () {
         editStore.addChangeListener(this.onSelectorChange)
         editStore.addAfterUpdateComponentListener(this.onSelectorChange)
+        editStore.addStartDropComponentListener(this.onDragStart)
+        editStore.addFinishDropComponentListener(this.onDragEnd)
     },
 
     componentWillUnmount: function () {
         editStore.removeChangeListener(this.onSelectorChange)
         editStore.removeAfterUpdateComponentListener(this.onSelectorChange)
+        editStore.removeStartDropComponentListener(this.onDragStart)
+        editStore.removeFinishDropComponentListener(this.onDragEnd)
+    },
+
+    // 拖拽开始
+    onDragStart: function () {
+        // 隐藏selector组件
+        this.setState({
+            style: $.extend(true, defaultStyle, {
+                display: 'none'
+            })
+        })
+    },
+
+    // 拖拽结束
+    onDragEnd: function () {
+        // 显示selector组件
+        setTimeout(()=> {
+            this.setState({
+                style: $.extend(true, defaultStyle, {
+                    display: 'block'
+                })
+            })
+        }, 400)
     },
 
     onSelectorChange: function () {
         let $componentDom = editStore.get$dom()
         let newStyle = {
-            left: $componentDom.offset().left - historyStore.get$ContainerEditDom().offset().left - 1,
-            top: $componentDom.offset().top - historyStore.get$ContainerEditDom().offset().top - 1,
-            width: $componentDom.width() + 2,
-            height: $componentDom.height() + 2
+            left: $componentDom.offset().left - historyStore.get$ContainerEditDom().offset().left,
+            top: $componentDom.offset().top - historyStore.get$ContainerEditDom().offset().top,
+            width: $componentDom.width(),
+            height: $componentDom.height(),
+            display: 'block'
+        }
+
+        if (editStore.get().props.children.props.name === 'LayoutBoxAbsolute') {
+            newStyle.borderColor = '#A900FF'
+        } else {
+            newStyle.borderColor = '#2DB7F5'
         }
 
         this.setState({

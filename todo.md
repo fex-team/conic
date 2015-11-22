@@ -10,11 +10,16 @@ TODO
 - 右侧增加可选模板
 - 预览和hover/selector时有Mutating `style` is deprecated报错
 - selector增加宽高拖拽按钮
+- 删除时hover/selector位置没有更新
+- 整个页面滚动条消失时，hover/selector位置没有更新
+- 用editorStore的container取代historyStore
 
 ## 页面
 - 多页面路由
 - 选择组件后，复用选择框，类似office平滑移动
-- 拖拽后动画缩小，hover 2秒后所有同级元素缩小
+- 触发缩小bug优化
+- 页面中组件拖拽缩小，会出现无法恢复的bug
+- 缩放拖拽结束后selector位置优化
 
 ## 后端
 - 支持配置存储
@@ -75,3 +80,9 @@ DONE 1.1.1
 ## 编辑器
 - 精简edit文件大小，拆分模块
 - selector跟上修改的视觉效果
+
+## 页面
+- 拖拽后动画缩小，hover 1秒后所有同级元素缩小
+- 拖拽元素不能拖动到自己、自己的父级、自己的任意子元素
+- absolute组件移动过程中保持边框，并隐藏原来组件
+- 拖拽缩小时，如果hover组件是当前拖拽的组件，不应该触发缩放

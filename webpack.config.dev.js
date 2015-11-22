@@ -32,7 +32,7 @@ var config = {
             {
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                loaders: ['jsx', 'react-hot', 'babel', 'path-class-loader']
+                loaders: ['jsx', 'react-hot', 'babel', 'html-path-loader']
             }, {
                 test: /\.(scss|css)/,
                 exclude: /node_modules/,

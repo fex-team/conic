@@ -9,11 +9,11 @@ const source = {
     },
 
     beginDrag: function (props) {
-        // 取消hover效果
-        editAction.hoverComponent(null)
-
         if (typeof props.onChangeEnableTarget === 'function') {
             props.onChangeEnableTarget(false)
+        } else {
+            // 触发dispatcher，但当前组件是编辑组件中拖拽的
+            editAction.startDropComponent(null)
         }
 
         return {

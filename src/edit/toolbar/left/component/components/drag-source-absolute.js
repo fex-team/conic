@@ -5,8 +5,7 @@ var editAction = require('../../../../actions/edit-action')
 
 const source = {
     beginDrag: function (props) {
-        // 取消hover效果
-        editAction.hoverComponent(null)
+        editAction.startDropComponent()
 
         return {}
     },

@@ -15,26 +15,6 @@ const defaultStyle = {
     position: 'relative'
 }
 
-const editStyle = {}
-
-function handleViewTypeChange(mode) {
-    switch (settingStore.getViewType()) {
-    case 'pc':
-        switch (mode) {
-        case 'edit':
-            editStyle.width = $(window).width() - 250
-            break
-        case 'preview':
-            editStyle.width = $(window).width()
-            break
-        }
-        break
-    case 'mobile':
-        editStyle.width = 500
-        break
-    }
-}
-
 let Container = React.createClass({
     mixins: [layoutMixin, pureRenderMixin, mergeOptsMixin],
 
@@ -69,39 +49,12 @@ let Container = React.createClass({
         }
     },
 
-    componentWillMount: function () {
-        switch (this.props.mode) {
-        case 'edit':
-            handleViewTypeChange(this.props.mode)
-            break
-        case 'preview':
-            handleViewTypeChange(this.props.mode)
-            break
-        }
-    },
-
     componentDidMount: function () {
-        switch (this.props.mode) {
-        case 'edit':
-            editStore.addSelectContainerListener(this.onSelectContainer)
-            settingStore.addViewTypeListener(this.viewTypeChange)
-            break
-        case 'preview':
-            settingStore.addViewTypeListener(this.viewTypeChange)
-            break
-        }
+        editStore.addSelectContainerListener(this.onSelectContainer)
     },
 
     componentWillUnmount: function () {
-        switch (this.props.mode) {
-        case 'edit':
-            editStore.removeSelectContainerListener(this.onSelectContainer)
-            settingStore.removeViewTypeListener(this.viewTypeChange)
-            break
-        case 'preview':
-            settingStore.removeViewTypeListener(this.viewTypeChange)
-            break
-        }
+        editStore.removeSelectContainerListener(this.onSelectContainer)
     },
 
     onSelectContainer: function () {
@@ -109,11 +62,6 @@ let Container = React.createClass({
         setTimeout(()=> {
             this.props.edit.onClick()
         })
-    },
-
-    viewTypeChange: function () {
-        handleViewTypeChange(this.props.mode)
-        this.forceUpdate()
     },
 
     getLayoutBox: function () {
@@ -127,7 +75,7 @@ let Container = React.createClass({
     render: function () {
         return (
             <div namespace
-                 style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.style.value,defaultStyle,editStyle)}>
+                 style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.style.value,defaultStyle)}>
                 {this.getChildrens()}
             </div>
         )

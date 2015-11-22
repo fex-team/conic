@@ -55,17 +55,17 @@ let ComponentTree = React.createClass({
 
     componentDidMount: function () {
         let container = editStore.getContainer()
-        //
+
         var info = {}
-        /getTree(container, info, 0)
-        //
+        getTree(container, info, 0)
+
         info['name'] = '手机壳'
         info['key'] = 0
         info['padding'] = 1
         info['ref'] = (ref) => {
             info.component.treeNode = ref
         }
-        //
+
         this.setState({
             info: info
         })

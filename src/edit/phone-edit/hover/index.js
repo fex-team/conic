@@ -26,10 +26,36 @@ var Selector = React.createClass({
 
     componentDidMount: function () {
         editStore.addChangeHoverDomListener(this.onHoverDomChange)
+        editStore.addStartDropComponentListener(this.onDragStart)
+        editStore.addFinishDropComponentListener(this.onDragEnd)
     },
 
     componentWillUnmount: function () {
         editStore.removeChangeHoverDomListener(this.onHoverDomChange)
+        editStore.removeStartDropComponentListener(this.onDragStart)
+        editStore.removeFinishDropComponentListener(this.onDragEnd)
+    },
+
+    // 拖拽开始
+    onDragStart: function () {
+        // 隐藏selector组件
+        this.setState({
+            style: $.extend(true, defaultStyle, {
+                display: 'none'
+            })
+        })
+    },
+
+    // 拖拽结束
+    onDragEnd: function () {
+        // 显示selector组件
+        setTimeout(()=> {
+            this.setState({
+                style: $.extend(true, defaultStyle, {
+                    display: 'block'
+                })
+            })
+        }, 400)
     },
 
     onHoverDomChange: function () {
@@ -42,11 +68,17 @@ var Selector = React.createClass({
 
         if ($componentDom && !(selectorUniqueKey && hoverUniqueKey && hoverUniqueKey === selectorUniqueKey)) {
             newStyle = {
-                left: $componentDom.offset().left - editStore.getContainerDom().offset().left - 1,
-                top: $componentDom.offset().top - editStore.getContainerDom().offset().top - 1,
-                width: $componentDom.width() + 2,
-                height: $componentDom.height() + 2,
+                left: $componentDom.offset().left - editStore.getContainerDom().offset().left,
+                top: $componentDom.offset().top - editStore.getContainerDom().offset().top,
+                width: $componentDom.width(),
+                height: $componentDom.height(),
                 display: 'block'
+            }
+
+            if (editStore.getHoverComponent().props.children.props.name === 'LayoutBoxAbsolute') {
+                newStyle.borderColor = '#A900FF'
+            } else {
+                newStyle.borderColor = '#2DB7F5'
             }
         } else {
             newStyle = {

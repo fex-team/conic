@@ -40,7 +40,7 @@ let Container = React.createClass({
             this.setState({
                 loading: false
             })
-        })
+        }, 1000)
     },
 
     componentWillUnmount: function () {
@@ -111,7 +111,8 @@ let Container = React.createClass({
         }
 
         return (
-            <div namespace>
+            <div namespace
+                 style={{height:'100%'}}>
                 {children}
             </div>
         )

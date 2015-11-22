@@ -12,6 +12,24 @@ require('./index.scss')
 const PhoneSelector = require('./selector')
 const PhoneHover = require('./hover')
 
+const viewTypeStyle = {
+    height: 'inherit',
+    position: 'relative'
+}
+
+function handleViewTypeChange() {
+    switch (settingStore.getViewType()) {
+    case 'pc':
+        viewTypeStyle.width = null
+        viewTypeStyle.flexGrow = 1
+        break
+    case 'mobile':
+        viewTypeStyle.width = 500
+        viewTypeStyle.flexGrow = null
+        break
+    }
+}
+
 var PhoneEdit = React.createClass({
     getInitialState: function () {
         return {
@@ -24,12 +42,23 @@ var PhoneEdit = React.createClass({
         editAction.setContainer(ref)
     },
 
+    componentWillMount(){
+        handleViewTypeChange()
+    },
+
     componentDidMount: function () {
         editStore.addChangeShowModeListener(this.changeMode)
+        settingStore.addViewTypeListener(this.viewTypeChange)
     },
 
     componentWillUnmount: function () {
         editStore.removeChangeShowModeListener(this.changeMode)
+        editStore.addSelectContainerListener(this.onSelectContainer)
+    },
+
+    viewTypeChange: function () {
+        handleViewTypeChange()
+        this.forceUpdate()
     },
 
     changeMode: function () {
@@ -49,23 +78,30 @@ var PhoneEdit = React.createClass({
         switch (this.state.mode) {
         case 'edit':
             return (
-                <div style={{height:'inherit'}} onMouseLeave={this.onMouseLeave}>
-                    <DragContainer>
-                        <DragAround>
-                            <Edit {...defaultTreeInfo} dragTarget="true"
-                                                       ref={this.ref}>
-                                <Container mode="edit"/>
-                            </Edit>
-                        </DragAround>
-                    </DragContainer>
-                    <PhoneSelector/>
-                    <PhoneHover/>
+                <div style={{height:'inherit',display:'flex',justifyContent:'center'}}
+                     onMouseLeave={this.onMouseLeave}>
+                    <div style={viewTypeStyle}>
+                        <DragContainer>
+                            <DragAround>
+                                <Edit {...defaultTreeInfo} dragTarget="true"
+                                                           ref={this.ref}>
+                                    <Container mode="edit"/>
+                                </Edit>
+                            </DragAround>
+                        </DragContainer>
+                        <PhoneSelector/>
+                        <PhoneHover/>
+                    </div>
                 </div>
             )
             break
         case 'preview':
             return (
-                <Container mode="preview" {...editStore.getShowModeInfo()}/>
+                <div style={{height:'inherit',display:'flex',justifyContent:'center'}}>
+                    <div style={viewTypeStyle}>
+                        <Container mode="preview" {...editStore.getShowModeInfo()}/>
+                    </div>
+                </div>
             )
             break
         }

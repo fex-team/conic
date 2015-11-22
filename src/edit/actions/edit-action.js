@@ -77,9 +77,31 @@ module.exports = {
     },
 
     // 更新样式
-    afterUpdateComponent:function(){
+    afterUpdateComponent: function () {
         dispatcher.dispatch({
             type: 'afterUpdateComponent'
+        })
+    },
+
+    // 当前拖拽状态hover组件
+    setDragHoverComponent: function (component) {
+        dispatcher.dispatch({
+            type: 'setDragHoverComponent',
+            component: component
+        })
+    },
+
+    startDropComponent: function (component) {
+        dispatcher.dispatch({
+            type: 'startDropComponent',
+            component: component
+        })
+    },
+
+    finishDropComponent: function (containerComponent) {
+        dispatcher.dispatch({
+            type: 'finishDropComponent',
+            containerComponent: containerComponent
         })
     }
 }

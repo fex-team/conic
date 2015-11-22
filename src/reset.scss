@@ -398,10 +398,21 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
   box-shadow: 0 0 0 1px $border-color;
 }
 
-// 高科技颜色字体
+// 邪能火焰字体
 .hack-color {
   background-image: -webkit-linear-gradient(top, #769944 0%, #769944 22.916667%, #9fb84a 37.5%, #e8e361 55%);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   color: #e8e361;
+}
+
+// edit缩放
+.src-edit-phone-edit {
+  transition-duration: .4s;
+  &.to-small {
+    transform: scale3d(.8, .8, .8);
+  }
+  &.to-normal {
+    transform: scale3d(1, 1, 1);
+  }
 }
