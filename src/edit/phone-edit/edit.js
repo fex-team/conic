@@ -17,24 +17,6 @@ const getTree = require('./lib/get-tree')
 const onDragMixins = require('./edit-mixins/on-drag')
 const getPosition = require('./lib/get-position')
 
-//const _ = {};
-//
-//_ = lodash.extend({}, lodash);
-//
-//_.cloneDeep = function (obj, fn) {
-//    if (!fn) {
-//        return lodash.cloneDeep(obj, function (value, name) {
-//            if (name === 'component' || name === 'treeNode') {
-//                return value;
-//            }
-//        })
-//    }
-//    else {
-//        return lodash.cloneDeep(obj, fn)
-//    }
-//}
-
-
 const Edit = React.createClass({
     mixins: [onDragMixins],
 
@@ -108,7 +90,7 @@ const Edit = React.createClass({
         })
 
         // 触发右侧树选中
-        //this.treeNode.select()
+        this.treeNode.select()
 
         editAction.selectComponent(this)
     },
@@ -161,7 +143,11 @@ const Edit = React.createClass({
 
     // 添加某个子元素（属性被定义好）
     addChild: function (props) {
-        let newChilds = _.cloneDeep(this.state.childs)
+        let newChilds = _.cloneDeep(this.state.childs, function (value, name) {
+            if (name === 'component' || name === 'childs') {
+                return value
+            }
+        })
         newChilds.push(props)
         this.setState({
             childs: newChilds
@@ -169,7 +155,11 @@ const Edit = React.createClass({
     },
 
     removeChild: function (index) {
-        let newChilds = _.cloneDeep(this.state.childs)
+        let newChilds = _.cloneDeep(this.state.childs, function (value, name) {
+            if (name === 'component' || name === 'childs') {
+                return value
+            }
+        })
         _.pullAt(newChilds, index)
 
         this.setState({
@@ -197,7 +187,7 @@ const Edit = React.createClass({
         }
 
         //// 右侧树删除节点
-        //this.treeNode.removeSelf()
+        this.treeNode.removeSelf()
 
         this.props.parent.removeChild(this.props.index)
     },
@@ -210,7 +200,6 @@ const Edit = React.createClass({
     render: function () {
         // 记录render日志
         // console.log('%c[render] edit', 'color:green')
-
         let positionArray = []
         getPosition(this, positionArray)
 

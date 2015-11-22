@@ -19,7 +19,7 @@ let TreeNode = React.createClass({
         return {
             childs: [],
             expand: false,
-            selected: false
+            selected: this.props.selected || false
         }
     },
 
@@ -32,6 +32,13 @@ let TreeNode = React.createClass({
     },
 
     componentDidMount: function () {
+
+        // 如果默认是选中状态，通知左侧组件更新
+        if (this.props.selected) {
+            setTimeout(()=> {
+                treeNodeAction.selectItem(this)
+            })
+        }
     },
 
     showChildren: function (e) {
@@ -86,6 +93,10 @@ let TreeNode = React.createClass({
     },
 
     unSelected: function () {
+        if (!this.state.selected || !this.isMounted()) {
+            return;
+        }
+
         this.setState({
             selected: false
         })
@@ -111,11 +122,12 @@ let TreeNode = React.createClass({
 
     addChild: function (props) {
         let newChilds = _.cloneDeep(this.state.childs, function (value, name) {
-            if (name === 'component') {
+            if (name === 'component' || name === 'childs') {
                 return value
             }
         })
         newChilds.push(props)
+
         this.setState({
             childs: newChilds
         })
@@ -148,6 +160,8 @@ let TreeNode = React.createClass({
                 parent: this,
                 name: item.name,
                 padding: padding + 1,
+                selected: item.selected,
+                uniqueKey: item.uniqueKey,
                 index: index,
                 ref: (ref) => {
                     if (ref === null) return
@@ -156,7 +170,7 @@ let TreeNode = React.createClass({
             }
 
             return (
-                <div className="node" key={index}>
+                <div className="node" key={item.uniqueKey}>
                     <TreeNode {...childProps}></TreeNode>
                 </div>
             )

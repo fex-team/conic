@@ -63,8 +63,8 @@ var Selector = React.createClass({
     onSelectorChange: function () {
         let $componentDom = editStore.get$dom()
         let newStyle = {
-            left: $componentDom.offset().left - historyStore.get$ContainerEditDom().offset().left,
-            top: $componentDom.offset().top - historyStore.get$ContainerEditDom().offset().top,
+            left: $componentDom.offset().left - editStore.get$ContainerDom().offset().left,
+            top: $componentDom.offset().top - editStore.get$ContainerDom().offset().top,
             width: $componentDom.width(),
             height: $componentDom.height(),
             display: 'block'

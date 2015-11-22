@@ -2,6 +2,7 @@ const editStore = require('../../stores/edit-store')
 const historyAction = require('../../actions/history-action')
 const editAction = require('../../actions/edit-action')
 const getPosition = require('../lib/get-position')
+const treeNodeAction = require('../../actions/tree-node-action')
 const getTree = require('../lib/get-tree')
 const $ = require('jquery')
 const _ = require('lodash')
@@ -32,6 +33,8 @@ module.exports = {
             selected: item.edit ? item.edit.state.selected : false
         }
 
+        console.time('drop')
+
         // 如果这个组件是新拖拽的万能矩形，不是最外层，则宽度设定为父级宽度的一半
         if (!item.edit && item.type === 'LayoutBox' && this.props.children.props.name !== 'Container') {
             // 获取拖拽父级的布局方式
@@ -51,7 +54,6 @@ module.exports = {
                 }
             })
         }
-
         // 如果有edit，是从模拟器中拖拽的元素，保留原有属性
         if (item.edit) {
             childInfo.opts = item.edit.state.customOpts
@@ -69,7 +71,9 @@ module.exports = {
             getPosition(this, afterPositionArray)
             afterPositionArray.unshift(childInfo.uniqueKey)
             let info = {}
+            console.time('drop getTree')
             getTree(item.edit, info)
+            console.timeEnd('drop getTree')
             setTimeout(()=> {
                 historyAction.addHistory({
                     position: positionArray,
@@ -82,6 +86,8 @@ module.exports = {
                     type: 'move',
                     operateName: '移动组件 ' + childInfo.name
                 })
+                console.timeEnd('drop')
+                treeNodeAction.addTreeNode(this, item, childInfo)
             })
         } else { // 否则为新增组件
             let positionArray = []
@@ -97,9 +103,13 @@ module.exports = {
                     operateName: '新增组件 ' + childInfo.name
                 })
             })
+
+            console.timeEnd('drop')
+            treeNodeAction.addTreeNode(this, item, childInfo)
         }
 
         newChilds.push(childInfo)
+
 
         this.setState({
             childs: newChilds

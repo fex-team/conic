@@ -118,7 +118,7 @@ var EditStore = assign({}, EventEmitter.prototype, {
         return editContainer
     },
 
-    getContainerDom: function () {
+    get$ContainerDom: function () {
         return $editContainerDom
     },
 
