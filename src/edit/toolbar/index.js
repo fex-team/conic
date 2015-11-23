@@ -6,11 +6,13 @@ const Footer = require('./footer')
 const editAction = require('../actions/edit-action')
 const editStore = require('../stores/edit-store')
 const settingAction = require('../actions/setting-action')
+const settingStore = require('../stores/setting-store')
 const classnames = require('classnames')
 
 const defaultJson = require('../phone-edit/default.json')
 
-const Phone = require('../../edit/phone-edit')
+const Center = require('./center')
+const PhoneEdit = require('../../edit/phone-edit')
 
 require('./index.scss')
 require('./animate.scss')
@@ -26,12 +28,18 @@ let Container = React.createClass({
             mode: 'edit',
 
             // 是否加载完毕
-            loading: true
+            loading: true,
+
+            tree: null,
+
+            editKey: 0,
+            previewKey: 0
         }
     },
 
     componentDidMount: function () {
         editStore.addChangeShowModeListener(this.changeMode)
+        settingStore.addChangeTreeListener(this.changeTree)
 
         // :TODO 异步请求配置信息
         settingAction.setDefault({
@@ -39,25 +47,33 @@ let Container = React.createClass({
         }, defaultJson)
         setTimeout(()=> {
             this.setState({
-                loading: false
+                loading: false,
+                tree: defaultJson
             })
         }, 1000)
     },
 
     componentWillUnmount: function () {
         editStore.removeChangeShowModeListener(this.changeMode)
+        settingStore.removeChangeTreeListener(this.changeTree)
     },
 
     changeMode: function () {
-        this.setState({
-            mode: editStore.getShowMode()
-        })
+        let mode = editStore.getShowMode()
+        let newState = {
+            mode: mode
+        }
+        if (mode === 'preview') {
+            newState.previewKey = this.state.previewKey + 1
+        }
+        this.setState(newState)
     },
 
-    // 点击手机外部，选中手机壳
-    onClickPhoneOut: function (event) {
-        event.stopPropagation()
-        editAction.selectContainer()
+    changeTree: function () {
+        this.setState({
+            tree: settingStore.getTree(),
+            editKey: this.state.editKey + 1
+        })
     },
 
     render: function () {
@@ -106,11 +122,14 @@ let Container = React.createClass({
                         <Right />
                     </div>
 
-                    <div className={mnClass}
-                         onClick={this.onClickPhoneOut}>
+                    <div className={mnClass}>
+                        <Center/>
+
                         <div className="phone-out">
                             <div className="phone">
-                                <Phone/>
+                                <PhoneEdit editKey={'edit-'+this.state.editKey}
+                                           previewKey={'preview-'+this.state.previewKey}
+                                           tree={this.state.tree}/>
                             </div>
                         </div>
                     </div>

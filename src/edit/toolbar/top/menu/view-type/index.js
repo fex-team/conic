@@ -1,7 +1,7 @@
 const React = require('react')
 const classnames = require('classnames')
-const editAction = require('../../../../actions/edit-action')
 const settingStore = require('../../../../stores/setting-store')
+const settingAction = require('../../../../actions/setting-action')
 require('./index.scss')
 
 const viewButtonStyle = {
@@ -31,7 +31,7 @@ module.exports = React.createClass({
     },
 
     changeType: function (viewType) {
-        editAction.changeViewType(viewType)
+        settingAction.changeViewType(viewType)
     },
 
     render: function () {

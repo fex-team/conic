@@ -19,5 +19,10 @@ module.exports = {
             start: start,
             end: end
         })
+    },
+    clearHistory: function () {
+        dispatcher.dispatch({
+            type: 'clearHistory'
+        })
     }
 }

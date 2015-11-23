@@ -14,5 +14,12 @@ module.exports = {
             type: 'changeViewType',
             viewType: viewType
         })
+    },
+
+    changeTree: function (tree) {
+        dispatcher.dispatch({
+            type: 'changeTree',
+            tree: tree
+        })
     }
 }

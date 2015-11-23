@@ -8,6 +8,7 @@ const $ = require('jquery')
 
 const CHANGE_EVENT = 'change'
 const REVERSE_EVENT = 'reverseEvent'
+const CLEAR_HISTORY_EVENT = 'clearHistory'
 
 let containerEdit
 let $containerDom
@@ -76,6 +77,19 @@ var HistoryStore = assign({}, EventEmitter.prototype, {
 
     get$ContainerEditDom: function () {
         return $containerDom
+    },
+
+    // 清空历史
+    emitClearHistory: function () {
+        this.emit(CLEAR_HISTORY_EVENT)
+    },
+
+    addClearHistoryListener: function (callback) {
+        this.on(CLEAR_HISTORY_EVENT, callback)
+    },
+
+    removeClearHistoryListener: function (callback) {
+        this.removeListener(CLEAR_HISTORY_EVENT, callback)
     }
 })
 
@@ -211,6 +225,11 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
         })
 
         HistoryStore.emitReverse()
+        break
+    case 'clearHistory':
+        currentIndex = 0
+        historys = []
+        HistoryStore.emitClearHistory()
         break
     }
 })

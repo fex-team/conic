@@ -90,7 +90,7 @@ const Edit = React.createClass({
         })
 
         // 触发右侧树选中
-        this.treeNode.select()
+        //this.treeNode.select()
 
         editAction.selectComponent(this)
     },
@@ -134,7 +134,7 @@ const Edit = React.createClass({
 
     // 开始被拖拽
     // 修改是否可以作为拖拽目标（当父级dragsource被拖动时，禁止子dragtarget生效）
-    onChangeEnableTarget: function (isOk) {
+    onChangeEnableTarget: function () {
         editAction.startDropComponent(this)
 
         // 如果组件被删除，取消更新
@@ -187,7 +187,7 @@ const Edit = React.createClass({
         }
 
         // 右侧树删除节点
-        this.treeNode.removeSelf()
+        //this.treeNode.removeSelf()
 
         this.props.parent.removeChild(this.props.index)
     },
@@ -253,7 +253,9 @@ const Edit = React.createClass({
                                     left={this.state.customOpts.position.value.left}
                                     top={this.state.customOpts.position.value.top}
                                     onChange={this.onDragSourceAbsoluteChange}
-                                    edit={this}>
+                                    edit={this}
+                                    onAbsoluteDragStart={this.onAbsoluteDragStart}
+                                    endDragAbsoluteComponent={this.onAbsoluteDragEnd}>
                     {childComponent}
                 </DragSourceAbsolute>
             )

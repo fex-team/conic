@@ -25,17 +25,25 @@ var Selector = React.createClass({
     },
 
     componentDidMount: function () {
-        editStore.addChangeListener(this.onSelectorChange)
+        editStore.addChangeListener(this.onSelectNewComponent)
         editStore.addAfterUpdateComponentListener(this.onSelectorChange)
         editStore.addStartDropComponentListener(this.onDragStart)
         editStore.addFinishDropComponentListener(this.onDragEnd)
+        editStore.addStartDropAbsoluteComponentListener(this.onDragStart)
+        editStore.addFinishDropAbsoluteComponentListener(this.onDragEnd)
+        editStore.addRemoveCurrentListener(this.onRemoveComponent)
+        editStore.addUpdateSelectorListener(this.onSelectorChange)
     },
 
     componentWillUnmount: function () {
-        editStore.removeChangeListener(this.onSelectorChange)
+        editStore.removeChangeListener(this.onSelectNewComponent)
         editStore.removeAfterUpdateComponentListener(this.onSelectorChange)
         editStore.removeStartDropComponentListener(this.onDragStart)
         editStore.removeFinishDropComponentListener(this.onDragEnd)
+        editStore.removeStartDropAbsoluteComponentListener(this.onDragStart)
+        editStore.removeFinishDropAbsoluteComponentListener(this.onDragEnd)
+        editStore.removeRemoveCurrentListener(this.onRemoveComponent)
+        editStore.removeUpdateSelectorListener(this.onSelectorChange)
     },
 
     // 拖拽开始
@@ -60,8 +68,25 @@ var Selector = React.createClass({
         }, 400)
     },
 
+    // 组件被删除
+    onRemoveComponent: function () {
+        this.setState({
+            style: $.extend(true, defaultStyle, {
+                display: 'none'
+            })
+        })
+    },
+
+    onSelectNewComponent: function () {
+        // 选中空组件无效
+        if (editStore.get() === null)return
+
+        this.onSelectorChange()
+    },
+
     onSelectorChange: function () {
         let $componentDom = editStore.get$dom()
+
         let newStyle = {
             left: $componentDom.offset().left - editStore.get$ContainerDom().offset().left,
             top: $componentDom.offset().top - editStore.get$ContainerDom().offset().top,

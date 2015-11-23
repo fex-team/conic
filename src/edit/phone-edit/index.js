@@ -7,6 +7,8 @@ const historyAction = require('../actions/history-action')
 const editAction = require('../actions/edit-action')
 const editStore = require('../stores/edit-store')
 const settingStore = require('../stores/setting-store')
+const copyPasteAction = require('../actions/copy-paste-action')
+const $ = require('jquery')
 require('./index.scss')
 
 const PhoneSelector = require('./selector')
@@ -53,7 +55,7 @@ var PhoneEdit = React.createClass({
 
     componentWillUnmount: function () {
         editStore.removeChangeShowModeListener(this.changeMode)
-        editStore.addSelectContainerListener(this.onSelectContainer)
+        settingStore.removeViewTypeListener(this.viewTypeChange)
     },
 
     viewTypeChange: function () {
@@ -73,13 +75,25 @@ var PhoneEdit = React.createClass({
     },
 
     render: function () {
-        let defaultTreeInfo = editStore.getShowModeInfo() || settingStore.getTree()
+        let defaultTreeInfo = this.props.tree
 
-        switch (this.state.mode) {
-        case 'edit':
-            return (
-                <div style={{height:'inherit',display:'flex',justifyContent:'center'}}
-                     onMouseLeave={this.onMouseLeave}>
+        let editStyle = {
+            height: 'inherit',
+            display: this.state.mode === 'edit' ? 'flex' : 'none',
+            justifyContent: 'center'
+        }
+
+        let previewStyle = {
+            height: 'inherit',
+            display: this.state.mode === 'preview' ? 'flex' : 'none',
+            justifyContent: 'center'
+        }
+
+        return (
+            <div style={{height: 'inherit'}}>
+                <div style={editStyle}
+                     onMouseLeave={this.onMouseLeave}
+                     key={this.props.editKey}>
                     <div style={viewTypeStyle}>
                         <DragContainer>
                             <DragAround>
@@ -93,18 +107,15 @@ var PhoneEdit = React.createClass({
                         <PhoneHover/>
                     </div>
                 </div>
-            )
-            break
-        case 'preview':
-            return (
-                <div style={{height:'inherit',display:'flex',justifyContent:'center'}}>
+
+                <div style={previewStyle}
+                     key={this.props.previewKey}>
                     <div style={viewTypeStyle}>
                         <Container mode="preview" {...editStore.getShowModeInfo()}/>
                     </div>
                 </div>
-            )
-            break
-        }
+            </div>
+        )
     }
 })
 

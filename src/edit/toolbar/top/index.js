@@ -1,12 +1,15 @@
-var React = require('react')
-var Menu = require('./menu')
+const React = require('react')
 require('./index.scss')
+
+var MenuComponent = require('./menu')
+const ModalComponent = require('./modal')
 
 module.exports = React.createClass({
     render: function () {
         return (
             <div namespace>
-                <Menu/>
+                <ModalComponent/>
+                <MenuComponent/>
             </div>
         )
     }

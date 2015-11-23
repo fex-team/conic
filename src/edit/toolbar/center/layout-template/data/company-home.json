@@ -1,0 +1,290 @@
+{
+  "name": "Container",
+  "opts": {},
+  "childs": [
+    {
+      "name": "LayoutBox",
+      "uniqueKey": 0,
+      "selected": false,
+      "opts": {
+        "style": {
+          "value": {
+            "margin": 0,
+            "padding": 0,
+            "width": "100%",
+            "minHeight": 50,
+            "height": null,
+            "fontSize": 14,
+            "color": "#333",
+            "background": "rgba(204, 204, 204, 1)"
+          },
+          "edit": "style"
+        },
+        "flex": {
+          "edit": "flex",
+          "value": {
+            "display": "flex",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "justifyContent": "center",
+            "alignItems": "center"
+          }
+        }
+      },
+      "childs": [
+        {
+          "name": "BaseText",
+          "uniqueKey": 4,
+          "selected": false,
+          "opts": {
+            "base": {
+              "value": {
+                "text": {
+                  "value": "导航",
+                  "edit": "text",
+                  "desc": "文字内容"
+                }
+              }
+            }
+          },
+          "childs": []
+        }
+      ]
+    },
+    {
+      "name": "LayoutBox",
+      "uniqueKey": 1,
+      "selected": false,
+      "opts": {
+        "style": {
+          "value": {
+            "margin": 0,
+            "padding": 0,
+            "width": "100%",
+            "minHeight": 30,
+            "height": null,
+            "fontSize": 14,
+            "color": "#333",
+            "background": "rgba(238, 238, 238, 1)"
+          },
+          "edit": "style"
+        },
+        "flex": {
+          "edit": "flex",
+          "value": {
+            "display": "flex",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "justifyContent": "center",
+            "alignItems": "center"
+          }
+        }
+      },
+      "childs": [
+        {
+          "name": "BaseText",
+          "uniqueKey": 5,
+          "selected": false,
+          "opts": {
+            "base": {
+              "value": {
+                "text": {
+                  "value": "二级导航",
+                  "edit": "text",
+                  "desc": "文字内容"
+                }
+              }
+            }
+          },
+          "childs": []
+        }
+      ]
+    },
+    {
+      "name": "LayoutBox",
+      "uniqueKey": 2,
+      "selected": false,
+      "opts": {
+        "style": {
+          "value": {
+            "margin": 0,
+            "padding": 0,
+            "width": "100%",
+            "minHeight": 200,
+            "height": null,
+            "fontSize": 14,
+            "color": "rgba(255, 255, 255, 1)",
+            "background": "rgba(156, 206, 220, 1)"
+          },
+          "edit": "style"
+        },
+        "flex": {
+          "edit": "flex",
+          "value": {
+            "display": "flex",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "justifyContent": "center",
+            "alignItems": "center"
+          }
+        }
+      },
+      "childs": [
+        {
+          "name": "BaseText",
+          "uniqueKey": 3,
+          "selected": false,
+          "opts": {
+            "base": {
+              "value": {
+                "text": {
+                  "value": "banner",
+                  "edit": "text",
+                  "desc": "文字内容"
+                }
+              }
+            }
+          },
+          "childs": []
+        }
+      ]
+    },
+    {
+      "name": "LayoutBox",
+      "uniqueKey": 6,
+      "selected": false,
+      "opts": {
+        "style": {
+          "value": {
+            "margin": 0,
+            "padding": "25px 50px 0px 50px",
+            "width": "100%",
+            "minHeight": 50,
+            "height": null,
+            "fontSize": 14,
+            "color": "#333",
+            "background": "white"
+          },
+          "edit": "style"
+        }
+      },
+      "childs": [
+        {
+          "name": "LayoutBox",
+          "uniqueKey": 7,
+          "selected": false,
+          "opts": {
+            "style": {
+              "value": {
+                "width": null,
+                "height": null,
+                "margin": "0px 20px 0px 0px",
+                "padding": "0px 0px 0px 0px",
+                "minHeight": 150,
+                "fontSize": 14,
+                "color": "#333",
+                "background": "rgba(204, 204, 204, 1)",
+                "flexGrow": 1
+              },
+              "edit": "style"
+            }
+          },
+          "childs": []
+        },
+        {
+          "name": "LayoutBox",
+          "uniqueKey": 8,
+          "selected": false,
+          "opts": {
+            "style": {
+              "value": {
+                "width": null,
+                "height": null,
+                "margin": "0px 20px 0px 0px",
+                "padding": 0,
+                "minHeight": 150,
+                "fontSize": 14,
+                "color": "#333",
+                "background": "rgba(204, 204, 204, 1)",
+                "flexGrow": 1
+              },
+              "edit": "style"
+            }
+          },
+          "childs": []
+        },
+        {
+          "name": "LayoutBox",
+          "uniqueKey": 9,
+          "selected": false,
+          "opts": {
+            "style": {
+              "value": {
+                "width": null,
+                "height": null,
+                "margin": 0,
+                "padding": 0,
+                "minHeight": 150,
+                "fontSize": 14,
+                "color": "#333",
+                "background": "rgba(204, 204, 204, 1)",
+                "flexGrow": 1
+              },
+              "edit": "style"
+            }
+          },
+          "childs": []
+        }
+      ]
+    },
+    {
+      "name": "LayoutBox",
+      "uniqueKey": 10,
+      "selected": false,
+      "opts": {
+        "style": {
+          "value": {
+            "margin": "50px 0px 0px 0px",
+            "padding": 0,
+            "width": "100%",
+            "minHeight": 50,
+            "height": null,
+            "fontSize": 14,
+            "color": "#333",
+            "background": "rgba(187, 187, 187, 1)"
+          },
+          "edit": "style"
+        },
+        "flex": {
+          "edit": "flex",
+          "value": {
+            "display": "flex",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "justifyContent": "center",
+            "alignItems": "center"
+          }
+        }
+      },
+      "childs": [
+        {
+          "name": "BaseText",
+          "uniqueKey": 11,
+          "selected": false,
+          "opts": {
+            "base": {
+              "value": {
+                "text": {
+                  "value": "页脚",
+                  "edit": "text",
+                  "desc": "文字内容"
+                }
+              }
+            }
+          },
+          "childs": []
+        }
+      ]
+    }
+  ]
+}

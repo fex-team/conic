@@ -117,6 +117,15 @@ module.exports = React.createClass({
                            onChange={this.onWidthChange.bind(this,key)}
                            onFlexGrowChange={this.onFlexGrowChange}/>
                 )
+            case 'flexGrow':
+                return (
+                    <Width key={key}
+                           propKey={key}
+                           value={value}
+                           allStyle={this.state.item.value}
+                           onChange={this.onWidthChange.bind(this,key)}
+                           onFlexGrowChange={this.onFlexGrowChange}/>
+                )
             case 'height':
                 return (
                     <Height key={key}

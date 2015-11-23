@@ -25,7 +25,6 @@ var AuxiliaryStore = assign({}, EventEmitter.prototype, {
 })
 
 AuxiliaryStore.dispatchToken = dispatcher.register(function (action) {
-    // 选择编辑组件
     switch (action.type) {
     case 'showLayoutBox':
         auxiliaryStoreInfo.showLayoutBox = action.isShow

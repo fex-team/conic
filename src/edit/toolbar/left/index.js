@@ -26,6 +26,9 @@ const Left = React.createClass({
     },
 
     onLeftTabChange: function () {
+        // 如果移动到编辑框，且编辑组件为空，则取消
+        if (editStore.getTabName() === 'edit' && editStore.get() === null)return
+
         this.setState({
             activeTab: editStore.getTabName()
         })
@@ -33,7 +36,8 @@ const Left = React.createClass({
 
     render: function () {
         return (
-            <div namespace style={{height:'100%'}}>
+            <div namespace
+                 style={{height:'100%'}}>
                 <Tabs activeKey={this.state.activeTab}>
                     <TabPane tab={<Tooltip placement="bottom" title="编辑组件"><i className="fa fa-edit"></i></Tooltip>}
                              key="edit">
