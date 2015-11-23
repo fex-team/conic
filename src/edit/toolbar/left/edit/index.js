@@ -4,7 +4,6 @@ const Option = Select.Option
 const Checkbox = require('antd/lib/checkbox')
 const Radio = require('antd/lib/radio')
 const RadioGroup = require('antd/lib/radio/group')
-const EnterAnimation = require('antd/lib/enter-animation')
 const $ = require('jquery')
 const _ = require('lodash')
 const editStore = require('../../../stores/edit-store')
@@ -138,14 +137,12 @@ module.exports = React.createClass({
             )
         } else {
             editForm = (
-                <EnterAnimation enter={animation.enter}>
-                    <div key="empty"
-                         className="nothing">
-                        <div className="bold">编辑组件</div>
+                <div key="empty"
+                     className="nothing">
+                    <div className="bold">编辑组件</div>
 
-                        <div>请选中一个组件</div>
-                    </div>
-                </EnterAnimation>
+                    <div>请选中一个组件</div>
+                </div>
             )
         }
 

@@ -1,5 +1,4 @@
 const React = require('react')
-const EnterAnimation = require('antd/lib/enter-animation')
 const TreeNode = require('./treeNode')
 const editStore = require('../../../stores/edit-store')
 const treeStore = require('../../../stores/tree-store')
