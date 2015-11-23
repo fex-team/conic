@@ -90,7 +90,7 @@ const Edit = React.createClass({
         })
 
         // 触发右侧树选中
-        //this.treeNode.select()
+        this.treeNode.select()
 
         editAction.selectComponent(this)
     },
@@ -187,7 +187,7 @@ const Edit = React.createClass({
         }
 
         // 右侧树删除节点
-        //this.treeNode.removeSelf()
+        this.treeNode.removeSelf()
 
         this.props.parent.removeChild(this.props.index)
     },

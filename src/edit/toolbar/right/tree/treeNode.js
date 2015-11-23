@@ -18,7 +18,7 @@ let TreeNode = React.createClass({
     getInitialState: function () {
         return {
             childs: [],
-            expand: false,
+            expand: this.props.expand || false,
             selected: this.props.selected || false
         }
     },
@@ -56,7 +56,7 @@ let TreeNode = React.createClass({
     },
 
     expand: function () {
-        if (this.state.expand) return
+        if (this.state.expand || !this.isMounted()) return
 
         this.setState({
             expand: true
@@ -64,7 +64,7 @@ let TreeNode = React.createClass({
     },
 
     collapse: function () {
-        if (!this.state.expand) return
+        if (!this.state.expand || !this.isMounted()) return
 
         this.setState({
            expand: false

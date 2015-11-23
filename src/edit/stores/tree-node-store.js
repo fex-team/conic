@@ -18,6 +18,14 @@ let _ = require('lodash')
 
 let getTree = require('../toolbar/right/tree/get-tree')
 
+function expandParent(treeNode) {
+    treeNode.expand()
+
+    if (treeNode.props.parent) {
+        expandParent(treeNode.props.parent)
+    }
+}
+
 let TreeNodeStore = assign({}, EventEmitter.prototype, {
     emitChange: function (e) {
         this.emit(CHANGE_EVENT, e)
@@ -62,6 +70,8 @@ TreeNodeStore.dispatchToken = dispatcher.register((action) => {
             if (previousTreeNode) {
                 previousTreeNode.unSelected()
             }
+
+            expandParent(currentTreeNode)
 
             TreeNodeStore.emitChange(currentTreeNode)
             break

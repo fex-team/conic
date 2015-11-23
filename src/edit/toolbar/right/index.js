@@ -4,13 +4,17 @@ const TabPane = Tabs.TabPane
 const Tooltip = require('antd/lib/tooltip')
 const editStore = require('../../stores/edit-store')
 const Badge = require('antd/lib/badge')
+const classnames = require('classnames')
 
 const Tree = require('./tree')
+
+require('./index.scss')
 
 const Right = React.createClass({
     getInitialState: function () {
         return {
-            activeTab: 'tree'
+            activeTab: 'tree',
+            show: true
         }
     },
 
@@ -29,6 +33,13 @@ const Right = React.createClass({
     },
 
     render: function () {
+
+        let closeClass = classnames({
+            'close-container': true,
+            'show-animate': this.state.show,
+            'hide-animate': !this.state.show
+        })
+
         return (
             <div namespace style={{height:'100%'}}>
                 <Tabs activeKey={this.state.activeTab}>
@@ -37,6 +48,11 @@ const Right = React.createClass({
                         <Tree />
                     </TabPane>
                 </Tabs>
+
+                <div className={closeClass}
+                     onClick={this.handleClose}>
+                    收起
+                </div>
             </div>
         )
     }
