@@ -33,7 +33,7 @@ ViewStore.dispatchToken = dispatcher.register(function (action) {
 
         // 如果当前选择组件不是布局组件，则复制到父级
         let nowSelectComponentName = nowSelectComponent.props.children.props.name
-        if (nowSelectComponentName !== 'LayoutBox' && nowSelectComponentName !== 'LayoutBoxAbsolute') {
+        if (nowSelectComponentName !== 'LayoutBox' && nowSelectComponentName !== 'LayoutBoxAbsolute' && nowSelectComponentName !== 'Container') {
             nowSelectComponent.props.parent.addChild(_.cloneDeep(copyInfo))
         } else {
             nowSelectComponent.addChild(_.cloneDeep(copyInfo))
