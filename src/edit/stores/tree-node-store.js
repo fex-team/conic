@@ -10,9 +10,13 @@ let editStore = require('./edit-store')
 
 let CHANGE_EVENT = 'change'
 let ADD_CHILD = 'add'
+let HOVER_EVENT = 'hover'
 
 let currentTreeNode = null
 let previousTreeNode = null
+
+let currentHoverTreeNode = null
+let previousHoverTreeNode = null
 
 let _ = require('lodash')
 
@@ -51,6 +55,18 @@ let TreeNodeStore = assign({}, EventEmitter.prototype, {
         this.removeListener(ADD_CHILD, callback)
     },
 
+    emitHover: function (e) {
+        this.emit(HOVER_EVENT, e)
+    },
+
+    addHoverListener: function (callback) {
+        this.on(HOVER_EVENT, callback)
+    },
+
+    removeHoverListener: function (callback) {
+        this.removeListener(HOVER_EVENT, callback)
+    },
+
     get: function () {
         return currentTreeNode
     }
@@ -74,6 +90,21 @@ TreeNodeStore.dispatchToken = dispatcher.register((action) => {
             expandParent(currentTreeNode)
 
             TreeNodeStore.emitChange(currentTreeNode)
+            break
+
+        case 'hoverTreeNode':
+            if (action.component === currentHoverTreeNode) {
+                return
+            }
+
+            previousHoverTreeNode = currentHoverTreeNode
+            currentHoverTreeNode = action.component
+
+            if (previousHoverTreeNode) {
+                previousHoverTreeNode.unHover()
+            }
+
+            TreeNodeStore.emitHover(currentHoverTreeNode)
             break
 
         case 'addTreeNode':
