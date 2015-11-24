@@ -19,17 +19,9 @@ const Right = React.createClass({
     },
 
     componentDidMount: function () {
-        //editStore.addLeftTabChangeListener(this.onLeftTabChange)
     },
 
     componentWillUnmount: function () {
-        //editStore.removeLeftTabChangeListener(this.onLeftTabChange)
-    },
-
-    onLeftTabChange: function () {
-        this.setState({
-            activeTab: editStore.getTabName()
-        })
     },
 
     render: function () {
