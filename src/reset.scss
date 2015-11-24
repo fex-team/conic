@@ -413,6 +413,19 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
   overflow-y: auto;
 }
 
+.ant-tabs-nav .ant-tabs-tab > .ant-tabs-tab-inner {
+  padding: 6px 15px;
+}
+
+.ant-tabs-nav .ant-tabs-tab > .ant-tabs-tab-inner > i {
+  color: $font-color;
+}
+
+.ant-tabs-tabs-bar {
+  border-color: $border-color;
+  margin: 0;
+}
+
 // 徽标数
 .ant-badge-count {
   height: 15px;
