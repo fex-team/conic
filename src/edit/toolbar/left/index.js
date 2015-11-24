@@ -10,6 +10,8 @@ const Component = require('./component')
 const Auxiliary = require('./auxiliary')
 const History = require('./history')
 
+require('./index.scss')
+
 const Left = React.createClass({
     getInitialState: function () {
         return {
