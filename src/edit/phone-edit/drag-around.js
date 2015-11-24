@@ -1,7 +1,7 @@
-var React = require('react')
-var ReactDnD = require('react-dnd')
-var ItemTypes = require('../toolbar/left/component/components/drag-type')
-var dragDropManager = require('../drag-drop-manager')
+const React = require('react')
+const ReactDnD = require('react-dnd')
+const ItemTypes = require('../toolbar/left/component/components/drag-type')
+const dragDropManager = require('../drag-drop-manager')
 
 const boxTarget = {
     drop(props, monitor, component) {

@@ -30,7 +30,7 @@ process.on('uncaughtException', function (err) {
 })
 
 // 入口文件
-var templateHtml = require('./src/html.js')
+var templateHtml = require('../src/html.js')
 app.use(function *() {
     this.type = 'text/html; charset=utf-8'
     this.body = templateHtml
