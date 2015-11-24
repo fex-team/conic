@@ -1,7 +1,7 @@
 @import "../../../../minxin";
 
-.title{
-  color:white;
+.title {
+  color: white;
 }
 
 .nothing {
@@ -45,5 +45,15 @@
   background-color: #393939;
   &.active, &:hover {
     background-color: #444;
+  }
+}
+
+.add-script-layout {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 300px;
+  .add-script-btn {
+    margin: 20px;
+    padding: 4px 40px;
   }
 }

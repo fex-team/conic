@@ -2,6 +2,7 @@ const React = require('react')
 const editStore = require('../../stores/edit-store')
 const historyStore = require('../../stores/history-store')
 const $ = require('jquery')
+const ReactDOM = require('react-dom')
 require('./index.scss')
 
 const defaultStyle = {
@@ -25,6 +26,7 @@ var Selector = React.createClass({
     },
 
     componentDidMount: function () {
+        this.$dom = $(ReactDOM.findDOMNode(this))
         editStore.addChangeListener(this.onSelectNewComponent)
         editStore.addAfterUpdateComponentListener(this.onSelectorChange)
         editStore.addStartDropComponentListener(this.onDragStart)
@@ -109,9 +111,7 @@ var Selector = React.createClass({
     render: function () {
         return (
             <div namespace
-                 style={this.state.style}>
-
-            </div>
+                 style={this.state.style}></div>
         )
     }
 })

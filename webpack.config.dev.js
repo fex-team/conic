@@ -8,7 +8,7 @@ var config = {
     },
 
     devtool: 'eval-source-map',
-    //watch: true,
+    watch: true,
 
     entry: [
         'webpack-dev-server/client?http://localhost:8090',
@@ -32,7 +32,7 @@ var config = {
             {
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                loaders: ['jsx', 'react-hot', 'babel', 'html-path-loader']
+                loaders: ['react-hot-loader', 'babel?presets[]=react,presets[]=es2015', 'html-path-loader']
             }, {
                 test: /\.(scss|css)/,
                 exclude: /node_modules/,

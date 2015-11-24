@@ -17,6 +17,7 @@ const Custom = require('./custom')
 const Flex = require('./flex')
 const Style = require('./style')
 const Position = require('./position')
+const AddScript = require('./add-script')
 
 let currentComponentOpts = null
 let currentComponentDesc = null
@@ -134,6 +135,7 @@ module.exports = React.createClass({
                     <Collapse defaultActiveKey={collapseDefaultActiveKeys}>
                         {editForm}
                     </Collapse>
+                    <AddScript/>
                 </div>
             )
         } else {
