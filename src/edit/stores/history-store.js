@@ -4,6 +4,8 @@ const EventEmitter = require('events').EventEmitter
 const assign = require('object-assign')
 const _ = require('lodash')
 const editAction = require('../actions/edit-action')
+const treeNodeAction = require('../actions/tree-node-action')
+const treeNodeStore = require('../stores/tree-node-store')
 const $ = require('jquery')
 
 const CHANGE_EVENT = 'change'
@@ -171,6 +173,20 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
                             uniqueKey: item.uniqueKey,
                             opts: item.opts
                         })
+
+                        setTimeout(() => {
+                            let addedComponent = _.find(componentEditContainer.childInstance.getChildsEdit(), (value, index) => {
+                                return value.props.uniqueKey === item.uniqueKey
+                            })
+
+                            componentEditContainer.treeNode.addChild({
+                                name: item.componentName,
+                                uniqueKey: item.uniqueKey,
+                                opts: item.opts,
+                                component: addedComponent
+                            })
+                        })
+
                     }
                     break
                 case 'delete':
@@ -185,6 +201,19 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
                             opts: item.optsBefore,
                             childs: item.childs,
                             uniqueKey: item.uniqueKey
+                        })
+
+                        setTimeout(() => {
+                            let addedComponent = _.find(componentEditContainer.childInstance.getChildsEdit(), (value) => {
+                                return value.props.uniqueKey === item.uniqueKey
+                            })
+
+                            componentEditContainer.treeNode.addChild({
+                                name: item.componentName,
+                                uniqueKey: item.uniqueKey,
+                                opts: item.opts,
+                                component: addedComponent
+                            })
                         })
                     } else {
                         componentEdit.removeSelf()
@@ -208,6 +237,21 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
                             childs: item.childs,
                             uniqueKey: item.beforeUniqueKey
                         })
+
+                        //setTimeout(() => {
+                        //    let addedComponent = _.find(componentEditContainer.childInstance.getChildsEdit(), (value, index) => {
+                        //        return value.props.uniqueKey === item.beforeUniqueKey
+                        //    })
+                        //
+                        //    console.log(addedComponent)
+                        //
+                        //    componentEditContainer.treeNode.addChild({
+                        //        name: item.componentName,
+                        //        uniqueKey: item.beforeUniqueKey,
+                        //        opts: item.opts,
+                        //        component: addedComponent
+                        //    })
+                        //})
                     } else { // 还原
                         // 删除移动前的
                         componentEdit.removeSelf()
@@ -218,6 +262,19 @@ HistoryStore.dispatchToken = dispatcher.register(function (action) {
                             childs: item.childs,
                             uniqueKey: item.uniqueKey
                         })
+
+                        //setTimeout(() => {
+                        //    let addedComponent = _.find(afterComponentEdit.childInstance.getChildsEdit(), (value) => {
+                        //        return value.props.uniqueKey === item.uniqueKey
+                        //    })
+                        //
+                        //    afterComponentEdit.treeNode.addChild({
+                        //        name: item.componentName,
+                        //        uniqueKey: item.uniqueKey,
+                        //        opts: item.opts,
+                        //        component: addedComponent
+                        //    })
+                        //})
                     }
                     break
                 }
