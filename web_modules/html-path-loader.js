@@ -1,19 +1,17 @@
 module.exports = function (source, map) {
     this.cacheable && this.cacheable()
 
-    var namespace = this.resourcePath.replace(/[\W\w]+(?=src\b)/, '').replace(/\.scss/, '')
+    var namespace = this.resourcePath.replace(process.cwd() + '/', '').replace(/\.(js|jsx)/, '')
 
     var nameArray = namespace.split('/')
     nameArray.pop()
-    namespace = nameArray.join('-')
+    nameArray.shift()
+    var nameStr = nameArray.join('-')
 
-    // 豁免全局样式
-    if (namespace !== 'src') {
-        // 匹配 namespace
-        source = source.replace(/(namespace)/g, function (text, $1) {
-            return 'className="' + namespace + '"'
-        })
-    }
+    // 匹配 namespace
+    source = source.replace(/(__namespace)/g, function (text, $1) {
+        return 'className="' + nameStr + '"'
+    })
 
     this.callback(null, source, map)
 }
