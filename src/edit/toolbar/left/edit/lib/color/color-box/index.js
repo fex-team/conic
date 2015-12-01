@@ -42,7 +42,7 @@ module.exports = React.createClass({
 
     render: function () {
         return (
-            <div namespace>
+            <div __namespace>
                 <div className="color-box"
                      onClick={this.onClick}>
                     <div style={{backgroundColor: this.state.color}}

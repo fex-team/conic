@@ -25,7 +25,7 @@ const ToolBarTopComponents = React.createClass({
         }
 
         return (
-            <div namespace>
+            <div __namespace>
                 {component}
             </div>
         )

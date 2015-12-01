@@ -16,6 +16,8 @@ const Custom = require('./custom')
 const Flex = require('./flex')
 const Style = require('./style')
 const Position = require('./position')
+const Network = require('./network')
+
 const AddScript = require('./add-script')
 
 let currentComponentOpts = null
@@ -83,7 +85,6 @@ module.exports = React.createClass({
                                     onChange={this.onEditChange.bind(this,key)}/>
                         </Panel>
                     )
-                    break
 
                 case 'flex':
                     return (
@@ -102,11 +103,21 @@ module.exports = React.createClass({
                                    onChange={this.onEditChange.bind(this,key)}/>
                         </Panel>
                     )
+
                 case 'position':
                     return (
                         <Panel header={`位置`}
                                key={index}>
                             <Position item={item}
+                                      onChange={this.onEditChange.bind(this,key)}/>
+                        </Panel>
+                    )
+
+                case 'network':
+                    return (
+                        <Panel header={`网络`}
+                               key={index}>
+                            <Network item={item}
                                       onChange={this.onEditChange.bind(this,key)}/>
                         </Panel>
                     )
@@ -149,7 +160,7 @@ module.exports = React.createClass({
         }
 
         return (
-            <div namespace>
+            <div __namespace>
                 {editForm}
             </div>
         )

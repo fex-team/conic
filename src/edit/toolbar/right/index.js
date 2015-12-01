@@ -41,7 +41,7 @@ const Right = React.createClass({
         })
 
         return (
-            <div namespace style={{height:'100%'}}>
+            <div __namespace style={{height:'100%'}}>
                 <Tabs activeKey={this.state.activeTab}>
                     <TabPane tab={<Tooltip placement="bottom" title="项目树状结构"><i className="fa fa-tree"></i></Tooltip>}
                              key="tree">

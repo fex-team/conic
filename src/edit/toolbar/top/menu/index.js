@@ -104,7 +104,7 @@ module.exports = React.createClass({
         })
 
         return (
-            <div namespace>
+            <div __namespace>
                 <div className="g-bd2 f-cb">
                     <div className="g-mn2">
                         <div className="g-mnc2">

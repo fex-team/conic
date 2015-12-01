@@ -10,7 +10,7 @@ module.exports = React.createClass({
 
     render: function () {
         return (
-            <div namespace>
+            <div __namespace>
                 <div className="container">
                     <DragSource type="BaseText">
                         <Component icon={iconMap.BaseText}>文字</Component>

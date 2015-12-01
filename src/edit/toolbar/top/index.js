@@ -7,7 +7,7 @@ const ModalComponent = require('./modal')
 module.exports = React.createClass({
     render: function () {
         return (
-            <div namespace>
+            <div __namespace>
                 <ModalComponent/>
                 <MenuComponent/>
             </div>
