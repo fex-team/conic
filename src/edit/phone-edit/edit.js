@@ -194,6 +194,11 @@ const Edit = React.createClass({
 
     onMouseOver: function (event) {
         event.stopPropagation()
+
+        if (this.treeNode) {
+            this.treeNode.hover();
+        }
+
         editAction.hoverComponent(this, this.$dom)
     },
 

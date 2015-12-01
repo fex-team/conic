@@ -13,6 +13,13 @@ module.exports = {
         })
     },
 
+    hoverItem: function (component) {
+        dispatcher.dispatch({
+            type: 'hoverTreeNode',
+            component: component
+        })
+    },
+
     addTreeNode: function (component, item, childInfo) {
         dispatcher.dispatch({
             type: 'addTreeNode',

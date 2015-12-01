@@ -9,6 +9,7 @@ let classNames = require('classnames')
 let pureRenderMixin = require('../../../components/mixins/pure-render')
 let treeNodeAction = require('../../../actions/tree-node-action')
 let treeNodeStore = require('../../../stores/tree-node-store')
+let editAction = require('../../../actions/edit-action')
 
 let selectType = null
 
@@ -19,7 +20,8 @@ let TreeNode = React.createClass({
         return {
             childs: [],
             expand: this.props.expand || false,
-            selected: this.props.selected || false
+            selected: this.props.selected || false,
+            hover: false
         }
     },
 
@@ -80,6 +82,36 @@ let TreeNode = React.createClass({
         this.props.component.clickAction()
     },
 
+    onMouseOver: function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+
+        this.hover()
+    },
+
+    hover: function () {
+        if (this.state.hover || this.props.name === '手机壳') {
+            return
+        }
+
+        this.setState({
+            hover: true
+        })
+
+        treeNodeAction.hoverItem(this)
+        editAction.hoverComponent(this.props.component, this.props.component.$dom)
+    },
+
+    unHover: function () {
+        if (!this.state.hover) {
+            return
+        }
+
+        this.setState({
+            hover: false
+        })
+    },
+
     select: function () {
         if (this.state.selected) {
             return;
@@ -138,6 +170,7 @@ let TreeNode = React.createClass({
         var angle
         var selected = this.state.selected
         var padding = this.props.padding
+        var hover = this.state.hover
 
         var styles = {
             paddingLeft: (12 * padding) + 'px'
@@ -179,7 +212,10 @@ let TreeNode = React.createClass({
         return (
             <div>
                 <div className="section">
-                    <div style={styles} className={classNames('section-inner', 'none-select', {selected: selected})} onClick={this.onClick}>
+                    <div style={styles}
+                         className={classNames('section-inner', 'none-select', {selected: selected}, {hover: hover})}
+                         onMouseOver={this.onMouseOver}
+                         onClick={this.onClick}>
                         <span className="dropdown">{angle}</span>
                         <span className="section-name">{this.props.name}</span>
                     </div>
