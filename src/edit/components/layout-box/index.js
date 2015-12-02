@@ -56,7 +56,7 @@ let LayoutBox = React.createClass({
 
     render: function () {
         return (
-            <div __namespace
+            <div _namespace
                  style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.style.value)}>
                 {this.getChildrens()}
             </div>

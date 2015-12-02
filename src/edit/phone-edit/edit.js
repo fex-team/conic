@@ -287,7 +287,7 @@ const Edit = React.createClass({
         }
 
         return (
-            <div __namespace
+            <div _namespace
                  style={editStyle}
                  onMouseOver={this.onMouseOver}
                  onClick={this.onClick}>

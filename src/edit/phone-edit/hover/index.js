@@ -93,7 +93,7 @@ var Selector = React.createClass({
 
     render: function () {
         return (
-            <div __namespace
+            <div _namespace
                  style={this.state.style}>
 
             </div>

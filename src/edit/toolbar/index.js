@@ -141,7 +141,7 @@ let Container = React.createClass({
         }
 
         return (
-            <div __namespace
+            <div _namespace
                  style={{height:'100%'}}>
                 {children}
             </div>

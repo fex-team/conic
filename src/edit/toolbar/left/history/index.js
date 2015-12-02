@@ -73,7 +73,7 @@ const History = React.createClass({
         })
 
         return (
-            <div __namespace>
+            <div _namespace>
                 {historyList}
             </div>
         )

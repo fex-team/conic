@@ -33,6 +33,9 @@ let TreeNode = React.createClass({
         }
     },
 
+    componentWillReceiveProps: function (nextProps) {
+    },
+
     componentDidMount: function () {
 
         // 如果默认是选中状态，通知左侧组件更新

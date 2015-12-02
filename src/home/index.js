@@ -6,7 +6,7 @@ require('./index.scss')
 var Home = React.createClass({
     render: function () {
         return (
-            <div __namespace>
+            <div _namespace>
                 <Link className="btn" to="/edit">编辑网站</Link>
             </div>
         )

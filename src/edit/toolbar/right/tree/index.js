@@ -3,7 +3,6 @@ const TreeNode = require('./treeNode')
 const editStore = require('../../../stores/edit-store')
 const treeStore = require('../../../stores/tree-store')
 const _ = require('lodash');
-const defaultJson = require('../../../phone-edit/default.json')
 const treeAction = require('../../../actions/tree-action')
 const getTree = require('./get-tree')
 const treeNodeStore = require('../../../stores/tree-node-store')
@@ -70,6 +69,7 @@ let ComponentTree = React.createClass({
         });
 
         treeNodeStore.addAddListener(this.addTreeNode)
+        treeStore.addRefreshListener(this.refreshTree)
     },
 
     addTreeNode: function (item, component, childInfo) {
@@ -77,6 +77,24 @@ let ComponentTree = React.createClass({
             var info = this.state.info
             updateInfo(childInfo, info)
         })
+    },
+
+    refreshTree: function () {
+        let container = editStore.getContainer()
+        let info = {}
+
+        getTree(container, info, 0)
+
+        info['name'] = '手机壳'
+        info['key'] = 0
+        info['padding'] = 1
+        info['ref'] = (ref) => {
+            info.component.treeNode = ref
+        }
+
+        //this.setState({
+        //    info: info
+        //})
     },
 
     expandAll: function () {
@@ -93,7 +111,7 @@ let ComponentTree = React.createClass({
         let info = this.state.info
 
         return (
-            <div __namespace>
+            <div _namespace>
                 <div className="navigator clearfix">
                     <div className="title">导航</div>
                     <div className="nav-buttons">

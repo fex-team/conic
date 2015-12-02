@@ -83,7 +83,7 @@ module.exports = React.createClass({
         })
 
         return (
-            <div __namespace>
+            <div _namespace>
                 <div className="layout">
                     <div className="footer-tree">
                         {arrows}

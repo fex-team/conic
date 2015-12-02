@@ -33,7 +33,7 @@ const Left = React.createClass({
 
     render: function () {
         return (
-            <div __namespace
+            <div _namespace
                  style={{height:'100%'}}>
                 <Tabs activeKey={this.state.activeTab}>
                     <TabPane tab={<Tooltip placement="bottom" title="编辑组件"><i className="fa fa-edit"></i></Tooltip>}

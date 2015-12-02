@@ -9,6 +9,7 @@ let _ = require('lodash')
 
 let CHANGE_EVENT = 'change'
 let EDIT_MOUNT_EVENT = 'mount'
+let REFRESH_TREE = 'fresh'
 
 let TreeStore = _.extend({}, EventEmitter.prototype, {
     emitChange: function () {
@@ -17,6 +18,10 @@ let TreeStore = _.extend({}, EventEmitter.prototype, {
 
     emitMount: function (component) {
         this.emit(EDIT_MOUNT_EVENT, component)
+    },
+
+    emitRefresh: function () {
+        this.emit(REFRESH_TREE)
     },
 
     addMountListener: function (callback) {
@@ -35,6 +40,14 @@ let TreeStore = _.extend({}, EventEmitter.prototype, {
         this.removeListener(CHANGE_EVENT, callback)
     },
 
+    addRefreshListener: function (callback) {
+        this.on(REFRESH_TREE, callback)
+    },
+
+    removeRefreshListener: function (callback) {
+        this.removeListener(REFRESH_TREE, callback)
+    },
+
     get: function () {
 
     }
@@ -45,7 +58,12 @@ TreeStore.dispatchToken = dispatcher.register(function (action) {
         case 'editComponentMounted':
             let component = action.component
             TreeStore.emitMount(component)
-            break;
+            break
+
+        case 'refreshTree':
+            TreeStore.emitRefresh()
+
+            break
     }
 })
 

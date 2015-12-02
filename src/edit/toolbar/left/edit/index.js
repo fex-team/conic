@@ -160,7 +160,7 @@ module.exports = React.createClass({
         }
 
         return (
-            <div __namespace>
+            <div _namespace>
                 {editForm}
             </div>
         )

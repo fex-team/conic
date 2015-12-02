@@ -3,6 +3,7 @@ const classnames = require('classnames')
 const settingAction = require('../../../actions/setting-action')
 const editAction = require('../../../actions/edit-action')
 const historyAction = require('../../../actions/history-action')
+const treeAction = require('../../../actions/tree-action')
 const _ = require('lodash')
 require('./index.scss')
 
@@ -24,6 +25,10 @@ module.exports = React.createClass({
         settingAction.changeTree(_.cloneDeep(data))
         editAction.selectComponent(null)
         historyAction.clearHistory()
+
+        setTimeout(() => {
+            treeAction.refreshTree()
+        })
     },
 
     render: function () {
@@ -43,7 +48,7 @@ module.exports = React.createClass({
         })
 
         return (
-            <div __namespace
+            <div _namespace
                  style={{height:'100%'}}>
                 <div className="layout">
                     {templates}

@@ -41,7 +41,7 @@ const Text = React.createClass({
 
     render: function () {
         return (
-            <div __namespace style={_.assign(this.mergedOpts.style.value, defaultStyle)}>
+            <div _namespace style={_.assign(this.mergedOpts.style.value, defaultStyle)}>
                 {this.mergedOpts.base.value.text.value}
             </div>
         )

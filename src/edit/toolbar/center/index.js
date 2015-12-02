@@ -62,7 +62,7 @@ module.exports = React.createClass({
         })
 
         return (
-            <div __namespace
+            <div _namespace
                  style={{height:'100%',position:'relative'}}>
                 <div className={layoutClass}>
                     {viewChild}

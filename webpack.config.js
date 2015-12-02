@@ -12,11 +12,11 @@ module.exports = {
             {
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                loaders: ['jsx', 'babel', 'html-path-loader']
+                loaders: ['jsx', 'babel']
             }, {
                 test: /\.(scss|css)/,
                 exclude: /node_modules/,
-                loaders: ['style', 'css', 'autoprefixer', 'sass', 'css-path-loader']
+                loaders: ['style', 'css', 'autoprefixer', 'sass']
             }, {
                 test: /\.(scss|css)/,
                 include: /node_modules/,

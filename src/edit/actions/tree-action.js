@@ -17,6 +17,11 @@ module.exports = {
             type: 'editComponentMounted',
             component: component
         })
+    },
+    refreshTree: function () {
+        dispatcher.dispatch({
+            type: 'refreshTree'
+        })
     }
 }
 
