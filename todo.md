@@ -14,6 +14,8 @@ TODO
 - 整个页面滚动条消失时，hover/selector位置没有更新
 - 用editorStore的container取代historyStore
 - 颜色可选继承
+- 选中code组件后，编辑框变宽
+- 编辑框title宽度固定
 
 ## 页面
 - 多页面路由

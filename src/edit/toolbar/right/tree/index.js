@@ -93,7 +93,7 @@ let ComponentTree = React.createClass({
         let info = this.state.info
 
         return (
-            <div namespace>
+            <div __namespace>
                 <div className="navigator clearfix">
                     <div className="title">导航</div>
                     <div className="nav-buttons">

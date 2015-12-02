@@ -110,7 +110,7 @@ var Selector = React.createClass({
 
     render: function () {
         return (
-            <div namespace
+            <div __namespace
                  style={this.state.style}></div>
         )
     }

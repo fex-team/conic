@@ -46,7 +46,7 @@ module.exports = React.createClass({
         })
 
         return (
-            <div namespace>
+            <div __namespace>
                 <div className="row">
                     <div style={viewButtonStyle}
                          className={mobileClass}

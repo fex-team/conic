@@ -67,7 +67,7 @@ let LayoutBoxAbsolute = React.createClass({
         }
 
         return (
-            <div namespace
+            <div __namespace
                  style={style}>
                 {this.getChildrens()}
             </div>

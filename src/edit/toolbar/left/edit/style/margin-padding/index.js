@@ -163,7 +163,7 @@ module.exports = React.createClass({
         })
 
         return (
-            <div namespace>
+            <div __namespace>
                 <div className="ant-form-item">
                     <label className="col-8">内外边距</label>
 

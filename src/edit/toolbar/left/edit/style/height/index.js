@@ -132,7 +132,7 @@ module.exports = React.createClass({
         })
 
         return (
-            <div namespace>
+            <div __namespace>
                 <div className="ant-form-item">
                     <label htmlFor="control-input"
                            className="col-8">高度</label>

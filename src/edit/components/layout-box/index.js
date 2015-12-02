@@ -33,6 +33,18 @@ let LayoutBox = React.createClass({
                         background: 'white'
                     },
                     edit: 'style'
+                },
+                network: {
+                    value: {
+                        url: 'http://www.baidu.com',
+                        trigger: 'init',
+                        data: {
+                            a: 1,
+                            b: 2
+                        },
+                        mock: false
+                    },
+                    edit: 'network'
                 }
             }
         }
@@ -44,7 +56,7 @@ let LayoutBox = React.createClass({
 
     render: function () {
         return (
-            <div namespace
+            <div __namespace
                  style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.style.value)}>
                 {this.getChildrens()}
             </div>
