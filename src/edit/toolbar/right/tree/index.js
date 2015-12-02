@@ -92,9 +92,9 @@ let ComponentTree = React.createClass({
             info.component.treeNode = ref
         }
 
-        //this.setState({
-        //    info: info
-        //})
+        this.setState({
+            info: info
+        })
     },
 
     expandAll: function () {
@@ -109,6 +109,10 @@ let ComponentTree = React.createClass({
 
     render: function () {
         let info = this.state.info
+
+        if (_.isEmpty(info)) {
+            return false
+        }
 
         return (
             <div _namespace>

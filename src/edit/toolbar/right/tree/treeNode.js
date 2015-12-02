@@ -18,7 +18,7 @@ let TreeNode = React.createClass({
 
     getInitialState: function () {
         return {
-            childs: [],
+            childs: this.props.childs || [],
             expand: this.props.expand || false,
             selected: this.props.selected || false,
             hover: false
@@ -26,14 +26,17 @@ let TreeNode = React.createClass({
     },
 
     componentWillMount: function () {
-        if (!_.isEmpty(this.props.childs)) {
-            this.setState({
-                childs: this.props.childs
-            })
-        }
+        //if (!_.isEmpty(this.props.childs)) {
+        //    this.setState({
+        //        childs: this.props.childs
+        //    })
+        //}
     },
 
     componentWillReceiveProps: function (nextProps) {
+        this.setState({
+            childs: nextProps.childs
+        })
     },
 
     componentDidMount: function () {
