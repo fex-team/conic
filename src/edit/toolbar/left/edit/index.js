@@ -41,6 +41,17 @@ module.exports = React.createClass({
 
     componentDidMount: function () {
         editStore.addChangeListener(this.onComponentChange)
+        $(document).on('keydown', (e) => {
+            if (e.keyCode == 8) { // backspace || delete
+                e.preventDefault()
+
+                if (currentComponentDesc === '手机壳') return
+
+                this.removeSelf()
+
+                return false
+            }
+        })
     },
 
     componentWillUnmount: function () {

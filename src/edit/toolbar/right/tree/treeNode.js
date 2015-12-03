@@ -18,8 +18,8 @@ let TreeNode = React.createClass({
 
     getInitialState: function () {
         return {
-            childs: [],
-            expand: this.props.expand || false,
+            childs: this.props.childs || [],
+            expand: this.props.expand || true,
             selected: this.props.selected || false,
             hover: false
         }
@@ -31,9 +31,6 @@ let TreeNode = React.createClass({
                 childs: this.props.childs
             })
         }
-    },
-
-    componentWillReceiveProps: function (nextProps) {
     },
 
     componentDidMount: function () {
@@ -93,7 +90,7 @@ let TreeNode = React.createClass({
     },
 
     hover: function () {
-        if (this.state.hover || this.props.name === '手机壳') {
+        if (this.state.hover || this.props.name === '手机壳' || !this.isMounted()) {
             return
         }
 
@@ -106,7 +103,7 @@ let TreeNode = React.createClass({
     },
 
     unHover: function () {
-        if (!this.state.hover) {
+        if (!this.state.hover || !this.isMounted()) {
             return
         }
 
@@ -116,7 +113,7 @@ let TreeNode = React.createClass({
     },
 
     select: function () {
-        if (this.state.selected) {
+        if (this.state.selected || !this.isMounted()) {
             return;
         }
 
