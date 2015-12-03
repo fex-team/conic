@@ -6,6 +6,7 @@ const getTreeCopy = require('../phone-edit/lib/get-tree-copy')
 const _ = require('lodash')
 
 const ViewStore = assign({}, EventEmitter.prototype, {})
+const getNodeTree = require('../toolbar/right/tree/get-tree')
 
 // 剪贴板中内容
 let copyInfo = null
@@ -35,8 +36,32 @@ ViewStore.dispatchToken = dispatcher.register(function (action) {
         let nowSelectComponentName = nowSelectComponent.props.children.props.name
         if (nowSelectComponentName !== 'LayoutBox' && nowSelectComponentName !== 'LayoutBoxAbsolute' && nowSelectComponentName !== 'Container') {
             nowSelectComponent.props.parent.addChild(_.cloneDeep(copyInfo))
+
+            setTimeout(() => {
+                let addedComponent = _.find(nowSelectComponent.props.parent.childInstance.getChildsEdit(), (value) => {
+                    return value.props.uniqueKey === copyInfo.uniqueKey
+                })
+
+                let newCopyInfo = _.cloneDeep(copyInfo)
+
+                getNodeTree(addedComponent, newCopyInfo, 0)
+
+                nowSelectComponent.props.parent.treeNode.addChild(newCopyInfo)
+            })
         } else {
             nowSelectComponent.addChild(_.cloneDeep(copyInfo))
+
+            setTimeout(() => {
+                let addedComponent = _.find(nowSelectComponent.childInstance.getChildsEdit(), (value) => {
+                    return value.props.uniqueKey === copyInfo.uniqueKey
+                })
+
+                let newCopyInfo = _.cloneDeep(copyInfo)
+
+                getNodeTree(addedComponent, newCopyInfo, 0)
+
+                nowSelectComponent.treeNode.addChild(newCopyInfo)
+            })
         }
         break
     }

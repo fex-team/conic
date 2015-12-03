@@ -86,7 +86,7 @@ let ComponentTree = React.createClass({
         getTree(container, info, 0)
 
         info['name'] = '手机壳'
-        info['key'] = 0
+        info['key'] = 1
         info['padding'] = 1
         info['ref'] = (ref) => {
             info.component.treeNode = ref

@@ -3,6 +3,7 @@ var Components = require('../../components')
 var Edit = require('../../phone-edit/edit')
 var LayoutBox = require('../../components/layout-box')
 var _ = require('lodash')
+var Perf = require('react-addons-perf')
 
 module.exports = {
     // 获得子元素的edit引用
