@@ -7,8 +7,6 @@ const editAction = require('../actions/edit-action')
 const editStore = require('../stores/edit-store')
 const footerAction = require('../actions/footer-action')
 const historyAction = require('../actions/history-action')
-const treeNodeAction = require('../actions/tree-node-action')
-const treeAction = require('../actions/tree-action')
 const classNames = require('classnames')
 const _ = require('lodash')
 const $ = require('jquery')
@@ -16,6 +14,8 @@ const getTree = require('./lib/get-tree')
 
 const onDragMixins = require('./edit-mixins/on-drag')
 const getPosition = require('./lib/get-position')
+
+const Selector = require('./selector')
 
 const Edit = React.createClass({
     mixins: [onDragMixins],
@@ -209,8 +209,6 @@ const Edit = React.createClass({
     render: function () {
         // 记录render日志
         // console.log('%c[render] edit', 'color:green')
-        let positionArray = []
-        getPosition(this, positionArray)
 
         // 放在edit上的style
         let editStyle = {}
@@ -229,6 +227,13 @@ const Edit = React.createClass({
         }
 
         let childComponent = React.cloneElement(this.props.children, newChildProps)
+
+        childComponent = (
+            <div style={{position:'relative',height:'100%'}}>
+                {this.state.selected ? <Selector absolute={this.props.dragSourceAbsolute}/> : null}
+                {childComponent}
+            </div>
+        )
 
         if (this.props.dragTarget) {
             childComponent = (

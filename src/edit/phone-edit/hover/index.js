@@ -66,7 +66,7 @@ var Selector = React.createClass({
         let selectorUniqueKey = editStore.get() && editStore.get().props.uniqueKey && editStore.get() && editStore.get().props.uniqueKey || false
         let hoverUniqueKey = editStore.getHoverComponent() && editStore.getHoverComponent().props.uniqueKey && editStore.getHoverComponent().props.uniqueKey || false
 
-        if ($componentDom && !(selectorUniqueKey && hoverUniqueKey && hoverUniqueKey === selectorUniqueKey)) {
+        if ($componentDom) {
             newStyle = {
                 left: $componentDom.offset().left - editStore.get$ContainerDom().offset().left,
                 top: $componentDom.offset().top - editStore.get$ContainerDom().offset().top,

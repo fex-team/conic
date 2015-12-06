@@ -289,10 +289,14 @@ form .ant-input, form .ant-input-group .ant-input, form .ant-input-group .ant-in
   line-height: 28px;
 }
 
+:root .ant-collapse > .ant-collapse-item > .ant-collapse-header .arrow {
+  margin-top: -6px;
+}
+
 // switch 开关
 .ant-switch {
   background-color: #333;
-  border-color:#222;
+  border-color: #222;
 }
 
 .ant-switch-checked {

@@ -4,6 +4,7 @@ const settingAction = require('../../../actions/setting-action')
 const editAction = require('../../../actions/edit-action')
 const historyAction = require('../../../actions/history-action')
 const treeAction = require('../../../actions/tree-action')
+const viewAction = require('../../../actions/view-action')
 const _ = require('lodash')
 require('./index.scss')
 
@@ -25,6 +26,7 @@ module.exports = React.createClass({
         settingAction.changeTree(_.cloneDeep(data))
         editAction.selectComponent(null)
         historyAction.clearHistory()
+        viewAction.closeView()
 
         setTimeout(() => {
             treeAction.refreshTree()
