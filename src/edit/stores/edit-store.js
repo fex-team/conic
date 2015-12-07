@@ -322,8 +322,6 @@ EditStore.dispatchToken = dispatcher.register(function (action) {
         currentComponent = action.component
         $currentComponentDom = $(ReactDOM.findDOMNode(currentComponent))
 
-        //currentComponent.treeNode.select()
-
         // 如果上个组件存在，则取消选中状态
         if (previousComponent) {
             previousComponent.unSelected()

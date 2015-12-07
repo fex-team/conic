@@ -11,8 +11,7 @@ const copyPasteAction = require('../actions/copy-paste-action')
 const $ = require('jquery')
 require('./index.scss')
 
-const PhoneSelector = require('./selector')
-const PhoneHover = require('./hover')
+const Hover = require('./hover')
 
 const viewTypeStyle = {
     height: 'inherit',
@@ -103,8 +102,7 @@ var PhoneEdit = React.createClass({
                                 </Edit>
                             </DragAround>
                         </DragContainer>
-                        <PhoneSelector/>
-                        <PhoneHover/>
+                        <Hover/>
                     </div>
                 </div>
 
