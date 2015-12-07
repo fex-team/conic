@@ -3,6 +3,7 @@ const editStore = require('../../stores/edit-store')
 const historyStore = require('../../stores/history-store')
 const $ = require('jquery')
 const ReactDOM = require('react-dom')
+const _ = require('lodash')
 require('./index.scss')
 
 const defaultStyle = {
@@ -22,13 +23,14 @@ var Selector = React.createClass({
     },
 
     render: function () {
-        if (this.props.absolute){
-            defaultStyle.outline = '2px solid #A900FF'
+        let style = _.cloneDeep(defaultStyle)
+        if (this.props.absolute) {
+            style.outline = '2px solid #A900FF'
         }
 
         return (
             <div _namespace
-                 style={defaultStyle}>
+                 style={style}>
                 <div className="relative"></div>
             </div>
         )
