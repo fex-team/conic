@@ -4,7 +4,7 @@ const TabPane = Tabs.TabPane
 const Tooltip = require('antd/lib/tooltip')
 const editStore = require('../../stores/edit-store')
 const Badge = require('antd/lib/badge')
-const classnames = require('classnames')
+const classNames = require('classnames')
 
 const Tree = require('./tree')
 
@@ -26,7 +26,7 @@ const Right = React.createClass({
 
     render: function () {
 
-        let closeClass = classnames({
+        let closeClass = classNames({
             'close-container': true,
             'show-animate': this.state.show,
             'hide-animate': !this.state.show

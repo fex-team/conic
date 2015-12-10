@@ -1,7 +1,7 @@
 const React = require('react')
 const InputNumber = require('antd/lib/input-number')
 const _ = require('lodash')
-const classnames = require('classnames')
+const classNames = require('classnames')
 const Switch = require('antd/lib/switch')
 require('./index.scss')
 
@@ -113,20 +113,20 @@ module.exports = React.createClass({
     },
 
     render: function () {
-        let pxClass = classnames({
+        let pxClass = classNames({
             'mode-btn': true,
             'active': this.state.type === 'px'
         })
-        let scaleClass = classnames({
+        let scaleClass = classNames({
             'mode-btn': true,
             'active': this.state.type === 'scale'
         })
 
-        let canExtendClass = classnames({
+        let canExtendClass = classNames({
             'mode-btn': true,
             'active': this.state.canExtend
         })
-        let canNotExtendClass = classnames({
+        let canNotExtendClass = classNames({
             'mode-btn': true,
             'active': !this.state.canExtend
         })

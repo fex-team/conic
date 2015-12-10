@@ -2,7 +2,7 @@ const React = require('react')
 const historyAction = require('../../../actions/history-action')
 const historyStore = require('../../../stores/history-store')
 const _ = require('lodash')
-const classnames = require('classnames')
+const classNames = require('classnames')
 const message = require('antd/lib/message')
 require('./index.scss')
 
@@ -56,7 +56,7 @@ const History = React.createClass({
     render: function () {
         let newHistorys = _.cloneDeep(this.state.historys)
         let historyList = newHistorys.reverse().map((item, index)=> {
-            let classname = classnames({
+            let classname = classNames({
                 'history-box': true,
                 'active': index === this.state.current
             })

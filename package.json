@@ -8,7 +8,7 @@
     "webpack-dev": "node webpack.js",
     "webpack-dist": "webpack -p --profile --display-modules",
     "start": "npm run server & npm run webpack-dev",
-    "release": "npm run webpack-dist && npm run server",
+    "build": "npm run webpack-dist && npm run server",
     "render": "babel server/render.js"
   },
   "repository": {

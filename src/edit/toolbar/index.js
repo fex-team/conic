@@ -7,7 +7,7 @@ const editAction = require('../actions/edit-action')
 const editStore = require('../stores/edit-store')
 const settingAction = require('../actions/setting-action')
 const settingStore = require('../stores/setting-store')
-const classnames = require('classnames')
+const classNames = require('classnames')
 
 const defaultJson = require('../phone-edit/default.json')
 
@@ -77,25 +77,25 @@ let Container = React.createClass({
     },
 
     render: function () {
-        let sdClass = classnames({
+        let sdClass = classNames({
             'g-sd': true,
             'g-sd-enter': this.state.mode === 'edit',
             'g-sd-leave': this.state.mode === 'preview'
         })
 
-        let rdClass = classnames({
+        let rdClass = classNames({
             'g-rd': true,
             'g-rd-enter': this.state.mode === 'edit',
             'g-rd-leave': this.state.mode === 'preview'
         })
 
-        let ftClass = classnames({
+        let ftClass = classNames({
             'g-ft': true,
             'g-ft-enter': this.state.mode === 'edit',
             'g-ft-leave': this.state.mode === 'preview'
         })
 
-        let mnClass = classnames({
+        let mnClass = classNames({
             'g-mn': true,
             'g-mn-leave': this.state.mode === 'preview'
         })

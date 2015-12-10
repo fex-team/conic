@@ -1,8 +1,8 @@
 const React = require('react')
-const reactRouter = require('react-router')
-const Router = reactRouter.Router
-const Route = reactRouter.Route
-const IndexRoute = reactRouter.IndexRoute
+const ReactRouter = require('react-router')
+const Router = ReactRouter.Router
+const Route = ReactRouter.Route
+const IndexRoute = ReactRouter.IndexRoute
 
 const Home = require('./home')
 const ToolBar = require('./edit/toolbar')

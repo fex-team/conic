@@ -1,7 +1,7 @@
 const React = require('react')
 const historyStore = require('../../../../stores/history-store')
 const historyAction = require('../../../../actions/history-action')
-const classnames = require('classnames')
+const classNames = require('classnames')
 require('./index.scss')
 
 module.exports = React.createClass({
@@ -42,12 +42,12 @@ module.exports = React.createClass({
     },
 
     render: function () {
-        var reverseClass = classnames({
+        var reverseClass = classNames({
             'operate-btn': true,
             'disabled': this.state.historyCount === 0 || historyStore.getCurrentIndex() === this.state.historyCount - 1
         })
 
-        var forwardClass = classnames({
+        var forwardClass = classNames({
             'operate-btn': true,
             'disabled': historyStore.getCurrentIndex() === 0
         })

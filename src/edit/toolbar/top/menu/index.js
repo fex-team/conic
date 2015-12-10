@@ -1,9 +1,9 @@
 const React = require('react')
 const Menu = require('antd/lib/menu')
 const SubMenu = Menu.SubMenu
-const reactRouter = require('react-router')
-const Link = reactRouter.Link
-const classnames = require('classnames')
+const ReactRouter = require('react-router')
+const Link = ReactRouter.Link
+const classNames = require('classnames')
 const editStore = require('../../../stores/edit-store')
 const viewAction = require('../../../actions/view-action')
 const ViewType = require('./view-type')
@@ -91,13 +91,13 @@ module.exports = React.createClass({
     },
 
     render: function () {
-        let sd2Class = classnames({
+        let sd2Class = classNames({
             'g-sd2': true,
             'g-sd2-enter': this.state.mode === 'edit',
             'g-sd2-leave': this.state.mode === 'preview'
         })
 
-        let sd2PreviewClass = classnames({
+        let sd2PreviewClass = classNames({
             'g-sd2': true,
             'g-sd2-preview-enter': this.state.mode === 'edit',
             'g-sd2-preview-leave': this.state.mode === 'preview'

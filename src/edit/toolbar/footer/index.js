@@ -1,6 +1,6 @@
 var React = require('react')
 var editStore = require('../../stores/edit-store')
-var classnames = require('classnames')
+var classNames = require('classnames')
 var iconMap = require('../left/component/components/icon-map')
 var footerStore = require('../../stores/footer-store')
 var Tooltip = require('antd/lib/tooltip')
@@ -60,7 +60,7 @@ module.exports = React.createClass({
 
     render: function () {
         let arrows = this.state.editLists.map((item, index)=> {
-            let className = classnames({
+            let className = classNames({
                 arrow: true,
                 active: index === this.state.editLists.length - 1
             })
@@ -75,7 +75,7 @@ module.exports = React.createClass({
             )
         })
 
-        let instanceNumberClass = classnames({
+        let instanceNumberClass = classNames({
             'instance-number': true,
             green: this.state.opts.instanceNumber < 100,
             warning: this.state.opts.instanceNumber >= 100 && this.state.opts.instanceNumber < 500,

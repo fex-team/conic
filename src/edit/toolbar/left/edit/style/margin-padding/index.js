@@ -1,6 +1,6 @@
 var React = require('react')
 var $ = require('jquery')
-var classnames = require('classnames')
+var classNames = require('classnames')
 require('./index.scss')
 
 
@@ -145,7 +145,7 @@ module.exports = React.createClass({
 
         let buttons = types.map((type)=> {
             return directions.map((direction)=> {
-                let buttonClass = classnames({
+                let buttonClass = classNames({
                     [type + '-' + direction]: true,
                     active: this.state.currentType === type && this.state.currentDirection === direction
                 })

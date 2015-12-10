@@ -1,3 +1,5 @@
+var externals = require('./externals')
+
 module.exports = {
     entry: [
         './src/index.js'
@@ -7,16 +9,17 @@ module.exports = {
         publicPath: '/output/',
         filename: './index.js'
     },
+    externals: externals,
     module: {
         loaders: [
             {
                 test: /\.js?$/,
                 exclude: /node_modules/,
-                loaders: ['jsx', 'babel']
+                loaders: ['babel?presets[]=react,presets[]=es2015', 'html-path-loader']
             }, {
                 test: /\.(scss|css)/,
                 exclude: /node_modules/,
-                loaders: ['style', 'css', 'autoprefixer', 'sass']
+                loaders: ['style', 'css', 'autoprefixer', 'sass', 'css-path-loader']
             }, {
                 test: /\.(scss|css)/,
                 include: /node_modules/,

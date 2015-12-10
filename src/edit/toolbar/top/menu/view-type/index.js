@@ -1,5 +1,5 @@
 const React = require('react')
-const classnames = require('classnames')
+const classNames = require('classnames')
 const settingStore = require('../../../../stores/setting-store')
 const settingAction = require('../../../../actions/setting-action')
 require('./index.scss')
@@ -35,12 +35,12 @@ module.exports = React.createClass({
     },
 
     render: function () {
-        let pcClass = classnames({
+        let pcClass = classNames({
             'operate-btn': true,
             'active': this.state.type === 'pc'
         })
 
-        let mobileClass = classnames({
+        let mobileClass = classNames({
             'operate-btn': true,
             'active': this.state.type === 'mobile'
         })

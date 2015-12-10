@@ -1,5 +1,6 @@
 var webpack = require('webpack')
 var path = require('path')
+var externals = require('./externals')
 
 var config = {
     addVendor: function (name, path) {
@@ -15,6 +16,8 @@ var config = {
         'webpack/hot/only-dev-server',
         './src/index.js'
     ],
+
+    externals: externals,
 
     output: {
         path: __dirname + '/output/',
@@ -65,9 +68,6 @@ var config = {
 }
 
 var node_modules = __dirname + '/node_modules'
-config.addVendor('flux', node_modules + '/flux/dist/flux.min.js')
 config.addVendor('react-dnd', node_modules + '/react-dnd/dist/ReactDnD.min.js')
-config.addVendor('react-router', node_modules + '/react-router/umd/ReactRouter.min.js')
-config.addVendor('jquery', node_modules + '/jquery/dist/jquery.min.js')
 
 module.exports = config

@@ -1,5 +1,5 @@
 const React = require('react')
-const classnames = require('classnames')
+const classNames = require('classnames')
 const viewStore = require('../../stores/view-store')
 const viewAction = require('../../actions/view-action')
 require('./index.scss')
@@ -40,7 +40,7 @@ module.exports = React.createClass({
     },
 
     render: function () {
-        let layoutClass = classnames({
+        let layoutClass = classNames({
             'layout': true,
             'show-animate': this.state.show,
             'hide-animate': !this.state.show
@@ -55,7 +55,7 @@ module.exports = React.createClass({
             break
         }
 
-        let closeClass = classnames({
+        let closeClass = classNames({
             'close-container': true,
             'show-animate': this.state.show,
             'hide-animate': !this.state.show

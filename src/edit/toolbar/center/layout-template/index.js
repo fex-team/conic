@@ -1,5 +1,5 @@
 const React = require('react')
-const classnames = require('classnames')
+const classNames = require('classnames')
 const settingAction = require('../../../actions/setting-action')
 const editAction = require('../../../actions/edit-action')
 const historyAction = require('../../../actions/history-action')
@@ -35,7 +35,7 @@ module.exports = React.createClass({
 
     render: function () {
         let templates = templateDatas.map((item, index)=> {
-            let imageClass = classnames({
+            let imageClass = classNames({
                 img: true,
                 [item.name]: true
             })

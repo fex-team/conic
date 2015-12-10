@@ -1,7 +1,7 @@
 const React = require('react')
 const InputNumber = require('antd/lib/input-number')
 const _ = require('lodash')
-const classnames = require('classnames')
+const classNames = require('classnames')
 require('./index.scss')
 
 const normalWidth = 80
@@ -115,15 +115,15 @@ module.exports = React.createClass({
     },
 
     render: function () {
-        let pxClass = classnames({
+        let pxClass = classNames({
             'mode-btn': true,
             'active': this.state.type === 'px'
         })
-        let scaleClass = classnames({
+        let scaleClass = classNames({
             'mode-btn': true,
             'active': this.state.type === 'scale'
         })
-        let autoClass = classnames({
+        let autoClass = classNames({
             'mode-btn': true,
             'active': this.state.type === 'auto'
         })
