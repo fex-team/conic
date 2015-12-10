@@ -50,7 +50,7 @@ module.exports = React.createClass({
         })
 
         return (
-            <div _namespace
+            <div className="_namespace"
                  style={{height:'100%'}}>
                 <div className="layout">
                     {templates}

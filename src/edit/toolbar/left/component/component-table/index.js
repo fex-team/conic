@@ -25,7 +25,7 @@ module.exports = React.createClass({
 
     render: function () {
         return (
-            <div _namespace>
+            <div className="_namespace">
                 <table className="menu-table">
                     <tbody>
                     <tr>

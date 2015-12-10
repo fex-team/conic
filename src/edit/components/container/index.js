@@ -74,7 +74,7 @@ let Container = React.createClass({
 
     render: function () {
         return (
-            <div _namespace
+            <div className="_namespace"
                  style={_.assign(this.mergedOpts.flex.value,this.mergedOpts.style.value,defaultStyle)}>
                 {this.getChildrens()}
             </div>

@@ -29,7 +29,7 @@ var Selector = React.createClass({
         }
 
         return (
-            <div _namespace
+            <div className="_namespace"
                  style={style}>
                 <div className="relative"></div>
             </div>

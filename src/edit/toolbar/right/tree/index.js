@@ -115,7 +115,7 @@ let ComponentTree = React.createClass({
         }
 
         return (
-            <div _namespace>
+            <div className="_namespace">
                 <div className="navigator clearfix">
                     <div className="title">导航</div>
                     <div className="nav-buttons">

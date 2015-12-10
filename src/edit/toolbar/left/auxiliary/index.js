@@ -13,7 +13,7 @@ const Auxiliary = React.createClass({
 
     render: function () {
         return (
-            <div _namespace>
+            <div className="_namespace">
                 <form className="ant-form-horizontal">
                     <div className="ant-form-item">
                         <label htmlFor="control-input"
