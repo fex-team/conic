@@ -16,7 +16,6 @@ module.exports = React.createClass({
         getTree(historyStore.getContainerEdit(), info)
         editAction.changeShowMode('preview', info)
         viewAction.closeView()
-        console.log(JSON.stringify(info))
     },
 
     render: function () {

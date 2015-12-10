@@ -31,7 +31,7 @@ function handleViewTypeChange() {
     }
 }
 
-var PhoneEdit = React.createClass({
+const PhoneEdit = React.createClass({
     getInitialState: function () {
         return {
             mode: 'edit'
