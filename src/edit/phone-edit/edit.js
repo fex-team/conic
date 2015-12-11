@@ -102,27 +102,27 @@ const Edit = React.createClass({
         let mergeOpts = $.extend(true, _.cloneDeep(this.state.customOpts), opts)
 
         // 如果是历史记录，则附加到历史中
-        if (_.isObject(historyInfo)) {
-            let positionArray = []
-            let optsBefore = _.cloneDeep(this.state.customOpts)
-            let optsAfter = _.cloneDeep(mergeOpts)
-            getPosition(this, positionArray)
-
-            // 如果before为空，为了完全还原，需要记下原始状态信息
-            if (_.isEmpty(optsBefore)) {
-                optsBefore = _.cloneDeep(this.props.children.props.defaultOpts)
-            }
-
-            setTimeout(()=> {
-                historyAction.addHistory({
-                    position: positionArray,
-                    optsBefore: optsBefore,
-                    optsAfter: optsAfter,
-                    type: 'update',
-                    operateName: this.props.children.props.name + ' ' + historyInfo.name
-                })
-            })
-        }
+//        if (_.isObject(historyInfo)) {
+//            let positionArray = []
+//            let optsBefore = _.cloneDeep(this.state.customOpts)
+//            let optsAfter = _.cloneDeep(mergeOpts)
+//            getPosition(this, positionArray)
+//
+//            // 如果before为空，为了完全还原，需要记下原始状态信息
+//            if (_.isEmpty(optsBefore)) {
+//                optsBefore = _.cloneDeep(this.props.children.props.defaultOpts)
+//            }
+//
+//            setTimeout(()=> {
+//                historyAction.addHistory({
+//                    position: positionArray,
+//                    optsBefore: optsBefore,
+//                    optsAfter: optsAfter,
+//                    type: 'update',
+//                    operateName: this.props.children.props.name + ' ' + historyInfo.name
+//                })
+//            })
+//        }
 
         this.setState({
             customOpts: mergeOpts

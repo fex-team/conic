@@ -1,6 +1,7 @@
 var React = require('react')
 var Select = require('antd/lib/select')
 var Option = Select.Option
+var editStore = require('../../../../stores/edit-store')
 
 const selectWidth = 150
 
@@ -26,6 +27,7 @@ module.exports = React.createClass({
         this.setState({
             item: newItem
         }, function () {
+
             this.props.onChange(this.state.item, {
                 name: '修改子元素布局方式'
             })
