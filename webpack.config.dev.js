@@ -6,24 +6,11 @@ var config = {
     devtool: 'eval-source-map',
     watch: true,
 
-    entry: {
-        app: [
-            'webpack-dev-server/client?http://localhost:8090',
-            'webpack/hot/only-dev-server',
-            './src/index.js'
-        ],
-        vendor: [
-            'react-dnd',
-            'react-json-tree',
-            'jquery',
-            'react',
-            'react-dom',
-            'classnames',
-            'lodash',
-            'react-router',
-            'flux'
-        ]
-    },
+    entry: [
+        'webpack-dev-server/client?http://localhost:8090',
+        'webpack/hot/only-dev-server',
+        './src/index.js'
+    ],
 
     externals: externals,
 

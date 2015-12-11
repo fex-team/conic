@@ -43,9 +43,5 @@ module.exports = {
                 loader: 'json-loader'
             }
         ]
-    },
-
-    plugins: [
-        new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.js", Infinity)
-    ]
+    }
 }
