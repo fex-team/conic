@@ -15,7 +15,7 @@
     "type": "git",
     "url": "https://github.com/fex-team/gaea.git"
   },
-  "author": "",
+  "author": "tieba",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer-loader": "^3.1.0",
