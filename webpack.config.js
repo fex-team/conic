@@ -1,15 +1,22 @@
-var externals = require('./externals')
+var webpack = require('webpack')
 
 module.exports = {
-    entry: [
-        './src/index.js'
-    ],
+    entry: {
+        app: [
+            './src/index.js'
+        ],
+        vendor: [
+            'react-dnd',
+            'react-json-tree'
+        ]
+    },
+
     output: {
         path: __dirname + '/output/',
         publicPath: '/output/',
         filename: './index.js'
     },
-    externals: externals,
+
     module: {
         loaders: [
             {
@@ -27,7 +34,7 @@ module.exports = {
             }, {
                 test: /\.(png|jpg)$/,
                 exclude: /node_modules/,
-                loader: 'url'
+                loader: 'url?limit=3000&name=img/[hash:8].[name].[ext]'
             }, {
                 test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: 'url'
@@ -36,5 +43,9 @@ module.exports = {
                 loader: 'json-loader'
             }
         ]
-    }
+    },
+
+    plugins: [
+        new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.js", Infinity)
+    ]
 }

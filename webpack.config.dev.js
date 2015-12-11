@@ -3,19 +3,27 @@ var path = require('path')
 var externals = require('./externals')
 
 var config = {
-    addVendor: function (name, path) {
-        this.resolve.alias[name] = path;
-        this.module.noParse.push(new RegExp('^' + name + '$'));
-    },
-
     devtool: 'eval-source-map',
     watch: true,
 
-    entry: [
-        'webpack-dev-server/client?http://localhost:8090',
-        'webpack/hot/only-dev-server',
-        './src/index.js'
-    ],
+    entry: {
+        app: [
+            'webpack-dev-server/client?http://localhost:8090',
+            'webpack/hot/only-dev-server',
+            './src/index.js'
+        ],
+        vendor: [
+            'react-dnd',
+            'react-json-tree',
+            'jquery',
+            'react',
+            'react-dom',
+            'classnames',
+            'lodash',
+            'react-router',
+            'flux'
+        ]
+    },
 
     externals: externals,
 
@@ -23,10 +31,6 @@ var config = {
         path: __dirname + '/output/',
         publicPath: '/output/',
         filename: 'index.js'
-    },
-
-    resolve: {
-        alias: {}
     },
 
     module: {
@@ -47,7 +51,7 @@ var config = {
             }, {
                 test: /\.(png|jpg)$/,
                 exclude: /node_modules/,
-                loader: 'url'
+                loader: 'url?limit=3000&name=img/[hash:8].[name].[ext]'
             }, {
                 test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: 'url'
@@ -66,8 +70,5 @@ var config = {
         new webpack.NoErrorsPlugin()
     ]
 }
-
-var node_modules = __dirname + '/node_modules'
-config.addVendor('react-dnd', node_modules + '/react-dnd/dist/ReactDnD.min.js')
 
 module.exports = config

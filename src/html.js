@@ -18,13 +18,7 @@ module.exports = `
       <div id="react-dom"></div>
 </body>
 
-<script src="//cdn.bootcss.com/react/0.14.3/react.min.js"></script>
-<script src="//cdn.bootcss.com/react/0.14.3/react-dom.min.js"></script>
-<script src="//cdn.bootcss.com/react-router/1.0.2/ReactRouter.min.js"></script>
-<script src="//cdn.bootcss.com/flux/2.1.1/Flux.min.js"></script>
-<script src="//cdn.bootcss.com/classnames/2.2.0/index.min.js"></script>
-<script src="//cdn.bootcss.com/lodash.js/3.10.1/lodash.min.js"></script>
-<script src="//cdn.bootcss.com/jquery/3.0.0-alpha1/jquery.min.js"></script>
+<script src="/output/vendor.js"></script>
 <script src="/output/index.js"></script>
 
 </html>
