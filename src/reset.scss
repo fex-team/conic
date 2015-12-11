@@ -27,6 +27,10 @@ body {
   background: gray;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 #react-dom {
   height: 100%;
 }
