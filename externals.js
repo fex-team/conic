@@ -6,5 +6,5 @@ module.exports = {
     'lodash': '_',
     'react-router': 'ReactRouter',
     'flux': 'Flux',
-    //'antd/lib/index.css':true,
+    'react-dnd': 'ReactDnd'
 }

@@ -1,15 +1,12 @@
 var webpack = require('webpack')
+var externals = require('./externals')
 
 module.exports = {
-    entry: {
-        app: [
-            './src/index.js'
-        ],
-        vendor: [
-            'react-dnd',
-            'react-json-tree'
-        ]
-    },
+    entry: [
+        './src/index.js'
+    ],
+
+    externals: externals,
 
     output: {
         path: __dirname + '/output/',
@@ -37,7 +34,7 @@ module.exports = {
                 loader: 'url?limit=3000&name=img/[hash:8].[name].[ext]'
             }, {
                 test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'url'
+                loader: 'url?limit=3000&name=font/[hash:8].[name].[ext]'
             }, {
                 test: /\.json$/,
                 loader: 'json-loader'

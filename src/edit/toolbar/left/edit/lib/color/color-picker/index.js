@@ -1,5 +1,5 @@
 var React = require('react')
-var ColorPicker = require('react-color')
+var ReactColor = require('react-color')
 var colorAction = require('../action')
 
 function getRGBA(color) {
@@ -47,7 +47,7 @@ module.exports = React.createClass({
 
         return (
             <div>
-                <ColorPicker positionCSS={popupPosition}
+                <ReactColor positionCSS={popupPosition}
                              color={this.state.color}
                              display={this.state.showPicker}
                              onChange={this.handleChange}
