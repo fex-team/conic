@@ -17,7 +17,11 @@ login() {
 }
 
 babel() {
-    babel src --out-dir dist
+    babel src --out-dir dist --presets react
+}
+
+clear() {
+    sudo rm -rf dist
 }
 
 update() {
@@ -52,7 +56,8 @@ checkWhoami
 
 if test `npm whoami` = tieba; then
     babel
-    //update
+    update
+    clear
 else
     echo "You must login with tieba"
     echo "|---------------------------------------------"
