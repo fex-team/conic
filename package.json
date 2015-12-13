@@ -10,7 +10,8 @@
     "cdn": "webpack -p --profile --config webpack.config.cdn.js",
     "start": "npm run cdn && npm run server & npm run webpack-dev",
     "build": "npm run cdn && npm run webpack-dist && npm run server",
-    "render": "babel server/render.js"
+    "render": "babel server/render.js",
+    "publish": "./publish.sh"
   },
   "repository": {
     "type": "git",
@@ -37,7 +38,9 @@
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.8",
-    "webpack-dev-server": "^1.12.1",
+    "webpack-dev-server": "^1.12.1"
+  },
+  "dependencies": {
     "antd": "^0.10.4",
     "classnames": "^2.1.5",
     "codemirror": "^5.9.0",

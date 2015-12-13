@@ -16,6 +16,10 @@ login() {
    npm login
 }
 
+babel() {
+    babel src --out-dir dist
+}
+
 update() {
     if test -f package.json; then
         npm version patch
@@ -47,7 +51,8 @@ checkChange
 checkWhoami
 
 if test `npm whoami` = tieba; then
-    update
+    babel
+    //update
 else
     echo "You must login with tieba"
     echo "|---------------------------------------------"
