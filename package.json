@@ -1,21 +1,22 @@
 {
   "name": "gaea",
-  "version": "1.1.5",
-  "description": "tieba h5 provider",
+  "version": "1.1.7",
+  "description": "website provider",
   "main": "index.js",
   "scripts": {
     "server": "node server/index.js",
     "webpack-dev": "node webpack.js",
     "webpack-dist": "webpack -p --profile --display-modules",
-    "start": "npm run server & npm run webpack-dev",
-    "build": "npm run webpack-dist && npm run server",
+    "cdn": "webpack -p --profile --config webpack.config.cdn.js",
+    "start": "npm run cdn && npm run server & npm run webpack-dev",
+    "build": "npm run cdn && npm run webpack-dist && npm run server",
     "render": "babel server/render.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/fex-team/gaea.git"
   },
-  "author": "",
+  "author": "tieba",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer-loader": "^3.1.0",
