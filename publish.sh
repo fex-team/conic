@@ -27,7 +27,7 @@ clear() {
 update() {
     if test -f package.json; then
         npm version patch
-        npm publish
+        npm publish $1 $2
     else
         echo "There is no package.json file in `pwd`"
     fi
