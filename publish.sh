@@ -16,7 +16,7 @@ login() {
    npm login
 }
 
-babel() {
+runBabel() {
     babel src --out-dir dist --presets react
 }
 
@@ -55,7 +55,7 @@ checkChange
 checkWhoami
 
 if test `npm whoami` = tieba; then
-    babel
+    runBabel
     update
     clear
 else
