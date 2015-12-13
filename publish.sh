@@ -17,6 +17,7 @@ login() {
 }
 
 runBabel() {
+    cp -r src dist
     babel src --out-dir dist --presets react
 }
 
