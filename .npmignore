@@ -7,3 +7,4 @@ publish
 webpack.*
 *.md
 *.sh
+npm-debug.log
