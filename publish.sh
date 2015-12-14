@@ -17,7 +17,7 @@ login() {
 }
 
 runBabel() {
-    webpack -p --config webpack.config.publish.js
+    webpack --config webpack.config.publish.js
 }
 
 clear() {
@@ -27,7 +27,7 @@ clear() {
 update() {
     if test -f package.json; then
         npm version patch
-        npm publish $1 $2
+        npm publish
     else
         echo "There is no package.json file in `pwd`"
     fi
