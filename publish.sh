@@ -17,7 +17,7 @@ login() {
 }
 
 runBabel() {
-    webpack --config webpack.config.publish.js
+    webpack -p --config webpack.config.publish.js
 }
 
 clear() {
