@@ -16,10 +16,6 @@ login() {
    npm login
 }
 
-runBabel() {
-    webpack --config webpack.config.publish.js
-}
-
 clear() {
     sudo rm -rf dist
 }
@@ -55,7 +51,6 @@ checkChange
 checkWhoami
 
 if test `npm whoami` = tieba; then
-    runBabel
     update
     clear
 else

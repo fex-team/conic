@@ -12,7 +12,7 @@
     "build": "npm run cdn && npm run webpack-dist && npm run server",
     "render": "babel server/render.js",
     "push": "git add -A && git commit -m \"quick push\" && git push",
-    "pub": "./publish.sh"
+    "pub": "webpack --config webpack.config.publish.js && ./publish.sh"
   },
   "repository": {
     "type": "git",
