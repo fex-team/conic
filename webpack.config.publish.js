@@ -8,7 +8,8 @@ module.exports = {
     output: {
         path: __dirname + '/dist/',
         publicPath: '/dist',
-        filename: './index.js'
+        filename: './index.js',
+        libraryTarget: "umd"
     },
 
     module: {
