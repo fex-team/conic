@@ -2,7 +2,7 @@ var webpack = require('webpack')
 
 module.exports = {
     entry: [
-        './src/common.js'
+        './src/edit/toolbar/index.js'
     ],
 
     output: {
