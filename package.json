@@ -40,9 +40,7 @@
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.8",
-    "webpack-dev-server": "^1.12.1"
-  },
-  "dependencies": {
+    "webpack-dev-server": "^1.12.1",
     "antd": "^0.10.4",
     "classnames": "^2.1.5",
     "codemirror": "^5.9.0",
@@ -64,5 +62,8 @@
     "react-dom": "^0.14.0",
     "react-json-tree": "^0.3.0",
     "swiper": "^3.1.7"
+  },
+  "dependencies": {
+
   }
 }

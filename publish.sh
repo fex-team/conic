@@ -17,7 +17,6 @@ login() {
 }
 
 runBabel() {
-    cp -r src dist
     webpack --config webpack.config.publish.js
 }
 
