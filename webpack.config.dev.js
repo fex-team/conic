@@ -30,7 +30,7 @@ var config = {
             }, {
                 test: /\.(scss|css)/,
                 exclude: /node_modules/,
-                loaders: ['style', 'css', 'autoprefixer', 'sass', 'css-path-loader']
+                loaders: ['style', 'css', 'autoprefixer', 'css-path-loader', 'sass']
             }, {
                 test: /\.(scss|css)/,
                 include: /node_modules/,
