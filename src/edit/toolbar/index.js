@@ -1,26 +1,17 @@
-const React = require('react')
-const Left = require('./left')
-const Top = require('./top')
-const Right = require('./right')
-const Footer = require('./footer')
-const editAction = require('../actions/edit-action')
-const editStore = require('../stores/edit-store')
-const settingAction = require('../actions/setting-action')
-const settingStore = require('../stores/setting-store')
+import React from 'react'
 const classNames = require('classnames')
 
 const defaultJson = require('../phone-edit/default.json')
 
-const Center = require('./center')
-const PhoneEdit = require('../../edit/phone-edit')
+import './index.scss'
+import './animate.scss'
+import './loading.scss'
 
-require('./index.scss')
-require('./animate.scss')
-require('./loading.scss')
+export default class Container extends React.Component {
+    constructor (props) {
+        super(props);
 
-let Container = React.createClass({
-    getInitialState: function () {
-        return {
+        this.state = {
             // 操作页面中当前选中对象
             selection: {},
 
@@ -28,55 +19,16 @@ let Container = React.createClass({
             mode: 'edit',
 
             // 是否加载完毕
-            loading: true,
+            loading: false,
 
             tree: null,
 
             editKey: 0,
             previewKey: 0
         }
-    },
+    }
 
-    componentDidMount: function () {
-        editStore.addChangeShowModeListener(this.changeMode)
-        settingStore.addChangeTreeListener(this.changeTree)
-
-        // :TODO 异步请求配置信息
-        settingAction.setDefault({
-            viewType: 'pc'
-        }, defaultJson)
-        setTimeout(()=> {
-            this.setState({
-                loading: false,
-                tree: defaultJson
-            })
-        }, 1000)
-    },
-
-    componentWillUnmount: function () {
-        editStore.removeChangeShowModeListener(this.changeMode)
-        settingStore.removeChangeTreeListener(this.changeTree)
-    },
-
-    changeMode: function () {
-        let mode = editStore.getShowMode()
-        let newState = {
-            mode: mode
-        }
-        if (mode === 'preview') {
-            newState.previewKey = this.state.previewKey + 1
-        }
-        this.setState(newState)
-    },
-
-    changeTree: function () {
-        this.setState({
-            tree: settingStore.getTree(),
-            editKey: this.state.editKey + 1
-        })
-    },
-
-    render: function () {
+    render () {
         let sdClass = classNames({
             'g-sd': true,
             'g-sd-enter': this.state.mode === 'edit',
@@ -103,50 +55,49 @@ let Container = React.createClass({
         let children
         if (this.state.loading) {
             children = (
-                <div className="loading">
-                    <i className="fa fa-refresh fa-spin"></i>
-                </div>
+              <div className="loading">
+                  <i className="fa fa-refresh fa-spin"></i>
+              </div>
             )
         } else {
             children = (
-                <div>
-                    <div className="g-hd">
-                        <Top/>
-                    </div>
+              <div>
+                  <div className="g-hd">
+                      top
+                  </div>
 
-                    <div className={sdClass}>
-                        <Left/>
-                    </div>
+                  <div className={sdClass}>
+                      left
+                  </div>
 
-                    <div className={rdClass}>
-                        <Right />
-                    </div>
+                  <div className={rdClass}>
+                      right
+                  </div>
 
-                    <div className={mnClass}>
-                        <Center/>
+                  <div className={mnClass}>
+                      center
 
-                        <div className="phone-out">
-                            <div className="phone">
-                                <PhoneEdit editKey={'edit-'+this.state.editKey}
-                                           previewKey={'preview-'+this.state.previewKey}
-                                           tree={this.state.tree}/>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={ftClass}>
-                        <Footer/>
-                    </div>
-                </div>
+                      <div className="phone-out">
+                          <div className="phone">
+
+                          </div>
+                      </div>
+                  </div>
+                  <div className={ftClass}>
+                      footer
+                  </div>
+              </div>
             )
         }
 
         return (
-            <div className="_namespace"
-                 style={{height:'100%'}}>
-                {children}
-            </div>
+          <div className="_namespace"
+               style={{height:'100%'}}>
+              {children}
+          </div>
         )
     }
-})
+}
+
 
 module.exports = Container
