@@ -1,0 +1,94 @@
+@import "../../minxin";
+
+// 全屏自适应布局
+html {
+  _height: auto;
+  _padding: 30px 0 50px;
+}
+
+.g-hd, .g-sd, .g-mn, .g-ft{
+  position: absolute;
+  left: 0;
+}
+
+.g-rd {
+  position: absolute;
+  right: 0;
+}
+
+.g-hd, .g-ft {
+  width: 100%;
+}
+
+.g-sd, .g-mn, .g-rd{
+  top: 30px;
+  bottom: 30px;
+  _height: 100%;
+  overflow: auto;
+}
+
+.g-sd, .g-ft, .g-rd {
+  color: $font-color;
+  background: $bg-color;
+}
+
+.g-rd, .g-sd {
+  overflow: hidden;
+  box-shadow: inset 0 -1px 0 $shadow-color;
+}
+
+.g-sd {
+  overflow-x: hidden;
+  z-index: 2;
+}
+
+.g-rd {
+  overflow-x: hidden;
+  z-index: 2;
+}
+
+.g-hd {
+  top: 0;
+  height: 28px;
+}
+
+.g-sd, .g-rd {
+  width: 250px;
+  user-select: none;
+}
+
+.g-mn {
+  display: flex;
+  justify-content: center;
+  _position: relative;
+  left: 250px;
+  right: 250px;
+  _top: 0;
+  _left: 0;
+  _margin-left: 250px;
+  background: url(./image/transparent.png);
+  z-index: 1;
+}
+
+.g-ft {
+  bottom: 0;
+  height: 30px;
+  z-index: 2;
+}
+
+// 手机样式
+.phone-out {
+  height: 100%;
+  width: 100%;
+  .phone {
+    position: relative;
+    height: inherit;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
+hr {
+  margin-bottom: 15px;
+  border-color: #444;
+}

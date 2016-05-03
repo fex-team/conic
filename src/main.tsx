@@ -3,11 +3,12 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import routes from './router.tsx'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import { Router, Route, browserHistory } from 'react-router'
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
-import 'antd/lib/index.css'
-import 'font-awesome/css/font-awesome.css'
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/theme/material.css'
+import './common.ts'
 
 import './reset.scss'
 

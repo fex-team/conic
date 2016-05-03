@@ -3,9 +3,14 @@
   "version": false,
   "dependencies": {},
   "ambientDependencies": {
+    "classnames": "registry:dt/classnames#0.0.0+20160316155526",
+    "lodash": "registry:dt/lodash#3.10.0+20160330154726",
     "react": "registry:dt/react#0.14.0+20160423065914",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
+    "react-redux": "registry:dt/react-redux#4.4.0+20160501125835",
     "react-router": "registry:dt/react-router#2.0.0+20160501155536",
-    "react-router/history": "registry:dt/react-router/history#2.0.0+20160316155526"
+    "react-router-redux": "registry:dt/react-router-redux#4.0.0+20160316155526",
+    "react-router/history": "registry:dt/react-router/history#2.0.0+20160316155526",
+    "redux": "registry:dt/redux#3.3.1+20160326112656"
   }
 }
