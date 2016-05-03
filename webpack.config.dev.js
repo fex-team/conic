@@ -9,7 +9,7 @@ var config = {
     entry: [
         'webpack-dev-server/client?http://localhost:8090',
         'webpack/hot/only-dev-server',
-        './src/index.js'
+        './src/main.tsx'
     ],
 
     externals: externals,
@@ -45,6 +45,9 @@ var config = {
             }, {
                 test: /\.json$/,
                 loader: 'json-loader'
+            }, {
+                test: /\.tsx?$/,
+                loaders: ['html-path-loader', 'ts-loader']
             }
         ]
     },

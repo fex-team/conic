@@ -2,7 +2,7 @@ var webpack = require('webpack')
 
 module.exports = {
     entry: [
-        './src/edit/toolbar/index.js'
+        './src/edit/toolbar/main.tsx'
     ],
 
     output: {
@@ -36,6 +36,9 @@ module.exports = {
             }, {
                 test: /\.json$/,
                 loader: 'json-loader'
+            }, {
+                test: /\.tsx?$/,
+                loaders: ['html-path-loader', 'ts-loader']
             }
         ]
     }

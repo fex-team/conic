@@ -3,16 +3,21 @@ var externals = require('./externals')
 
 module.exports = {
     entry: [
-        './src/index.js'
+        './src/main.tsx'
     ],
-
-    externals: externals,
 
     output: {
         path: __dirname + '/output/',
         publicPath: '/output/',
         filename: './index.js'
     },
+
+    resolve: {
+        // Add `.ts` and `.tsx` as a resolvable extension.
+        extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+    },
+
+    externals: externals,
 
     module: {
         loaders: [
@@ -38,6 +43,9 @@ module.exports = {
             }, {
                 test: /\.json$/,
                 loader: 'json-loader'
+            }, {
+                test: /\.tsx?$/,
+                loaders: ['html-path-loader', 'ts-loader']
             }
         ]
     }
