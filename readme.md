@@ -1,5 +1,5 @@
 # Conic
-可视化组件组装平台（近期暂停开发）
+已迁移至 fit-gaea 组件
 
 ## 已经完成的功能
 [https://github.com/fex-team/conic/issues/2](https://github.com/fex-team/conic/issues/2)
